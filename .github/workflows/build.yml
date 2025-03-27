@@ -46,11 +46,11 @@ jobs:
           pip install pyinstaller
           pip install -r requirements.txt
 
-      # 5. Compilar la aplicación usando el archivo Main.spec
+      # 5. Compilar la aplicación usando el archivo UI.spec
       - name: Build application
         shell: bash
         run: |
-          pyinstaller Main.spec
+          pyinstaller UI.spec
 
       # 6. Verificar que el ejecutable existe
       - name: Verify build output
