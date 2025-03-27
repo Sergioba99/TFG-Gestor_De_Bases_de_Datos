@@ -1,0 +1,82 @@
+name: Build and Release Application
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        os: [windows-latest, ubuntu-latest, macos-latest]
+
+    steps:
+      # 1. Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # 2. Leer la versión desde version.txt y asignarla a la variable de entorno global
+      - name: Read version
+        run: |
+          VERSION=$(cat version.txt | tr -d '[:space:]')
+          if [ -z "$VERSION" ]; then
+            echo "El archivo version.txt está vacío o contiene solo espacios." >&2
+            exit 1
+          fi
+          echo "Versión leída desde version.txt: $VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      # 3. Configurar Python
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.13'
+
+      # 4. Instalar dependencias
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+          pip install -r requirements.txt
+
+      # 5. Compilar la aplicación
+      - name: Build application
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            pyinstaller Main.spec
+          else
+            pyinstaller --onefile --name "TFG_Gestor_Base_Datos" Main.py
+
+      # 6. Verificar que el ejecutable existe
+      - name: Verify build output
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            if (!(Test-Path "dist/TFG - Gestor de base de datos.exe")); then
+              echo "El archivo 'dist/TFG - Gestor de base de datos.exe' no existe. Verifica que PyInstaller lo haya generado correctamente." >&2
+              exit 1
+            else
+              echo "El archivo 'dist/TFG - Gestor de base de datos.exe' existe y está listo para subirlo."
+            fi
+          else
+            if [ ! -f "dist/TFG_Gestor_Base_Datos" ]; then
+              echo "El archivo ejecutable no existe. Verifica que PyInstaller lo haya generado correctamente." >&2
+              exit 1
+            else
+              echo "El ejecutable se ha generado correctamente."
+            fi
+
+      # 7. Crear release en GitHub
+      - name: Create GitHub Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: v${{ env.VERSION }}
+          name: TFG - Gestor de base de datos Release v${{ env.VERSION }}
+          artifacts: |
+            dist/TFG - Gestor de base de datos.exe
+            dist/TFG_Gestor_Base_Datos
+          artifactPrefix: "" # Elimina prefijos o transformaciones
