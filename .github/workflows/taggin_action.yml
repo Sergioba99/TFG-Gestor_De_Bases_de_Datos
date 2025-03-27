@@ -29,14 +29,6 @@ jobs:
           echo "VERSION=$VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
-      # 4. Autenticar GitHub con un token personal (PAT) o credenciales predeterminadas
-      - name: Authenticate with GitHub
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Usando GITHUB_TOKEN para autenticar"
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-
       # 5. Crear o actualizar el tag
       - name: Create or update tag
         run: |
