@@ -1,0 +1,45 @@
+name: Tagging Preview Branch
+
+on:
+  push:
+    branches:
+      - preview  # Solo se ejecutará en la rama preview
+
+jobs:
+  tag_preview_branch:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout del código con todos los tags
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      # 2. Configurar Git
+      - name: Configure Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      # 3. Leer la versión desde version.txt
+      - name: Read version
+        run: |
+          VERSION=$(cat version.txt | xargs)  # Limpia espacios en blanco
+          echo "VERSION=$VERSION"
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      # 5. Crear o actualizar el tag
+      - name: Create or update tag
+        run: |
+          # Comprobar si el tag local ya existe
+          if git tag | grep -q "^v${{ env.VERSION }}$"; then
+            echo "El tag local v${{ env.VERSION }} ya existe. Se actualizará."
+            git tag -f v${{ env.VERSION }}
+          else
+            echo "El tag local v${{ env.VERSION }} no existe. Se creará."
+            git tag v${{ env.VERSION }}
+          fi
+          
+          # Subir el tag al remoto
+          git push origin -f v${{ env.VERSION }}
