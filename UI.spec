@@ -22,7 +22,7 @@ exe = EXE(
     a.binaries,  # Incluimos binarios y datos como en el archivo funcional
     a.datas,
     [],
-    name='TFG - Gestor de base de datos',
+    name='TFG-Gestor_de_base_de_datos',
     debug=False,
     bootloader_ignore_signals=False,
     strip=False,
