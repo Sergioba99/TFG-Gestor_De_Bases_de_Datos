@@ -57,15 +57,15 @@ jobs:
         shell: bash
         run: |
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            if [ ! -f "dist/TFG - Gestor de base de datos.exe" ]; then
-              echo "El archivo 'dist/TFG - Gestor de base de datos.exe' no existe." >&2
+            if [ ! -f "dist/TFG-Gestor_de_base_de_datos.exe" ]; then
+              echo "El archivo 'dist/TFG-Gestor_de_base_de_datos.exe' no existe." >&2
               exit 1
             else
               echo "Archivo verificado para Windows."
             fi
           else
-            if [ ! -f "dist/TFG - Gestor de base de datos" ]; then
-              echo "El archivo 'dist/TFG - Gestor de base de datos' no existe." >&2
+            if [ ! -f "dist/TFG-Gestor_de_base_de_datos" ]; then
+              echo "El archivo 'dist/TFG-Gestor_de_base_de_datos' no existe." >&2
               exit 1
             else
               echo "Archivo verificado para Linux/macOS."
@@ -77,11 +77,11 @@ jobs:
         shell: bash
         run: |
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            mv "dist/TFG - Gestor de base de datos.exe" "dist/TFG - Gestor de base de datos-windows.exe"
+            mv "dist/TFG-Gestor_de_base_de_datos.exe" "dist/TFG-Gestor_de_base_de_datos-windows.exe"
           elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            mv "dist/TFG - Gestor de base de datos" "dist/TFG - Gestor de base de datos-linux"
+            mv "dist/TFG-Gestor_de_base_de_datos" "dist/TFG-Gestor_de_base_de_datos-linux"
           elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            mv "dist/TFG - Gestor de base de datos" "dist/TFG - Gestor de base de datos-macos"
+            mv "dist/TFG-Gestor_de_base_de_datos" "dist/TFG-Gestor_de_base_de_datos-macos"
           fi
 
       # 8. Establecer una variable de entorno con el nombre del archivo para usarla en el release
@@ -89,11 +89,11 @@ jobs:
         shell: bash
         run: |
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            echo "ARTIFACT=dist/TFG - Gestor de base de datos-windows.exe" >> $GITHUB_ENV
+            echo "ARTIFACT=dist/TFG-Gestor_de_base_de_datos-windows.exe" >> $GITHUB_ENV
           elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            echo "ARTIFACT=dist/TFG - Gestor de base de datos-linux" >> $GITHUB_ENV
+            echo "ARTIFACT=dist/TFG-Gestor_de_base_de_datos-linux" >> $GITHUB_ENV
           elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            echo "ARTIFACT=dist/TFG - Gestor de base de datos-macos" >> $GITHUB_ENV
+            echo "ARTIFACT=dist/TFG-Gestor_de_base_de_datos-macos" >> $GITHUB_ENV
           fi
 
       # 9. Crear release en GitHub y subir el artefacto
@@ -101,6 +101,6 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: v${{ env.VERSION }}
-          name: TFG - Gestor de base de datos Release v${{ env.VERSION }}
+          name: TFG-Gestor_de_base_de_datos_Release_v${{ env.VERSION }}
           artifacts: ${{ env.ARTIFACT }}
           allowUpdates: true
