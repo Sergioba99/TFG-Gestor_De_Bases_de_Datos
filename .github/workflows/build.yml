@@ -20,7 +20,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Leer la versión desde version.txt y asignarla a la variable de entorno global
+      # 2. Leer la versión desde version.txt y asignarla a una variable de entorno global
       - name: Read version
         shell: bash
         run: |
@@ -29,7 +29,7 @@ jobs:
             echo "El archivo version.txt está vacío o contiene solo espacios." >&2
             exit 1
           fi
-          echo "Versión leída desde version.txt: $VERSION"
+          echo "Versión leída: $VERSION"
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       # 3. Configurar Python
@@ -46,15 +46,11 @@ jobs:
           pip install pyinstaller
           pip install -r requirements.txt
 
-      # 5. Compilar la aplicación
+      # 5. Compilar la aplicación usando el archivo UI.spec
       - name: Build application
         shell: bash
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            pyinstaller Main.spec
-          else
-            pyinstaller --onefile --name "TFG_Gestor_Base_Datos" Main.py
-          fi
+          pyinstaller UI.spec
 
       # 6. Verificar que el ejecutable existe
       - name: Verify build output
@@ -62,27 +58,49 @@ jobs:
         run: |
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
             if [ ! -f "dist/TFG - Gestor de base de datos.exe" ]; then
-              echo "El archivo 'dist/TFG - Gestor de base de datos.exe' no existe. Verifica que PyInstaller lo haya generado correctamente." >&2
+              echo "El archivo 'dist/TFG - Gestor de base de datos.exe' no existe." >&2
               exit 1
             else
-              echo "El archivo 'dist/TFG - Gestor de base de datos.exe' existe y está listo para subirlo."
+              echo "Archivo verificado para Windows."
             fi
           else
-            if [ ! -f "dist/TFG_Gestor_Base_Datos" ]; then
-              echo "El archivo ejecutable no existe. Verifica que PyInstaller lo haya generado correctamente." >&2
+            if [ ! -f "dist/TFG - Gestor de base de datos" ]; then
+              echo "El archivo 'dist/TFG - Gestor de base de datos' no existe." >&2
               exit 1
             else
-              echo "El ejecutable se ha generado correctamente."
+              echo "Archivo verificado para Linux/macOS."
             fi
           fi
 
-      # 7. Crear release en GitHub
+      # 7. Renombrar el ejecutable añadiendo un sufijo según el sistema operativo
+      - name: Rename artifact with OS suffix
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            mv "dist/TFG - Gestor de base de datos.exe" "dist/TFG - Gestor de base de datos-windows.exe"
+          elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            mv "dist/TFG - Gestor de base de datos" "dist/TFG - Gestor de base de datos-linux"
+          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+            mv "dist/TFG - Gestor de base de datos" "dist/TFG - Gestor de base de datos-macos"
+          fi
+
+      # 8. Establecer una variable de entorno con el nombre del archivo para usarla en el release
+      - name: Set artifact name variable
+        shell: bash
+        run: |
+          if [ "${{ matrix.os }}" == "windows-latest" ]; then
+            echo "ARTIFACT=dist/TFG - Gestor de base de datos-windows.exe" >> $GITHUB_ENV
+          elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
+            echo "ARTIFACT=dist/TFG - Gestor de base de datos-linux" >> $GITHUB_ENV
+          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
+            echo "ARTIFACT=dist/TFG - Gestor de base de datos-macos" >> $GITHUB_ENV
+          fi
+
+      # 9. Crear release en GitHub y subir el artefacto
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: v${{ env.VERSION }}
           name: TFG - Gestor de base de datos Release v${{ env.VERSION }}
-          artifacts: |
-            dist/TFG - Gestor de base de datos.exe
-            dist/TFG_Gestor_Base_Datos
-          artifactPrefix: "" # Elimina prefijos o transformaciones
+          artifacts: ${{ env.ARTIFACT }}
+          artifactPrefix: ""
