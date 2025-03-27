@@ -103,4 +103,4 @@ jobs:
           tag: v${{ env.VERSION }}
           name: TFG - Gestor de base de datos Release v${{ env.VERSION }}
           artifacts: ${{ env.ARTIFACT }}
-          artifactPrefix: ""
+          allowUpdates: true
