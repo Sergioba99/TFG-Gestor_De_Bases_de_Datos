@@ -22,6 +22,7 @@ jobs:
 
       # 2. Leer la versión desde version.txt y asignarla a la variable de entorno global
       - name: Read version
+        shell: bash
         run: |
           VERSION=$(cat version.txt | tr -d '[:space:]')
           if [ -z "$VERSION" ]; then
@@ -39,6 +40,7 @@ jobs:
 
       # 4. Instalar dependencias
       - name: Install dependencies
+        shell: bash
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
@@ -46,17 +48,20 @@ jobs:
 
       # 5. Compilar la aplicación
       - name: Build application
+        shell: bash
         run: |
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
             pyinstaller Main.spec
           else
             pyinstaller --onefile --name "TFG_Gestor_Base_Datos" Main.py
+          fi
 
       # 6. Verificar que el ejecutable existe
       - name: Verify build output
+        shell: bash
         run: |
           if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            if (!(Test-Path "dist/TFG - Gestor de base de datos.exe")); then
+            if [ ! -f "dist/TFG - Gestor de base de datos.exe" ]; then
               echo "El archivo 'dist/TFG - Gestor de base de datos.exe' no existe. Verifica que PyInstaller lo haya generado correctamente." >&2
               exit 1
             else
@@ -69,6 +74,7 @@ jobs:
             else
               echo "El ejecutable se ha generado correctamente."
             fi
+          fi
 
       # 7. Crear release en GitHub
       - name: Create GitHub Release
