@@ -11,6 +11,7 @@ from Modules.configManager import Config
 from Modules.csvHandler import *
 from Modules.dataLoger import *
 from Modules.yalmWriter import Writer
+
 class UI:
     """
     Clase encargada de la generacion de la ventana principal de la interfaz grafica, asi como de la logica que rige
@@ -22,7 +23,8 @@ class UI:
         self.root.withdraw()
         #self.root.geometry("1000x525")  # Ajuste del tamaño de ventana
         self.root.title("TFG - Gestor de base de datos")  # Establecimiento del nombre de la ventana
-        self.root.iconbitmap(os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.ico"))
+        icon = tk.PhotoImage(file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.png"))
+        self.root.iconphoto(False,icon)
         self.root.columnconfigure(0, weight=1)  # Activacion del autoajuste de la columna 0
         self.root.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
         self.root.protocol("WM_DELETE_WINDOW",

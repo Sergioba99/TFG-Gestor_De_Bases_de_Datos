@@ -4,7 +4,7 @@ a = Analysis(
     ['UI.py'],  # Archivo principal
     pathex=[],  # Dejamos vacío como en el archivo funcional
     binaries=[],
-    datas=[('./icon.ico','./')],  # Eliminamos `datas` si no es necesario
+    datas=[('./icon.png','./')],  # Eliminamos `datas` si no es necesario
     hiddenimports=[],
     hookspath=[],
     runtime_hooks=[],
