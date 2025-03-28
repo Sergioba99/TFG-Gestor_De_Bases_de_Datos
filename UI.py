@@ -1,7 +1,6 @@
 import tkinter as tk
 from os import getcwd
 from tkinter import messagebox
-from tkinter import simpledialog
 from tkinter import ttk
 from copy import deepcopy
 import sys
@@ -156,18 +155,6 @@ class UI:
                                      postcommand=lambda: self.updateComboboxQuerys(queryCombobox), width=105)
         queryCombobox.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")
 
-        # Boton para ejecutar la query del selector
-        tk.Button(sqlFrame, text="Ejecutar", command=lambda: self.executeSqlQuery(queryComboboxOption)).grid(row=0,
-                                                                                                             column=2,
-                                                                                                             padx=5,
-                                                                                                             pady=5,
-                                                                                                             sticky="nsew")
-
-        # Boton para borrar la query que aparece en el selector del archivo de configuracion
-        tk.Button(sqlFrame, text="Eliminar",
-                  command=lambda: self.deleteSqlQuery(queryCombobox, queryComboboxOption)).grid(row=0, column=3, padx=5,
-                                                                                                pady=5, sticky="nsew")
-
         # Manejo de querys introducidas por el usuario
         tk.Label(sqlFrame, text="Entrada de querys").grid(row=1, column=0, padx=5, pady=5, sticky="esn", rowspan=2)
 
@@ -177,7 +164,7 @@ class UI:
         textFrame = tk.Frame(sqlFrame)
         textFrame.grid(row=1, column=1, padx=5, pady=5, sticky="nsew", rowspan=3)
 
-        queryText = tk.Text(textFrame, width=79, height=6)
+        queryText = tk.Text(textFrame, width=79, height=10)
         queryText.grid(row=0, column=0, sticky="nsew")
 
         textScrollY = ttk.Scrollbar(textFrame, orient="vertical", command=queryText.yview)
@@ -188,21 +175,37 @@ class UI:
         textScrollX.grid(row=1, column=0, sticky="ew")
         queryText.config(xscrollcommand=textScrollX.set)
 
+        buttonFrame = tk.Frame(sqlFrame)
+        buttonFrame.grid(row=0,column=3,rowspan=5,sticky="nsew")
+        buttonFrame.grid_rowconfigure((tuple([x for x in range(3,6)]+[1])),weight=1)
+
+        # Boton para ejecutar la query del selector
+        tk.Button(buttonFrame, text="Ejecutar", command=lambda: self.executeSqlQuery(queryComboboxOption)).grid(row=0,
+                                                                                                             column=2,
+                                                                                                             padx=5,
+                                                                                                             pady=5,
+                                                                                                             sticky="nsew")
+
+        # Boton para borrar la query que aparece en el selector del archivo de configuracion
+        tk.Button(buttonFrame, text="Eliminar",
+                  command=lambda: self.deleteSqlQuery(queryCombobox, queryComboboxOption)).grid(row=0, column=3, padx=5,
+                                                                                                pady=5, sticky="nsew")
+
         # Boton para borrar el texto de la entrada de texto
-        tk.Button(sqlFrame, text="Borrar", command=lambda: self.clearQueryText(queryText)).grid(row=1, column=2, padx=5,
+        tk.Button(buttonFrame, text="Borrar", command=lambda: self.clearQueryText(queryText)).grid(row=2, column=2, padx=5,
                                                                                                 pady=5, sticky="nsew")
 
         # Boton para ejecutar la query introducida por el usuario
-        tk.Button(sqlFrame, text="Ejecutar", command=lambda: self.executeSqlQuery(queryText)).grid(row=1, column=3,
+        tk.Button(buttonFrame, text="Ejecutar", command=lambda: self.executeSqlQuery(queryText)).grid(row=2, column=3,
                                                                                                    padx=5, pady=5,
                                                                                                    sticky="nsew")
 
         # Boton para añadir la query del usuario a la configuracion
-        tk.Button(sqlFrame, text="Añadir", command=lambda: self.addSqlQuery(queryText)).grid(row=1, column=4, padx=5,
+        tk.Button(buttonFrame, text="Añadir", command=lambda: self.addSqlQuery(queryText)).grid(row=2, column=4, padx=5,
                                                                                              pady=5, sticky="nsew")
 
         # Boton para cargar una query dentro de un archivo SQL
-        tk.Button(sqlFrame, text="Cargar desde archivo", command=lambda: self.loadSqlQuery(queryText)).grid(row=2,
+        tk.Button(buttonFrame, text="Cargar desde archivo", command=lambda: self.loadSqlQuery(queryText)).grid(row=3,
                                                                                                             column=2,
                                                                                                             padx=5,
                                                                                                             pady=5,
@@ -210,7 +213,7 @@ class UI:
                                                                                                             columnspan=3)
 
         # Boton para reiniciar la lista de querys a sus valores por defecto
-        tk.Button(sqlFrame, text="Reiniciar querys almacenadas", command=lambda: self.resetSqlQuerys()).grid(row=3,
+        tk.Button(buttonFrame, text="Reiniciar querys almacenadas", command=lambda: self.resetSqlQuerys()).grid(row=4,
                                                                                                              column=2,
                                                                                                              padx=5,
                                                                                                              pady=5,
@@ -224,7 +227,7 @@ class UI:
                                                                       column=0,
                                                                       columnspan=1,
                                                                       padx=10,
-                                                                      pady=5,
+                                                                      pady=10,
                                                                       sticky="ns")
 
         self.root.update_idletasks()
@@ -249,7 +252,7 @@ class UI:
         observations = ""
         if supplyFile != -2 and supplyFile != -1:
             if messagebox.askyesno("Añadir observaciones", "¿Desea añadir observaciones al test que se va a importar?"):
-                observations = simpledialog.askstring("Observación", "Introduzca la observación para el test")
+                observations = PersonalizedAsktext(self.root,"Observación", "Introduzca la observación para el test").returnValue()
             self.supplyLoger(self.ymlParser, self.sqlSupply).logSupplyTestData(observations)
             messagebox.showinfo("Importar archivo de oferta", "Se ha importado el archivo " + str(
                 self.ymlParser.supplyFileName) + ".yml a la base de datos.")
@@ -268,7 +271,7 @@ class UI:
         observations = ""
         if demandFile != -2 and demandFile != -1:
             if messagebox.askyesno("Añadir observaciones", "¿Desea añadir observaciones al test que se va a importar?"):
-                observations = simpledialog.askstring("Observación", "Introduzca la observación para el test")
+                observations = PersonalizedAsktext(self.root,"Observación", "Introduzca la observación para el test").returnValue()
             self.demandLoger(self.ymlParser, self.sqlDemand).logDemandTestData(observations)
             messagebox.showinfo("Importar archivo de demanda", "Se ha importado el archivo " + str(
                 self.ymlParser.demandFileName) + ".yml a la base de datos")
@@ -287,7 +290,7 @@ class UI:
         observations = ""
         if resultsFile != -2 and resultsFile != -1:
             if messagebox.askyesno("Añadir observaciones", "¿Desea añadir observaciones al test que se va a importar?"):
-                observations = simpledialog.askstring("Observación", "Introduzca la observación para el test")
+                observations = PersonalizedAsktext(self.root,"Observación", "Introduzca la observación para el test").returnValue()
             self.resultsLoger(self.csvReader, self.sqlResults).logResultsTestData(observations)
             messagebox.showinfo("Importar archivo de resultados", "Se ha importado el archivo " + str(
                 self.csvReader.csvFileName) + ".csv a la base de datos")
@@ -515,7 +518,7 @@ class UI:
     def addSqlQuery(self, query=None):
         try:
             q = str(query.get("1.0", tk.END))
-            name = simpledialog.askstring("Nombre de la query", "Escribe un nombre para identificar la query SQL:")
+            name = PersonalizedAskstring(self.root,"Nombre de la query", "Escribe un nombre para identificar la query SQL").returnValue()
             if name is not None and name != "":
                 db = SelectDataBase(self.root).value
                 self.config.addSQLQuery(name, db, q)
@@ -719,7 +722,7 @@ class TableViewFrame(tk.Toplevel):
         self.after(100, lambda: self.attributes("-topmost", False))
 
     def exportarDatos(self,cols,data):
-        fileName = simpledialog.askstring("Exportar vista", "Nombre del archivo de datos",parent=self)
+        fileName = PersonalizedAskstring(self,"Exportar vista", "Nombre del archivo de datos").returnValue()
         if fileName is None or fileName == "": return -1
         csv = csvWriter(fileName,data,cols)
         csv.saveFile()
@@ -822,6 +825,187 @@ class SelectTestFromList(tk.Toplevel):
 class PersonalizedAskstring(tk.Toplevel):
     def __init__(self,master,title:str="",prompt:str=""):
         super().__init__(master)
+        self.withdraw()
+        self.iconbitmap(
+            os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.ico"))
+        self.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
+        self.protocol("WM_DELETE_WINDOW",
+                           self.onCloseEvent)
+        self.title = title
+        self.prompt = prompt
+        self.result = None
+        self.minimunWidth = 400
+        self.minimunHeight = 100
+        self.init_ui()
+
+
+        self.transient(master)
+        self.grab_set()
+        self.wait_window(self)
+
+    def init_ui(self):
+
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+        mainFrame = tk.Frame(self)
+        mainFrame.grid(row=0, column=0, sticky="nsew")
+        mainFrame.grid_rowconfigure((0, 1), weight=1)
+        mainFrame.grid_columnconfigure(0, weight=1)
+
+        entryFrame = tk.Frame(mainFrame)
+        entryFrame.grid(row=0, column=0, sticky="nsew")
+        entryFrame.grid_rowconfigure(0, weight=1)
+        entryFrame.grid_columnconfigure(0, weight=1)
+
+        entryPrompt = tk.Label(entryFrame, text=self.prompt, anchor="center")
+        entryPrompt.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+
+        self.entryVar = tk.StringVar(self, "Datos seleccionados")
+        self.entryString = tk.Entry(entryFrame, textvariable=self.entryVar,justify="center")
+        self.entryString.grid(row=1, column=0, sticky="nsew", pady=5, padx=15)
+
+        buttonsFrame = tk.Frame(mainFrame)
+        buttonsFrame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+        buttonsFrame.grid_rowconfigure(0, weight=1)
+        buttonsFrame.grid_columnconfigure((0,3), weight=1)
+        buttonsFrame.grid_columnconfigure((1,2), weight=0)
+
+        aceptButton = tk.Button(
+            buttonsFrame,
+            text="Aceptar",
+            command=self.storeResult
+        )
+        aceptButton.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
+
+        cerrarButton = tk.Button(
+            buttonsFrame,
+            text="Cancelar",
+            command=lambda: self.onCloseEvent()
+        )
+        cerrarButton.grid(row=0, column=2, sticky="nsew", padx=5, pady=5)
+
+        self.update_idletasks()
+        width = self.winfo_reqwidth()
+        height = self.winfo_reqheight()
+        screenHeight = self.winfo_screenheight()
+        screenWidth = self.winfo_screenwidth()
+        posX = (screenWidth - width) // 2
+        posY = (screenHeight - height) // 2
+        if width < self.minimunWidth: width = self.minimunWidth
+        if height < self.minimunHeight: height = self.minimunHeight
+        self.geometry(f"{width}x{height}+{posX}+{posY}")
+
+        self.deiconify()
+
+    def storeResult(self):
+        self.result = self.entryString.get()
+        self.onCloseEvent()
+
+    def returnValue(self):
+        if self.result is None: self.result = ""
+        return self.result
+
+    def onCloseEvent(self):
+        self.destroy()
+        del self
+
+class PersonalizedAsktext(tk.Toplevel):
+    def __init__(self,master,title:str="",prompt:str=""):
+        super().__init__(master)
+        self.withdraw()
+        self.iconbitmap(
+            os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.ico"))
+        self.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
+        self.protocol("WM_DELETE_WINDOW",
+                           self.onCloseEvent)
+        self.title = title
+        self.prompt = prompt
+        self.result = None
+        self.minimunWidth = 300
+        self.minimunHeight = 200
+        self.init_ui()
+
+
+        self.transient(master)
+        self.grab_set()
+        self.wait_window(self)
+
+    def init_ui(self):
+
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
+
+        mainFrame = tk.Frame(self)
+        mainFrame.grid(row=0, column=0, sticky="nsew")
+        mainFrame.grid_rowconfigure((0, 1), weight=1)
+        mainFrame.grid_columnconfigure(0, weight=1)
+
+        entryFrame = tk.Frame(mainFrame)
+        entryFrame.grid(row=0, column=0, sticky="nsew")
+        entryFrame.grid_rowconfigure(0, weight=1)
+        entryFrame.grid_columnconfigure(0, weight=1)
+
+        entryPrompt = tk.Label(entryFrame, text=self.prompt, anchor="center")
+        entryPrompt.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
+
+        textFrame = tk.Frame(entryFrame)
+        textFrame.grid(row=1, column=0, sticky="nsew", padx=15, pady=10)
+        textFrame.grid_rowconfigure(0, weight=1)
+        textFrame.grid_columnconfigure(0, weight=1)
+
+        self.textString = tk.Text(textFrame,wrap="word",height=16,width=50,font=("Arial",12))
+        self.textString.grid(row=0, column=0, sticky="nsew",)
+
+        scrollbar = tk.Scrollbar(textFrame, orient="vertical", command=self.textString.yview)
+        scrollbar.grid(row=0, column=1, sticky="ns")
+        self.textString.configure(yscrollcommand=scrollbar.set)
+
+        buttonsFrame = tk.Frame(mainFrame)
+        buttonsFrame.grid(row=1, column=0, sticky="nsew", padx=5, pady=5)
+        buttonsFrame.grid_rowconfigure(0, weight=0)
+        buttonsFrame.grid_columnconfigure((0,3), weight=1)
+        buttonsFrame.grid_columnconfigure((1,2), weight=0)
+
+        aceptButton = tk.Button(
+            buttonsFrame,
+            text="Aceptar",
+            command=self.storeResult
+        )
+        aceptButton.grid(row=0, column=1, sticky="nsew", padx=5, pady=5)
+
+        cerrarButton = tk.Button(
+            buttonsFrame,
+            text="Cancelar",
+            command=lambda: self.onCloseEvent()
+        )
+        cerrarButton.grid(row=0, column=2, sticky="nsew", padx=5, pady=5)
+
+        self.update_idletasks()
+        width = self.winfo_reqwidth()
+        height = self.winfo_reqheight()
+        screenHeight = self.winfo_screenheight()
+        screenWidth = self.winfo_screenwidth()
+        posX = (screenWidth - width) // 2
+        posY = (screenHeight - height) // 2
+        if width < self.minimunWidth: width = self.minimunWidth
+        if height < self.minimunHeight: height = self.minimunHeight
+        self.geometry(f"{width}x{height}+{posX}+{posY}")
+
+        self.deiconify()
+
+    def storeResult(self):
+        self.result = self.textString.get("1.0",tk.END).strip()
+        self.onCloseEvent()
+
+    def returnValue(self):
+        if self.result is None: self.result = ""
+        return self.result
+
+    def onCloseEvent(self):
+        self.destroy()
+        del self
+
 
 if __name__ == "__main__":
     app = UI()
