@@ -8,7 +8,7 @@ a = Analysis(
     hiddenimports=[],
     hookspath=[],
     runtime_hooks=[],
-    excludes=[],
+    excludes=['libc.so.6'],
     noarchive=False,  # No cambiamos esta configuración
     optimize=0,  # Optimización mínima
 
