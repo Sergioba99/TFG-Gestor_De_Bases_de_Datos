@@ -53,7 +53,7 @@ jobs:
 
       # 6. Compilar la aplicación
       - name: Build application
-        run: pyinstaller Main.spec
+        run: pyinstaller UI.spec
 
       # 7. Verificar que el ejecutable existe
       - name: Verify build output
