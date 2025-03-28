@@ -8,8 +8,8 @@ class Config:
     def __init__(self):
         self.configData = None
         self.workingDirectory = os.getcwd()
-        self.configFolderPath = self.workingDirectory + "\\config"
-        self.configFilePath = self.configFolderPath +"\\config.json"
+        self.configFolderPath = self.workingDirectory + "/config"
+        self.configFilePath = self.configFolderPath +"/config.json"
         Path(self.configFolderPath).mkdir(parents=True, exist_ok=True)
         if not Path(self.configFilePath).exists(): self.generateDefaultConfig()
         else: self.getConfig()

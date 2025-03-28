@@ -18,7 +18,7 @@ class csvReader:
     def __init__(self):
         self.csvReader = csv.DictReader
         self.workingDirectory = os.getcwd()
-        self.defaultInputDataFolder = self.workingDirectory + "\\inputData"
+        self.defaultInputDataFolder = self.workingDirectory + "/inputData"
         self.csvFilePath:str = ""
         self.csvFileName:str = ""
         self.csvData = []
@@ -32,7 +32,7 @@ class csvReader:
                                            defaultextension=".csv")
 
             if f != "":
-                self.csvFilePath = f.replace("\\", "/")
+                self.csvFilePath = f.replace("/", "/")
             if self.csvFilePath is None or self.csvFilePath == '':
                 print("Archivo de oferta no seleccionado")
                 raise CsvFileNotFound
@@ -100,7 +100,7 @@ class csvWriter:
                                 "best_utility")
         self.csvWriter = csv.writer
         self.workingDirectory = os.getcwd()
-        self.defaultOutputDataFolder = self.workingDirectory + "\\outputData"
+        self.defaultOutputDataFolder = self.workingDirectory + "/outputData"
         self.csvSavePath: str = ""
         self.csvFileName: str = csvFileName+".csv"
         self.csvData = data
@@ -111,7 +111,7 @@ class csvWriter:
                                     initialdir=self.defaultOutputDataFolder)
 
         if f != "":
-            self.csvSavePath = f.replace("\\", "/")
+            self.csvSavePath = f.replace("/", "/")
             self.csvSavePath = self.csvSavePath + "/" + self.csvFileName
 
     def saveFile(self):

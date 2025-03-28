@@ -9,7 +9,7 @@ class Writer:
         self.data = None
         self.fileName = None
         self.workingDirectory = os.getcwd()
-        self.defaultOutputDataFolder = self.workingDirectory + "\\outputData"
+        self.defaultOutputDataFolder = self.workingDirectory + "/outputData"
         Path(self.defaultOutputDataFolder).mkdir(parents=True, exist_ok=True)
         self.saveFilePath = ""
 
@@ -18,7 +18,7 @@ class Writer:
                                     initialdir=self.defaultOutputDataFolder)
 
         if f!="":
-            self.saveFilePath = f.replace("\\", "/")
+            self.saveFilePath = f.replace("/", "/")
             self.saveFilePath = self.saveFilePath+"/"+self.fileName
 
     def saveFile(self,fileName,data):
