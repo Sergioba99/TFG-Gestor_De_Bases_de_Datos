@@ -6,6 +6,7 @@ from tkinter import ttk
 from copy import deepcopy
 import sys
 
+
 from Modules.SQLHandler import *
 from Modules.configManager import Config
 from Modules.csvHandler import *
@@ -594,14 +595,14 @@ class SelectDataBase(tk.Toplevel):
         self.value = tk.StringVar()  # Almacena la opción seleccionada
 
         labelFrame = tk.Frame(self)
-        # labelFrame.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
+        # labelFrame.grid(selectedRow=0, column=0, padx=5, pady=5, sticky="nsew")
         labelFrame.pack(anchor="n", padx=5, pady=5)
         tk.Label(labelFrame, text="Selecciona la base de datos en la que se ejecutara la query").pack(anchor="center",
                                                                                                       fill="both",
                                                                                                       pady=5, padx=5)
 
         buttonsFrame = tk.Frame(self)
-        # buttonsFrame.grid(row=1, column=0, padx=5, pady=5, sticky="nsew")
+        # buttonsFrame.grid(selectedRow=1, column=0, padx=5, pady=5, sticky="nsew")
         buttonsFrame.pack(anchor="s", padx=5, pady=5)
         tk.Button(buttonsFrame, text="Oferta", command=lambda: self.option("oferta")).pack(side="left", anchor="e",
                                                                                            fill="both", padx=10)
@@ -630,40 +631,83 @@ class TableViewFrame(tk.Toplevel):
     def __init__(self, master, cols, data):
         super().__init__(master)
         self.withdraw()
+        self.cols = cols
+        self.data = data
         self.attributes("-topmost", True)
         self.iconbitmap(
             os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.ico"))
         self.title("Datos seleccionados")
         self.protocol("WM_DELETE_WINDOW",
                            self.onCloseEvent)
-        self.grid_rowconfigure(1, weight=1)
-        self.grid_columnconfigure(1, weight=2)
+        self.init_ui()
 
-        trv = ttk.Treeview(self, selectmode="browse", columns=cols, show="headings", height=20, style="Treeview",
-                           padding=10)
-        trv.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
-        trv.tag_configure("heading", background="#999")
+    def init_ui(self):
+        self.grid_rowconfigure(0, weight=1)
+        self.grid_columnconfigure(0, weight=1)
 
-        minW = self.minWidthCalculator(deepcopy(data), deepcopy(cols))
+        trvFrame = tk.Frame(self)
+        trvFrame.grid(row=0, column=0, sticky="nsew")
+        trvFrame.grid_rowconfigure(1, weight=1)
+        trvFrame.grid_columnconfigure(1, weight=1)
+
+        self.trv = ttk.Treeview(
+            trvFrame,
+            selectmode="browse",
+            columns=self.cols,
+            show="headings",
+            height=20,
+            style="Treeview",
+            padding=10
+        )
+        self.trv.grid(row=1, column=1, padx=5, pady=5, sticky="nsew")
+        self.trv.tag_configure("heading", background="#999")
+
+        self.contextMenu = tk.Menu(self,tearoff=0)
+        self.contextMenu.add_command(label="Copiar", command=lambda:self.cellCopy())
+
+        self.trv.bind("<Button-3>",self.showContextMenu)
+
+        minW = self.minWidthCalculator(deepcopy(self.data), deepcopy(self.cols))
         if minW != -1:
-            for col in cols:
-                trv.column(col, anchor="c", minwidth=minW[cols.index(col)])
-                trv.heading(col, text=col)
+            for col in self.cols:
+                index = self.cols.index(col)
+                self.trv.column(col, anchor="c", minwidth=minW[index])
+                self.trv.heading(col, text=col)
 
-        for i, d in enumerate(data):
-            trv.insert("", "end", iid=str(i + 1), text=str(i + 1), values=d)
+        for i, d in enumerate(self.data):
+            self.trv.insert("", "end", iid=str(i + 1), text=str(i + 1), values=d)
 
-        verticalScroll = ttk.Scrollbar(self, orient="vertical", command=trv.yview)
-        trv.configure(yscrollcommand=verticalScroll.set)
+        verticalScroll = ttk.Scrollbar(trvFrame, orient="vertical", command=self.trv.yview)
+        self.trv.configure(yscrollcommand=verticalScroll.set)
         verticalScroll.grid(row=1, column=2, sticky='ns')
 
-        horizontalScroll = ttk.Scrollbar(self, orient="horizontal", command=trv.xview)
-        trv.configure(xscrollcommand=horizontalScroll.set)
+        horizontalScroll = ttk.Scrollbar(trvFrame, orient="horizontal", command=self.trv.xview)
+        self.trv.configure(xscrollcommand=horizontalScroll.set)
         horizontalScroll.grid(row=2, column=1, sticky="ew")
 
+        buttonsFrame = tk.Frame(self)
+        buttonsFrame.grid(row=1, column=0, sticky="ew", padx=5, pady=5)
+        buttonsFrame.grid_columnconfigure(0, weight=1)
+
+        exportButton = tk.Button(
+            buttonsFrame,
+            text="Exportar",
+            command=lambda: self.exportarDatos(self.cols, self.data)
+        )
+        exportButton.grid(row=0, column=1, sticky="e", padx=5, pady=5)
+
+        cerrarButton = tk.Button(
+            buttonsFrame,
+            text="Cerrar",
+            command=lambda: self.onCloseEvent()
+        )
+        cerrarButton.grid(row=0, column=2, sticky="e", padx=5, pady=5)
+
+        # Ajustar dimensiones y centrar la ventana
         self.update_idletasks()
         width = self.winfo_reqwidth()
-        if width > 1000: width = 1000
+        if width > 1000:
+            width = 1000
         height = self.winfo_reqheight()
         screenHeight = self.winfo_screenheight()
         screenWidth = self.winfo_screenwidth()
@@ -673,6 +717,28 @@ class TableViewFrame(tk.Toplevel):
         self.deiconify()
         self.lift()
         self.after(100, lambda: self.attributes("-topmost", False))
+
+    def exportarDatos(self,cols,data):
+        fileName = simpledialog.askstring("Exportar vista", "Nombre del archivo de datos",parent=self)
+        if fileName is None or fileName == "": return -1
+        csv = csvWriter(fileName,data,cols)
+        csv.saveFile()
+        del csv
+
+    def showContextMenu(self,event):
+        self.selectedRow = self.trv.identify_row(event.y)
+        self.selectedColumn = self.trv.identify_column(event.x)
+        if self.selectedRow and self.selectedColumn:
+            self.contextMenu.post(event.x_root,event.y_root)
+
+    def cellCopy(self):
+        if self.selectedRow and self.selectedColumn:
+            columnIndex = int(self.selectedColumn.replace("#","")) - 1
+            cellValue = self.trv.item(self.selectedRow)["values"][columnIndex]
+            self.clipboard_clear()
+            self.clipboard_append(cellValue)
+            self.update()
+
     # Funcion para intentar calcular el ancho mínimo de las diferentes columnas del treeview
     def minWidthCalculator(self, data, cols):
         try:
@@ -753,6 +819,9 @@ class SelectTestFromList(tk.Toplevel):
             self.update_idletasks()
             self.destroy()
 
+class PersonalizedAskstring(tk.Toplevel):
+    def __init__(self,master,title:str="",prompt:str=""):
+        super().__init__(master)
 
 if __name__ == "__main__":
     app = UI()
