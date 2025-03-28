@@ -57,7 +57,7 @@ class Parser:
     # Definición del constructor de la clase Parser
     def __init__(self, supplyFile = None,demandFile = None):
         self.workingDirectory = os.getcwd()                                     #Directorio de trabajo
-        self.defaultInputDataFolder = self.workingDirectory + "\\inputData"     #Directorio de entrada de datos
+        self.defaultInputDataFolder = self.workingDirectory + "/inputData"     #Directorio de entrada de datos
         self.supplyFilePath:str = supplyFile                                    #Dirección del archivo de oferta
         self.demandFilePath:str = demandFile                                    #Dirección del archivo de demanda
         self.supplyData = dict()                                                  #Datos del archivo de oferta
@@ -73,7 +73,7 @@ class Parser:
                                            filetypes=[("Archivos YAML", "*.yml"), ("Todos los archivos", "*.*")],
                                            defaultextension=".yml")
             if f != "":
-                self.supplyFilePath = f.replace("\\", "/")
+                self.supplyFilePath = f.replace("/", "/")
             if self.supplyFilePath is None or self.supplyFilePath == '':
                 #print("Archivo de oferta no seleccionado")
                 raise SupplyFileNotFound
@@ -96,7 +96,7 @@ class Parser:
                                            filetypes=[("Archivos YAML", "*.yml"), ("Todos los archivos", "*.*")],
                                            defaultextension=".yml")
             if f != "":
-                self.demandFilePath = f.replace("\\", "/")
+                self.demandFilePath = f.replace("/", "/")
             if self.demandFilePath is None or self.demandFilePath == '':
                 #print("Archivo de demanda no seleccionado")
                 raise DemandFileNotFound

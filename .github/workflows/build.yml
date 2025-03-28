@@ -7,100 +7,68 @@ on:
 
 jobs:
   build:
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
+
     permissions:
       contents: write
-
-    strategy:
-      matrix:
-        os: [windows-latest, ubuntu-22.04, macos-latest]
 
     steps:
       # 1. Checkout del código
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Leer la versión desde version.txt y asignarla a una variable de entorno global
+      # 2. Leer la versión desde version.txt y asignarla a la variable de entorno global
       - name: Read version
-        shell: bash
+        shell: pwsh
         run: |
-          VERSION=$(cat version.txt | tr -d '[:space:]')
-          if [ -z "$VERSION" ]; then
-            echo "El archivo version.txt está vacío o contiene solo espacios." >&2
-            exit 1
-          fi
-          echo "Versión leída: $VERSION"
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
+          $VERSION = Get-Content version.txt | ForEach-Object { $_.Trim() }
+          if (-not $VERSION) {
+            Write-Error "El archivo version.txt está vacío o contiene solo espacios."
+          }
+          Write-Host "Versión leída desde version.txt: $VERSION"
+          Add-Content -Path "$env:GITHUB_ENV" -Value "VERSION=$VERSION"
 
-      # 3. Configurar Python
+      # 3. Depurar la variable VERSION
+      - name: Debug exported VERSION
+        shell: pwsh
+        run: |
+          if (-not $env:VERSION) {
+            Write-Error "La variable VERSION no está definida correctamente."
+          } else {
+            Write-Host "La versión en el entorno global es: $env:VERSION"
+          }
+
+      # 4. Configurar Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.13'
 
-      # 4. Instalar dependencias
+      # 5. Instalar dependencias
       - name: Install dependencies
-        shell: bash
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
           pip install -r requirements.txt
 
-      # 5. Compilar la aplicación usando el archivo UI.spec
+      # 6. Compilar la aplicación
       - name: Build application
-        shell: bash
-        run: |
-          pyinstaller UI.spec
+        run: pyinstaller Main.spec
 
-      # 6. Verificar que el ejecutable existe
+      # 7. Verificar que el ejecutable existe
       - name: Verify build output
-        shell: bash
         run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            if [ ! -f "dist/TFG-Gestor_de_base_de_datos.exe" ]; then
-              echo "El archivo 'dist/TFG-Gestor_de_base_de_datos.exe' no existe." >&2
-              exit 1
-            else
-              echo "Archivo verificado para Windows."
-            fi
-          else
-            if [ ! -f "dist/TFG-Gestor_de_base_de_datos" ]; then
-              echo "El archivo 'dist/TFG-Gestor_de_base_de_datos' no existe." >&2
-              exit 1
-            else
-              echo "Archivo verificado para Linux/macOS."
-            fi
-          fi
+          if (!(Test-Path "dist/TFG-Gestor_de_base_de_datos.exe")) {
+            Write-Error "El archivo 'dist/TFG-Gestor_de_base_de_datos.exe' no existe. Verifica que PyInstaller lo haya generado correctamente."
+          } else {
+            Write-Host "El archivo 'dist/TFG-Gestor_de_base_de_datos.exe' existe y está listo para subirlo."
+          }
 
-      # 7. Renombrar el ejecutable añadiendo un sufijo según el sistema operativo
-      - name: Rename artifact with OS suffix
-        shell: bash
-        run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            mv "dist/TFG-Gestor_de_base_de_datos.exe" "dist/TFG-Gestor_de_base_de_datos-windows.exe"
-          elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            mv "dist/TFG-Gestor_de_base_de_datos" "dist/TFG-Gestor_de_base_de_datos-linux"
-          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            mv "dist/TFG-Gestor_de_base_de_datos" "dist/TFG-Gestor_de_base_de_datos-macos"
-          fi
-
-      # 8. Establecer una variable de entorno con el nombre del archivo para usarla en el release
-      - name: Set artifact name variable
-        shell: bash
-        run: |
-          if [ "${{ matrix.os }}" == "windows-latest" ]; then
-            echo "ARTIFACT=dist/TFG-Gestor_de_base_de_datos-windows.exe" >> $GITHUB_ENV
-          elif [ "${{ matrix.os }}" == "ubuntu-latest" ]; then
-            echo "ARTIFACT=dist/TFG-Gestor_de_base_de_datos-linux" >> $GITHUB_ENV
-          elif [ "${{ matrix.os }}" == "macos-latest" ]; then
-            echo "ARTIFACT=dist/TFG-Gestor_de_base_de_datos-macos" >> $GITHUB_ENV
-          fi
-
-      # 9. Crear release en GitHub y subir el artefacto
+      # 8. Crear release en GitHub
       - name: Create GitHub Release
         uses: ncipollo/release-action@v1
         with:
           tag: v${{ env.VERSION }}
-          name: TFG-Gestor_de_base_de_datos_Release_v${{ env.VERSION }}
-          artifacts: ${{ env.ARTIFACT }}
-          allowUpdates: true
+          name: TFG-Gestor de base de datos v${{ env.VERSION }}
+          artifacts: dist/TFG-Gestor_de_base_de_datos.exe
+          artifactPrefix: "" # Elimina prefijos o transformaciones

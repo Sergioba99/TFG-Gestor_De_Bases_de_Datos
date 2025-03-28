@@ -19,14 +19,14 @@ class EmptyTestData(Exception):
 class SqlSupply:
     """
     Módulo que se encarga de gestionar la entrada y salida de datos de la base de datos de la oferta
-    :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>\\Database\\supplyDb.db
+    :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>/Database/supplyDb.db
     """
     #Inicializacion del objeto SqlSupply, encargado de manejar las interacciones con la base de datos de la oferta
     def __init__(self,db=None):
         self.workingDirectory = os.getcwd()                                     #Directorio de trabajo
-        self.defaultDatabaseFolder = self.workingDirectory + "\\Database"       #Directorio para las bases de datos
+        self.defaultDatabaseFolder = self.workingDirectory + "/Database"       #Directorio para las bases de datos
         Path(self.defaultDatabaseFolder).mkdir(parents=True, exist_ok=True)     #Generamos la carpeta Database en caso de no existir
-        self.defaultSupplyPath = self.defaultDatabaseFolder + "\\supplyDb.db"   #Direccion de la base de datos por defecto
+        self.defaultSupplyPath = self.defaultDatabaseFolder + "/supplyDb.db"   #Direccion de la base de datos por defecto
         self.conector = sqlite3.connect(db if db is not None                    #Creamos la conexion con la base de datos de la oferta
                                            else self.defaultSupplyPath)         #Si la base de datos no existe, se generara automaticamente
         self.cursor = self.conector.cursor()                                    #Creamos el cursor para la base de datos
@@ -2052,15 +2052,15 @@ class SqlSupply:
 class SqlDemand:
     """
         Módulo que se encarga de gestionar la entrada y salida de datos de la base de datos de la demanda
-        :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>\\Database\\demandDb.db
+        :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>/Database/demandDb.db
     """
     # Inicializacion del objeto SqlDemand, encargado de manejar las interacciones con la base de datos de la oferta
     def __init__(self, db=None):
         self.workingDirectory = os.getcwd()  # Directorio de trabajo
-        self.defaultDatabaseFolder = self.workingDirectory + "\\Database"  # Directorio para las bases de datos
+        self.defaultDatabaseFolder = self.workingDirectory + "/Database"  # Directorio para las bases de datos
         Path(self.defaultDatabaseFolder).mkdir(parents=True,
                                                exist_ok=True)  # Generamos la carpeta Database en caso de no existir
-        self.defaultDemandPath = self.defaultDatabaseFolder + "\\demandDb.db"  # Direccion de la base de datos por defecto
+        self.defaultDemandPath = self.defaultDatabaseFolder + "/demandDb.db"  # Direccion de la base de datos por defecto
         self.conector = sqlite3.connect(db if db is not None  # Creamos la conexion con la base de datos de la oferta
                                         else self.defaultDemandPath)  # Si la base de datos no existe, se generara automaticamente
         self.cursor = self.conector.cursor()  # Creamos el cursor para la base de datos
@@ -3330,16 +3330,16 @@ class SqlDemand:
 class SqlResults:
     """
         Módulo que se encarga de gestionar la entrada y salida de datos de la base de datos de los resultados
-        :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>\\Database\\resultsDb.db
+        :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>/Database/resultsDb.db
     """
 
     # Inicializacion del objeto SqlDemand, encargado de manejar las interacciones con la base de datos de la oferta
     def __init__(self, db=None):
         self.workingDirectory = os.getcwd()  # Directorio de trabajo
-        self.defaultDatabaseFolder = self.workingDirectory + "\\Database"  # Directorio para las bases de datos
+        self.defaultDatabaseFolder = self.workingDirectory + "/Database"  # Directorio para las bases de datos
         Path(self.defaultDatabaseFolder).mkdir(parents=True,
                                                exist_ok=True)  # Generamos la carpeta Database en caso de no existir
-        self.defaultResultsPath = self.defaultDatabaseFolder + "\\resultsDb.db"  # Direccion de la base de datos por defecto
+        self.defaultResultsPath = self.defaultDatabaseFolder + "/resultsDb.db"  # Direccion de la base de datos por defecto
         self.conector = sqlite3.connect(db if db is not None  # Creamos la conexion con la base de datos de la oferta
                                         else self.defaultResultsPath)  # Si la base de datos no existe, se generara automaticamente
         self.cursor = self.conector.cursor()  # Creamos el cursor para la base de datos
