@@ -79,23 +79,25 @@ class csvReader:
             return -1
 
 class csvWriter:
-    def __init__(self,csvFileName,data):
-        self.columnsName = ("id",
-                            "user_pattern",
-                            "departure_station",
-                            "arrival_station",
-                            "arrival_day",
-                            "arrival_time",
-                            "purchase_day",
-                            "service",
-                            "service_departure_time",
-                            "service_arrival_time",
-                            "seat",
-                            "price",
-                            "utility",
-                            "best_service",
-                            "best_seat",
-                            "best_utility")
+    def __init__(self,csvFileName,data,columnsName = None):
+        if columnsName is not None: self.columnsName = columnsName
+        else:
+            self.columnsName = ("id",
+                                "user_pattern",
+                                "departure_station",
+                                "arrival_station",
+                                "arrival_day",
+                                "arrival_time",
+                                "purchase_day",
+                                "service",
+                                "service_departure_time",
+                                "service_arrival_time",
+                                "seat",
+                                "price",
+                                "utility",
+                                "best_service",
+                                "best_seat",
+                                "best_utility")
         self.csvWriter = csv.writer
         self.workingDirectory = os.getcwd()
         self.defaultOutputDataFolder = self.workingDirectory + "\\outputData"
@@ -123,3 +125,4 @@ class csvWriter:
                     writer.writerows(self.csvData)
         except Exception as e:
             print("Error: " + str(e))
+        finally: del self
