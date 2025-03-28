@@ -585,8 +585,8 @@ class SelectDataBase(tk.Toplevel):
     def __init__(self, master):
         super().__init__(master)
         self.withdraw()
-        self.iconbitmap(
-            os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.ico"))
+        icon = tk.PhotoImage(file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.png"))
+        self.iconphoto(False,icon)
         self.title("Seleccion de base de datos")
         width = 350
         height = 75
@@ -639,8 +639,8 @@ class TableViewFrame(tk.Toplevel):
         self.cols = cols
         self.data = data
         self.attributes("-topmost", True)
-        self.iconbitmap(
-            os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.ico"))
+        icon = tk.PhotoImage(file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.png"))
+        self.iconphoto(False,icon)
         self.title("Datos seleccionados")
         self.protocol("WM_DELETE_WINDOW",
                            self.onCloseEvent)
@@ -767,8 +767,8 @@ class SelectTestFromList(tk.Toplevel):
     def __init__(self, master, testNames):
         super().__init__(master)
         self.withdraw()
-        self.iconbitmap(
-            os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.ico"))
+        icon = tk.PhotoImage(file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.png"))
+        self.iconphoto(False,icon)
         self.selectedTests = []
         self.title("Selecciona un test")
 
@@ -828,8 +828,8 @@ class PersonalizedAskstring(tk.Toplevel):
     def __init__(self,master,title:str="",prompt:str=""):
         super().__init__(master)
         self.withdraw()
-        self.iconbitmap(
-            os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.ico"))
+        icon = tk.PhotoImage(file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.png"))
+        self.iconphoto(False,icon)
         self.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
         self.protocol("WM_DELETE_WINDOW",
                            self.onCloseEvent)
@@ -916,8 +916,8 @@ class PersonalizedAsktext(tk.Toplevel):
     def __init__(self,master,title:str="",prompt:str=""):
         super().__init__(master)
         self.withdraw()
-        self.iconbitmap(
-            os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.ico"))
+        icon = tk.PhotoImage(file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.png"))
+        self.iconphoto(False,icon)
         self.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
         self.protocol("WM_DELETE_WINDOW",
                            self.onCloseEvent)
