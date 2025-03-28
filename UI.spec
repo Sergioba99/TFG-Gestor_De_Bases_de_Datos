@@ -4,11 +4,11 @@ a = Analysis(
     ['UI.py'],  # Archivo principal
     pathex=[],  # Dejamos vacío como en el archivo funcional
     binaries=[],
-    datas=[('./icon.png','./')],  # Eliminamos `datas` si no es necesario
+    datas=[('./icon.png','./'),('./icon.ico','./')],  # Eliminamos `datas` si no es necesario
     hiddenimports=[],
     hookspath=[],
     runtime_hooks=[],
-    excludes=['libc.so.6'],
+    excludes=['libc.so.6','libpython3.13.so.1.0'],
     noarchive=False,  # No cambiamos esta configuración
     optimize=0,  # Optimización mínima
 
@@ -35,5 +35,5 @@ exe = EXE(
     target_arch=None,
     codesign_identity=None,
     entitlements_file=None,
-    icon=["icon.png"],
+    icon=["icon.ico"],
 )
