@@ -697,7 +697,7 @@ class TableViewFrame(tk.Toplevel):
         exportButton = tk.Button(
             buttonsFrame,
             text="Exportar",
-            command=lambda: self.exportarDatos(self.cols, self.data)
+            command=lambda: self.exportData(self.cols, self.data)
         )
         exportButton.grid(row=0, column=1, sticky="e", padx=5, pady=5)
 
@@ -723,12 +723,16 @@ class TableViewFrame(tk.Toplevel):
         self.lift()
         self.after(100, lambda: self.attributes("-topmost", False))
 
-    def exportarDatos(self,cols,data):
-        fileName = PersonalizedAskstring(self,"Exportar vista", "Nombre del archivo de datos").returnValue()
-        if fileName is None or fileName == "": return -1
-        csv = csvWriter(fileName,data,cols)
-        csv.saveFile()
-        del csv
+    def exportData(self,cols,data):
+        try:
+            fileName = PersonalizedAskstring(self,"Exportar vista", "Nombre del archivo de datos").returnValue()
+            if fileName is None or fileName == "": return -2
+            csv = csvWriter(fileName,data,cols)
+            csv.saveFile()
+            del csv
+            messagebox.showinfo("Exportar vista","Se ha generado con éxito el archivo csv con los datos de la vista.")
+        except Exception as e:
+            messagebox.showerror("Error al exportar vista","Se ha producido un error al exportar los datos de la vista.")
 
     def showContextMenu(self,event):
         self.selectedRow = self.trv.identify_row(event.y)
@@ -825,7 +829,7 @@ class SelectTestFromList(tk.Toplevel):
             self.destroy()
 
 class PersonalizedAskstring(tk.Toplevel):
-    def __init__(self,master,title:str="",prompt:str=""):
+    def __init__(self,master,title:str="TFG - Gestor de base de datos",prompt:str=""):
         super().__init__(master)
         self.withdraw()
         icon = tk.PhotoImage(file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.png"))
@@ -833,13 +837,12 @@ class PersonalizedAskstring(tk.Toplevel):
         self.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
         self.protocol("WM_DELETE_WINDOW",
                            self.onCloseEvent)
-        self.title = title
+        self.title(title)
         self.prompt = prompt
         self.result = None
         self.minimunWidth = 400
         self.minimunHeight = 100
         self.init_ui()
-
 
         self.transient(master)
         self.grab_set()
@@ -913,7 +916,7 @@ class PersonalizedAskstring(tk.Toplevel):
         del self
 
 class PersonalizedAsktext(tk.Toplevel):
-    def __init__(self,master,title:str="",prompt:str=""):
+    def __init__(self,master,title:str="TFG - Gestor de base de datos",prompt:str=""):
         super().__init__(master)
         self.withdraw()
         icon = tk.PhotoImage(file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))),"icon.png"))
@@ -921,7 +924,7 @@ class PersonalizedAsktext(tk.Toplevel):
         self.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
         self.protocol("WM_DELETE_WINDOW",
                            self.onCloseEvent)
-        self.title = title
+        self.title(title)
         self.prompt = prompt
         self.result = None
         self.minimunWidth = 300
