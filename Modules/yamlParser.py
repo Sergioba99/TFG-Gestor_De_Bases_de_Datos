@@ -792,10 +792,10 @@ class Parser:
     # Funciones auxiliares de service
     @staticmethod
     def extractSeatsPriceFromServiceOdt(odtData: list):
-        price = {}
         data = deepcopy(odtData)
         outputData = []
         while data:
+            price = {}
             seats = data[0].get("seats")
             odt = data[0]
             while seats:
