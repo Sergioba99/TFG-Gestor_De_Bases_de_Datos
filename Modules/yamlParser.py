@@ -74,6 +74,9 @@ class Parser:
                                            defaultextension=".yml")
             if f != "":
                 self.supplyFilePath = f.replace("/", "/")
+            else:
+                self.supplyFilePath = ""
+                self.supplyFileName = ""
             if self.supplyFilePath is None or self.supplyFilePath == '':
                 #print("Archivo de oferta no seleccionado")
                 raise SupplyFileNotFound
@@ -97,6 +100,9 @@ class Parser:
                                            defaultextension=".yml")
             if f != "":
                 self.demandFilePath = f.replace("/", "/")
+            else:
+                self.demandFilePath = ""
+                self.demandFileName = ""
             if self.demandFilePath is None or self.demandFilePath == '':
                 #print("Archivo de demanda no seleccionado")
                 raise DemandFileNotFound
