@@ -89,7 +89,7 @@ class Config:
             data = self.configData["SQL_Querys"].get(key)
             db = str(data.get("db"))
             query = str(data.get("query"))
-            if not query and not db: return -2
+            if not query or not db: return -2
             return db,query
 
         except Exception as e:
