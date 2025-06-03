@@ -801,7 +801,7 @@ class Parser:
             while seats:
                 price.update({str(seats[0].get("seat")): seats[0].get("price")})
                 seats.pop(0)
-            output = [odt.get("origin"), odt.get("destination"), price]
+            output = [odt.get("origin"), odt.get("destination"), deepcopy(price)]
             outputData.append(output)
             data.pop(0)
         return outputData
