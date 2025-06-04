@@ -122,10 +122,11 @@ class SqlSupply:
         self.initCursor()
         try:
             query = """ CREATE TABLE IF NOT EXISTS CORRIDOR (
-                            ID          INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                            ID          TEXT PRIMARY KEY,
                             
-                            ID_ON_FILE  TEXT,
-                            NAME        TEXT
+                            NAME        TEXT,
+                            
+                            UNIQUE(ID,NAME)
                         );"""
             self.cursor.execute(query)
             self.conector.commit()
@@ -206,7 +207,8 @@ class SqlSupply:
 
                             NAME        TEXT,
                             
-                            CORRIDOR    TEXT,
+                            CORRIDOR    TEXT REFERENCES CORRIDOR (ID) ON DELETE CASCADE
+                                                                      ON UPDATE CASCADE,
                             
                             UNIQUE(ID,NAME,CORRIDOR)
                         );"""
@@ -711,12 +713,11 @@ class SqlSupply:
         self.initCursor()
         id = []
         try:
-            query = "INSERT OR IGNORE INTO CORRIDOR (ID_ON_FILE,NAME) VALUES (?,?) RETURNING ID"
+            query = "INSERT OR IGNORE INTO CORRIDOR (ID,NAME) VALUES (?,?)"
             data = [corridor[:2]
                     for corridor in corridorData]
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query,data)
-            id = self.cursor.fetchall()
             self.conector.commit()
         except sqlite3.Error as e:
             print("Sqlite Error: "+str(e))
@@ -758,7 +759,7 @@ class SqlSupply:
         finally:
             self.cursor.close()
 
-    def insertCorridorStationsData(self,corridorData,testID,ids):
+    def insertCorridorStationsData(self,corridorData,testID):
         """
         Inserta los datos de las estaciones del corredor en la tabla CORRIDOR_STATIONS
         :param corridorData: Datos del corredor
@@ -773,9 +774,12 @@ class SqlSupply:
             #    self.cursor.execute(queryFormated)
             query = ("INSERT OR IGNORE INTO CORRIDOR_STATIONS (TEST_ID,CORRIDOR,STATIONS) "
                      "VALUES (?,?,?) ")
-            inputData = [[testID,corridorID[0], json.dumps(line)]
-                         for corridor,corridorID in zip(corridorData,ids)
+            inputData = [[testID, corridor[0], json.dumps(line)]
+                         for corridor in corridorData
                          for line in corridor[2]]
+            # lines = [[line] for corridor in corridorData for line in corridor[2]]
+            # for n,line in enumerate(lines):
+            #     print(f"Ramal {n}: {line}")
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query,inputData)
             self.conector.commit()
@@ -902,8 +906,9 @@ class SqlSupply:
         """
         self.initCursor()
         try:
-            query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}')"
+            query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}') RETURNING ID"
             self.cursor.execute(query)
+            id = self.cursor.fetchone()
             query =  f"UPDATE TESTS SET OBSERVATIONS = '{observations}' WHERE TESTS.NAME = '{testName}'"
             self.cursor.execute(query)
             self.conector.commit()
@@ -918,6 +923,7 @@ class SqlSupply:
             self.conector.rollback()
         finally:
             self.cursor.close()
+        return id
 
     def insertRollingStockData(self, rollingStockData):
         """
@@ -1912,7 +1918,6 @@ class SqlSupply:
         try:
             query = f"""SELECT
                             CORRIDOR.ID,
-                            CORRIDOR.ID_ON_FILE,
                             CORRIDOR.NAME
                         FROM
                             CORRIDOR
@@ -1924,7 +1929,7 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[1], "name": element[2], "stations":
+            formatedData = [{"id": element[0], "name": element[1], "stations":
                 self.formatCorridorStationsForCorridor(element[0],testName)}
                             for element in data]
             outputData = {"corridor": formatedData}

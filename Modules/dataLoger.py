@@ -23,17 +23,19 @@ class SupplyLoger:
         :return:
         """
         testData = self.yml.supplyFileName
-        self.sqlSupply.insertTestsData(testData,observations)
-        self.testID = self.sqlSupply.executeSelectTestsIDQuery(f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
-        print("Tests -> Data: " + str([self.testID, testData]))
-        self.logCorridorData()
-        self.logRollingStockData()
-        self.logStationsData()
-        self.logLineData()
-        self.logTimeSlotData()
-        self.logTrainServiceProviderData()
-        self.logSeatData()
-        self.logServiceData()
+        self.testID = self.sqlSupply.insertTestsData(testData,observations)
+        # self.testID = self.sqlSupply.executeSelectTestsIDQuery(f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
+        if self.testID:
+            self.testID = self.testID[0]
+            print("Tests -> Data: " + str([self.testID, testData]))
+            self.logCorridorData()
+            self.logRollingStockData()
+            self.logStationsData()
+            self.logLineData()
+            self.logTimeSlotData()
+            self.logTrainServiceProviderData()
+            self.logSeatData()
+            self.logServiceData()
         self.testID = None
 
     # Funciones auxiliares
@@ -43,9 +45,9 @@ class SupplyLoger:
         :return:
         """
         data = self.yml.getCorridorData()
-        ids = self.sqlSupply.insertCorridorData(data)
-        self.sqlSupply.insertAuxCorridorData(ids, self.testID)
-        self.sqlSupply.insertCorridorStationsData(data, self.testID,ids)
+        self.sqlSupply.insertCorridorData(data)
+        self.sqlSupply.insertAuxCorridorData(data, self.testID)
+        self.sqlSupply.insertCorridorStationsData(data, self.testID)
 
     def logTimeSlotData(self):
         """
