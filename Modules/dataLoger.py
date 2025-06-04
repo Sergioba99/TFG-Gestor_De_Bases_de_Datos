@@ -43,9 +43,9 @@ class SupplyLoger:
         :return:
         """
         data = self.yml.getCorridorData()
-        self.sqlSupply.insertCorridorData(data)
-        self.sqlSupply.insertAuxCorridorData(data, self.testID)
-        self.sqlSupply.insertCorridorStationsData(data, self.testID)
+        ids = self.sqlSupply.insertCorridorData(data)
+        self.sqlSupply.insertAuxCorridorData(ids, self.testID)
+        self.sqlSupply.insertCorridorStationsData(data, self.testID,ids)
 
     def logTimeSlotData(self):
         """
@@ -72,8 +72,8 @@ class SupplyLoger:
         :return:
         """
         data = self.yml.getRollingStockData()
-        self.sqlSupply.insertRollingStockData(data)
-        self.sqlSupply.insertAuxRollingStockData(data, self.testID)
+        ids = self.sqlSupply.insertRollingStockData(data)
+        self.sqlSupply.insertAuxRollingStockData(ids, self.testID)
             
     def logSeatData(self):
         """
@@ -90,8 +90,8 @@ class SupplyLoger:
         :return:
         """
         data = self.yml.getTrainServiceProviderData()
-        self.sqlSupply.insertTrainServiceProviderData(data)
-        self.sqlSupply.insertAuxTrainServiceProviderData(data, self.testID)
+        ids = self.sqlSupply.insertTrainServiceProviderData(data)
+        self.sqlSupply.insertAuxTrainServiceProviderData(ids, self.testID)
 
     def logLineData(self):
         """
