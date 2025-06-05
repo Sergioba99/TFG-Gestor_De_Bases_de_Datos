@@ -3092,7 +3092,7 @@ class SqlDemand:
             data = self.cursor.fetchall()
             formatedData = []
             for element in data:
-                formatedData.append({"id": element[0], "percentage": element[1]})
+                formatedData.append({"id": int(element[0]), "percentage": element[1]})
             return formatedData
         except sqlite3.Error as e:
             print("Sqlite Error: " + str(e))
@@ -3137,7 +3137,7 @@ class SqlDemand:
         formatedData = []
         try:
             for key,value in tspData.items():
-                formatedData.append({"id":key,"utility":value})
+                formatedData.append({"id":int(key),"utility":value})
             return formatedData
         except Exception as e:
             print(e)
@@ -3146,7 +3146,7 @@ class SqlDemand:
         formatedData = []
         try:
             for key,value in seatData.items():
-                formatedData.append({"id":key,"utility":value})
+                formatedData.append({"id":int(key),"utility":value})
             return formatedData
         except Exception as e:
             print(e)
@@ -3231,7 +3231,8 @@ class SqlDemand:
             self.cursor.execute(query)
             data = self.cursor.fetchall()
             formatedData = [
-                {"id": element[0], "departure_station": element[1], "departure_station_coords": json.loads(element[2]),
+                {"id": int(element[0]), "departure_station": element[1], "departure_station_coords": json.loads(element[
+                                                                                                                 2]),
                  "arrival_station": element[3], "arrival_station_coords": json.loads(element[4])} for element in data]
             outputData = {"market": formatedData}
             return outputData
@@ -3275,7 +3276,8 @@ class SqlDemand:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0], "name": element[1], "rules": json.loads(element[2]),"variables": self.selectAndFormatVariablesForUserPattern(element[0]),
+            formatedData = [{"id": int(element[0]), "name": element[1], "rules": json.loads(element[2]),"variables":
+                self.selectAndFormatVariablesForUserPattern(element[0]),
                              "arrival_time": element[3], "arrival_time_kwargs": json.loads(element[4]),"purchase_day":element[5],
                              "purchase_day_kwargs":json.loads(element[6]),"forbidden_departure_hours":json.loads(element[7]),
                              "seats": self.formatTspForUserPattern(json.loads(element[8])), "train_service_providers": self.formatTspForUserPattern(json.loads(element[9])),
@@ -3311,7 +3313,8 @@ class SqlDemand:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0], "name": element[1], "markets":self.selectAndExtractMarketsForDemandPattern(element[0])} for element in data]
+            formatedData = [{"id": int(element[0]), "name": element[1],
+                             "markets":self.selectAndExtractMarketsForDemandPattern(element[0])} for element in data]
             outputData = {"demandPattern": formatedData}
             return outputData
         except sqlite3.Error as e:
@@ -3343,8 +3346,8 @@ class SqlDemand:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0], "date": element[1],
-                             "demand_pattern": element[2]} for element in data]
+            formatedData = [{"id": int(element[0]), "date": element[1],
+                             "demandPattern": element[2]} for element in data]
             outputData = {"day": formatedData}
             return outputData
         except sqlite3.Error as e:
