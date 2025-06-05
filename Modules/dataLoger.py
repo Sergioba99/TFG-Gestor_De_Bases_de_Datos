@@ -43,8 +43,11 @@ class SupplyLoger:
             self.logTrainServiceProviderData()
             self.logSeatData()
             self.logServiceData()
-        self.testID = None
-
+            self.testID = None
+            return 0
+        else:
+            self.testID = None
+            return -1
     # Funciones auxiliares
     def logCorridorData(self):
         """
@@ -143,15 +146,21 @@ class DemandLoger:
         :return:
         """
         testData = self.yml.demandFileName
-        self.sqlDemand.insertTestData(testData, observations)
-        self.testID = self.sqlDemand.executeSelectTestsIDQuery(
-            f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
-        print("Tests -> Data: " + str([self.testID, testData]))
-
-        self.logMarketData()
-        self.logUserPatternData()
-        self.logDemandPatternData()
-        self.logDayData()
+        self.testID = self.sqlDemand.insertTestData(testData, observations)
+        # self.testID = self.sqlDemand.executeSelectTestsIDQuery(
+        #     f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
+        if self.testID:
+            self.testID = self.testID[0]
+            print("Tests -> Data: " + str([self.testID, testData]))
+            self.logMarketData()
+            self.logUserPatternData()
+            self.logDemandPatternData()
+            self.logDayData()
+            self.testID = None
+            return 0
+        else:
+            self.testID = None
+            return -1
 
     # Funciones auxiliares
     def logMarketData(self):
@@ -211,13 +220,19 @@ class ResultsLoger:
 
     def logResultsTestData(self, observations=""):
         testData = self.csv.csvFileName
-        self.sqlResults.insertTestData(testData, observations)
-        self.testID = self.sqlResults.executeSelectTestsIDQuery(
-            f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
-        print("Tests -> Data: " + str([self.testID, testData]))
+        self.testID = self.sqlResults.insertTestData(testData, observations)
+        # self.testID = self.sqlResults.executeSelectTestsIDQuery(
+        #     f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
 
-        self.logResultsData()
-
+        if self.testID:
+            self.testID = self.testID[0]
+            print("Tests -> Data: " + str([self.testID, testData]))
+            self.logResultsData()
+            self.testID = None
+            return 0
+        else:
+            self.testID = None
+            return -1
     # Funciones auxiliares
     def logResultsData(self):
         """

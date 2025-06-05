@@ -974,6 +974,7 @@ class SqlSupply:
         :return:
         """
         self.initCursor()
+        id = []
         try:
             query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{
             testName}') RETURNING ID"
@@ -2715,8 +2716,11 @@ class SqlDemand:
         :return:
         """
         self.initCursor()
+        id = []
         try:
-            query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}')"
+            query = (f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('"
+                     f"{testName}') RETURNING ID")
+            id = self.cursor.fetchone()
             self.cursor.execute(query)
             query = (f"UPDATE TESTS SET OBSERVATIONS = '{observations}' WHERE "
                      f"TESTS.NAME = '{testName}'")
@@ -2730,7 +2734,7 @@ class SqlDemand:
             print(e)
         finally:
             self.cursor.close()
-
+        return id
     def insertMarketData(self, marketData):
         """
         Inserta los datos del test en la tabla MARKET
@@ -3867,9 +3871,12 @@ class SqlResults:
         :return:
         """
         self.initCursor()
+        id = []
         try:
-            query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}')"
+            query = (f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}')"
+                     f"RETURNING ID")
             self.cursor.execute(query)
+            id = self.cursor.fetchone()
             query = (f"UPDATE TESTS SET OBSERVATIONS = '{observations}' WHERE "
                      f"TESTS.NAME = '{testName}'")
             self.cursor.execute(query)
@@ -3882,7 +3889,7 @@ class SqlResults:
             print(e)
         finally:
             self.cursor.close()
-
+        return id
     def insertResultsData(self, resultsData):
         """
         Inserta los datos del test en la tabla RESULTS

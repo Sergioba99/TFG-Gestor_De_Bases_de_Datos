@@ -315,14 +315,23 @@ class UI:
                 observations = PersonalizedAsktext(self.root, "Observación",
                                                    "Introduzca la observación "
                                                    "para el test").returnValue()
-            self.supplyLoger(self.ymlParser, self.sqlSupply).logSupplyTestData(
+            success = self.supplyLoger(self.ymlParser,
+                               self.sqlSupply).logSupplyTestData(
                 observations)
-            messagebox.showinfo("Importar archivo de oferta",
+            if success == 0:
+                messagebox.showinfo("Importar archivo de oferta",
                                 "Se ha importado el archivo " + str(
                                     self.ymlParser.supplyFileName) + ".yml a "
                                                                      "la base"
                                                                      " de "
                                                                      "datos.")
+            else:
+                messagebox.showerror("Importar archivo de oferta",
+                                "Error importando el archivo " + str(
+                                    self.ymlParser.supplyFileName) + (".yml a "
+                                    "la base de datos.\n"
+                                    "Es posible que el archivo ya exista"
+                                    " en la base de datos"))
         elif supplyFile == -1:
             messagebox.showerror(title="Error al importar archivo de oferta",
                                  message="Se ha producido un error al "
@@ -348,14 +357,23 @@ class UI:
                 observations = PersonalizedAsktext(self.root, "Observación",
                                                    "Introduzca la observación "
                                                    "para el test").returnValue()
-            self.demandLoger(self.ymlParser, self.sqlDemand).logDemandTestData(
+            success = self.demandLoger(self.ymlParser,
+                               self.sqlDemand).logDemandTestData(
                 observations)
-            messagebox.showinfo("Importar archivo de demanda",
+            if success == 0:
+                messagebox.showinfo("Importar archivo de oferta",
                                 "Se ha importado el archivo " + str(
                                     self.ymlParser.demandFileName) + ".yml a "
                                                                      "la base"
                                                                      " de "
-                                                                     "datos")
+                                                                     "datos.")
+            else:
+                messagebox.showerror("Importar archivo de oferta",
+                                "Error importando el archivo " + str(
+                                    self.ymlParser.demandFileName) + (".yml a "
+                                    "la base de datos.\n"
+                                    "Es posible que el archivo ya exista"
+                                    " en la base de datos"))
         elif demandFile == -1:
             messagebox.showerror(title="Error al importar archivo de demanda",
                                  message="Se ha producido un error al "
@@ -381,13 +399,22 @@ class UI:
                 observations = PersonalizedAsktext(self.root, "Observación",
                                                    "Introduzca la observación "
                                                    "para el test").returnValue()
-            self.resultsLoger(self.csvReader,
+            success = self.resultsLoger(self.csvReader,
                               self.sqlResults).logResultsTestData(observations)
-            messagebox.showinfo("Importar archivo de resultados",
+            if success == 0:
+                messagebox.showinfo("Importar archivo de oferta",
                                 "Se ha importado el archivo " + str(
-                                    self.csvReader.csvFileName) + ".csv a la "
-                                                                  "base de "
-                                                                  "datos")
+                                    self.csvReader.csvFileName) + ".csv a "
+                                                                     "la base"
+                                                                     " de "
+                                                                     "datos.")
+            else:
+                messagebox.showerror("Importar archivo de oferta",
+                                "Error importando el archivo " + str(
+                                    self.csvReader.csvFileName) + (".csv a "
+                                    "la base de datos.\n"
+                                    "Es posible que el archivo ya exista"
+                                    " en la base de datos"))
         elif resultsFile == -1:
             messagebox.showerror(
                 title="Error al importar archivo de resultados",
