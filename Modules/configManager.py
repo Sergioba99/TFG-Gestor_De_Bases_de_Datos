@@ -1,18 +1,22 @@
 import json
 import os
-from pathlib import Path
 from copy import deepcopy
+from pathlib import Path
+
 
 class Config:
     """Modulo encargado de gestionar la configuracion de la aplicacion"""
+
     def __init__(self):
         self.configData = None
         self.workingDirectory = os.getcwd()
         self.configFolderPath = self.workingDirectory + "/config"
-        self.configFilePath = self.configFolderPath +"/config.json"
+        self.configFilePath = self.configFolderPath + "/config.json"
         Path(self.configFolderPath).mkdir(parents=True, exist_ok=True)
-        if not Path(self.configFilePath).exists(): self.generateDefaultConfig()
-        else: self.getConfig()
+        if not Path(self.configFilePath).exists():
+            self.generateDefaultConfig()
+        else:
+            self.getConfig()
 
     def generateDefaultConfig(self):
         """
@@ -22,15 +26,15 @@ class Config:
         """
         try:
             data = {
-                'SQL_Querys':{
-                    "Mostrar test de oferta":{"db":"oferta","query":"SELECT * FROM TESTS"},
+                'SQL_Querys': {
+                    "Mostrar test de oferta": {"db": "oferta", "query": "SELECT * FROM TESTS"},
                     "Mostrar test de demanda": {"db": "demanda", "query": "SELECT * FROM TESTS"},
                     "Mostrar test de resultados": {"db": "resultados", "query": "SELECT * FROM TESTS"}
                 }
             }
             self.configData = deepcopy(data)
-            with open(self.configFilePath,'w') as configFile:
-                json.dump(data,configFile,indent=4)
+            with open(self.configFilePath, 'w') as configFile:
+                json.dump(data, configFile, indent=4)
         except Exception as e:
             print(e)
 
@@ -41,20 +45,21 @@ class Config:
         :return: None
         """
         try:
-            with open(self.configFilePath,'r') as configFile:
+            with open(self.configFilePath, 'r') as configFile:
                 self.configData = json.load(configFile)
         except Exception as e:
             print(e)
 
     def saveConfig(self):
         """
-        Esta función se encarga de volcar la configuración presente en la variable configData al archivo JSON que almacena
+        Esta función se encarga de volcar la configuración presente en la variable configData al archivo JSON que
+        almacena
         la configuración de la aplicación.
         :return: None
         """
         try:
-            with open(self.configFilePath,'w') as configFile:
-                json.dump(self.configData,configFile,indent=4)
+            with open(self.configFilePath, 'w') as configFile:
+                json.dump(self.configData, configFile, indent=4)
 
         except Exception as e:
             print(e)
@@ -84,29 +89,30 @@ class Config:
             print(e)
             return -1
 
-    def getSQLQueryValue(self,key):
+    def getSQLQueryValue(self, key):
         try:
             data = self.configData["SQL_Querys"].get(key)
             db = str(data.get("db"))
             query = str(data.get("query"))
             if not query or not db: return -2
-            return db,query
+            return db, query
 
         except Exception as e:
             print(e)
             return -1
 
-    def addSQLQuery(self,name,db,query):
+    def addSQLQuery(self, name, db, query):
         """
         Esta función se encarga de añadir querys de SQL a la lista almacenada en el archivo de configuración
         :return: None
         """
         try:
-            self.configData["SQL_Querys"].update({str(name):{"db":str(db),"query":str(query)}})
+            self.configData["SQL_Querys"].update({str(name): {"db": str(db), "query": str(query)}})
             self.saveConfig()
-        except Exception as e: print(e)
+        except Exception as e:
+            print(e)
 
-    def removeSQLQuery(self,name):
+    def removeSQLQuery(self, name):
         """
         Esta función se encarga de eliminar querys de SQL a la lista almacenada en el archivo de configuración
         :return: None
@@ -114,7 +120,8 @@ class Config:
         try:
             self.configData["SQL_Querys"].pop(name)
             self.saveConfig()
-        except Exception as e: print(e)
+        except Exception as e:
+            print(e)
 
     def resetConfig(self):
         """

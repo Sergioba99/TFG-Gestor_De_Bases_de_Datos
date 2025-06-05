@@ -1,10 +1,12 @@
-#Importamos las librerias necesarios para el funcionamiento del módulo yamlParser
+# Importamos las librerias necesarios para el funcionamiento del módulo yamlParser
+import json
+import os
 from copy import deepcopy
 from pathlib import Path
 from tkinter import filedialog
-import json
+
 import yaml
-import os
+
 
 # Excepción personalizada para falta de datos de oferta
 class EmptySupplyData(Exception):
@@ -18,6 +20,7 @@ class EmptySupplyData(Exception):
             "correcto y se ha cargado correctamente")
         super().__init__(self.message)
 
+
 # Excepción personalizada para falta de datos de oferta
 class EmptyDemandData(Exception):
     """
@@ -30,6 +33,7 @@ class EmptyDemandData(Exception):
             "correcto y se ha cargado correctamente")
         super().__init__(self.message)
 
+
 # Excepción personalizada para archivo de oferta faltante
 class SupplyFileNotFound(Exception):
     """
@@ -40,6 +44,7 @@ class SupplyFileNotFound(Exception):
         self.message = ("No se ha podido cargar el archivo de oferta, asegúrese de que el archivo se encuentra en el "
                         "directorio correcto y tiene el nombre de supply_data.yml")
         super().__init__(self.message)
+
 
 # Excepción personalizada para archivo de demanda faltante
 class DemandFileNotFound(Exception):
@@ -52,26 +57,28 @@ class DemandFileNotFound(Exception):
                         "directorio correcto y tiene el nombre de demand_data.yml")
         super().__init__(self.message)
 
+
 # Clase para manejar la lectura del archivo Yaml
 class Parser:
     # Definición del constructor de la clase Parser
-    def __init__(self, supplyFile = None,demandFile = None):
-        self.workingDirectory = os.getcwd()                                     #Directorio de trabajo
-        self.defaultInputDataFolder = self.workingDirectory + "/inputData"     #Directorio de entrada de datos
-        self.supplyFilePath:str = supplyFile                                    #Dirección del archivo de oferta
-        self.demandFilePath:str = demandFile                                    #Dirección del archivo de demanda
-        self.supplyData = dict()                                                  #Datos del archivo de oferta
-        self.demandData = dict()                                                  #Datos del archivo de demanda
-        self.supplyFileName:str = ''                                            #Nombre del archivo de oferta
-        self.demandFileName:str = ''                                            #Nombre del archivo de demanda
-        Path(self.defaultInputDataFolder).mkdir(parents=True, exist_ok=True)    #Generamos la carpeta inputData si no existe
+    def __init__(self, supplyFile=None, demandFile=None):
+        self.workingDirectory = os.getcwd()  # Directorio de trabajo
+        self.defaultInputDataFolder = self.workingDirectory + "/inputData"  # Directorio de entrada de datos
+        self.supplyFilePath: str = supplyFile  # Dirección del archivo de oferta
+        self.demandFilePath: str = demandFile  # Dirección del archivo de demanda
+        self.supplyData = dict()  # Datos del archivo de oferta
+        self.demandData = dict()  # Datos del archivo de demanda
+        self.supplyFileName: str = ''  # Nombre del archivo de oferta
+        self.demandFileName: str = ''  # Nombre del archivo de demanda
+        Path(self.defaultInputDataFolder).mkdir(parents=True,
+                                                exist_ok=True)  # Generamos la carpeta inputData si no existe
 
     def loadSupplyFile(self):
         try:
             f = filedialog.askopenfilename(title="Seleccionar archivo de oferta",
                                            initialdir=self.defaultInputDataFolder,
-                                           filetypes=[("Archivos YAML", ("*.yml","*.yaml")), ("Todos los archivos",
-                                                                                           "*.*")],
+                                           filetypes=[("Archivos YAML", ("*.yml", "*.yaml")), ("Todos los archivos",
+                                                                                               "*.*")],
                                            defaultextension=".yml")
             if f != "":
                 self.supplyFilePath = f.replace("/", "/")
@@ -79,7 +86,7 @@ class Parser:
                 self.supplyFilePath = ""
                 self.supplyFileName = ""
             if self.supplyFilePath is None or self.supplyFilePath == '':
-                #print("Archivo de oferta no seleccionado")
+                # print("Archivo de oferta no seleccionado")
                 raise SupplyFileNotFound
 
             self.supplyFileName = self.supplyFilePath.split("/")[-1].split(".")[0]
@@ -97,7 +104,8 @@ class Parser:
         try:
             f = filedialog.askopenfilename(title="Seleccionar archivo de demanda",
                                            initialdir=self.defaultInputDataFolder,
-                                           filetypes=[("Archivos YAML", ("*.yml","*.yaml")), ("Todos los archivos", "*.*")],
+                                           filetypes=[("Archivos YAML", ("*.yml", "*.yaml")),
+                                                      ("Todos los archivos", "*.*")],
                                            defaultextension=".yml")
             if f != "":
                 self.demandFilePath = f.replace("/", "/")
@@ -105,7 +113,7 @@ class Parser:
                 self.demandFilePath = ""
                 self.demandFileName = ""
             if self.demandFilePath is None or self.demandFilePath == '':
-                #print("Archivo de demanda no seleccionado")
+                # print("Archivo de demanda no seleccionado")
                 raise DemandFileNotFound
 
             self.demandFileName = self.demandFilePath.split("/")[-1].split(".")[0]
@@ -127,7 +135,7 @@ class Parser:
         """
         try:
             file = open(path, 'r')
-            data = yaml.safe_load(file) #Cargamos los datos desde el archivo yaml
+            data = yaml.safe_load(file)  # Cargamos los datos desde el archivo yaml
             return data
         except Exception as e:
             print(e)
@@ -140,7 +148,7 @@ class Parser:
         """
         try:
             file = open(self.supplyFilePath, 'r', encoding='utf-8')
-            self.supplyData = yaml.safe_load(file) #Cargamos los datos del archivo yaml de la oferta
+            self.supplyData = yaml.safe_load(file)  # Cargamos los datos del archivo yaml de la oferta
 
         except Exception as e:
             print(e)
@@ -332,11 +340,12 @@ class Parser:
         except:
             return -1
 
-    #Funciones para el archivo de oferta
+    # Funciones para el archivo de oferta
     # Funciones para campos específicos de timeSlot
     def getTimeSlotData(self):
         """
-        Función que devuelve todos los campos de time slot en la posición index ordenados en una lista como en el archivo Yaml.\n
+        Función que devuelve todos los campos de time slot en la posición index ordenados en una lista como en el
+        archivo Yaml.\n
         Salida: [<id>, <start>, <end>]
         :return: Devuelve el value de timeSlot en la posicion index.
         """
@@ -345,11 +354,11 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             timeSlot = self.getTimeSlot()
             TimeSlot = [[
-                        data.get("id"),
-                        data.get("start"),
-                        data.get("end")]
-                        for data in timeSlot
-                        ]
+                data.get("id"),
+                data.get("start"),
+                data.get("end")]
+                for data in timeSlot
+            ]
             return TimeSlot
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -358,10 +367,11 @@ class Parser:
             print(e)
             return -1
 
-    #Funciones para campos específicos de timeSlot por índice
+    # Funciones para campos específicos de timeSlot por índice
     def getTimeSlotByIndex(self, index):
         """
-        Función que devuelve todos los campos de time slot en la posición index ordenados en una lista como en el archivo Yaml.\n
+        Función que devuelve todos los campos de time slot en la posición index ordenados en una lista como en el
+        archivo Yaml.\n
         Salida: [<id>, <start>, <end>]
         :param index: Índice de value de timeSlot que queremos obtener.
         :return: Devuelve el value de timeSlot en la posicion index.
@@ -383,7 +393,8 @@ class Parser:
     # Funciones para campos especificos de trainServiceProvider
     def getTrainServiceProviderData(self):
         """
-        Funcion que devuelve todos los campos de trainServiceProvider en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de trainServiceProvider en la posicion index ordenados en una lista
+        como en el archivo Yaml.\n
         Salida: [<id>,<name>,<{<seat>:<quantity>}>]
         :return: Devuelve el value de trainServiceProvider en la posicion index.
         """
@@ -392,11 +403,11 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             trainServiceProvider = self.getTrainServiceProvider()
             TrainServiceProvider = [[
-                                    data.get("id"),
-                                    data.get("name"),
-                                    json.dumps(data.get("rolling_stock"))]
-                                    for data in trainServiceProvider
-                                    ]
+                data.get("id"),
+                data.get("name"),
+                json.dumps(data.get("rolling_stock"))]
+                for data in trainServiceProvider
+            ]
             return TrainServiceProvider
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -408,7 +419,8 @@ class Parser:
     # Funciones para campos especificos de trainServiceProvider por índice
     def getTrainServiceProviderByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de trainServiceProvider en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de trainServiceProvider en la posicion index ordenados en una lista
+        como en el archivo Yaml.\n
         Salida: [<id>,<name>,<{<seat>:<quantity>}>]
         :param index: Indice del value del trainServiceProvider que queremos obtener.
         :return: Devuelve el value de trainServiceProvider en la posicion index.
@@ -430,7 +442,8 @@ class Parser:
     # Funciones para campos especificos de stations
     def getStationsData(self):
         """
-        Funcion que devuelve todos los campos de stations en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de stations en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
         Salida: [<id>,<name>,<city>,<shortName>,{"latitude":>lat>,"longitude":<lon>}]
         :return: Devuelve el value de stations en la posicion index.
         """
@@ -439,13 +452,13 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             stations = self.getStations()
             Stations = [[
-                        data.get("id"),
-                        data.get("name"),
-                        data.get("city"),
-                        data.get("short_name"),
-                        json.dumps(data.get("coordinates"))]
-                        for data in stations
-                        ]
+                data.get("id"),
+                data.get("name"),
+                data.get("city"),
+                data.get("short_name"),
+                json.dumps(data.get("coordinates"))]
+                for data in stations
+            ]
             return Stations
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -457,7 +470,8 @@ class Parser:
     # Funciones para campos especificos de stations por índice
     def getStationsByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de stations en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de stations en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
         Salida: [<id>,<name>,<city>,<shortName>,{"latitude":>lat>,"longitude":<lon>}]
         :param index: Indice del value de stations que queremos obtener.
         :return: Devuelve el value de stations en la posicion index.
@@ -481,7 +495,8 @@ class Parser:
     # Funciones para campos especificos de corridor
     def getCorridorData(self):
         """
-        Funcion que devuelve todos los campos de corridor en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de corridor en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
         Salida: [<id>, <name>, <[<station_1>, <station_2>, …, <station_n>]>]
         :return: Devuelve el value de corridor en la posicion index.
         """
@@ -490,11 +505,11 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             corridor = self.getCorridor()
             Corridor = [[
-                        data.get("id"),
-                        data.get("name"),
-                        self.extractStationsFromCorridor(data.get("stations"))]
-                        for data in corridor
-                        ]
+                data.get("id"),
+                data.get("name"),
+                self.extractStationsFromCorridor(data.get("stations"))]
+                for data in corridor
+            ]
             return Corridor
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -506,7 +521,8 @@ class Parser:
     # Funciones para campos especificos de corridor por índice
     def getCorridorByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de corridor en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de corridor en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
         Salida: [<id>, <name>, <[<station_1>, <station_2>, …, <station_n>]>]
         :param index: Índice del value de corridor que queremos obtener.
         :return: Devuelve el value de corridor en la posicion index.
@@ -526,7 +542,7 @@ class Parser:
             return -1
 
     # Funciones auxiliares de corridor
-    def extractStationsFromCorridor(self,stationsData: list, stations=None):
+    def extractStationsFromCorridor(self, stationsData: list, stations=None):
         """
         Extrae las estaciones por las que va a pasar el corredor a partir de los datos obtenidos directamente del
         archivo Yaml. Esta funcion devuelve una lista ordenada con todas las estaciones siendo el primer elemento el
@@ -579,7 +595,8 @@ class Parser:
     # Funciones para campos especificos de seats
     def getSeatData(self):
         """
-        Funcion que devuelve todos los campos de seat en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de seat en la posicion index ordenados en una lista como en el archivo
+        Yaml.\n
         Salida: [<id>,<name>,<hardType>,<softType>]
         :return: Devuelve el value de seat en la posicion index.
         """
@@ -588,12 +605,12 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             seat = self.getSeat()
             Seat = [[
-                    data.get("id"),
-                    data.get("name"),
-                    data.get("hard_type"),
-                    data.get("soft_type")]
-                    for data in seat
-                    ]
+                data.get("id"),
+                data.get("name"),
+                data.get("hard_type"),
+                data.get("soft_type")]
+                for data in seat
+            ]
             return Seat
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -605,7 +622,8 @@ class Parser:
     # Funciones para campos especificos de seats por índice
     def getSeatByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de seat en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de seat en la posicion index ordenados en una lista como en el archivo
+        Yaml.\n
         Salida: [<id>,<name>,<hardType>,<softType>]
         :param index: Indice del value de seat que queremos obtener.
         :return: Devuelve el value de seat en la posicion index.
@@ -628,7 +646,8 @@ class Parser:
     # Funciones para campos especificos de line
     def getLineData(self):
         """
-        Funcion que devuelve todos los campos de line en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de line en la posicion index ordenados en una lista como en el archivo
+        Yaml.\n
         Salida: [<id>,<name>,<corridor>,<[<[<station>,<arrivalTime>,<departureTime>]>,...]>]
         :return: Devuelve el value de line en la posicion index.
         """
@@ -637,12 +656,12 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             line = self.getLine()
             Line = [[
-                    data.get("id"),
-                    data.get("name"),
-                    data.get("corridor"),
-                    self.extractStopsFromLine(data.get("stops"))]
-                    for data in line
-                    ]
+                data.get("id"),
+                data.get("name"),
+                data.get("corridor"),
+                self.extractStopsFromLine(data.get("stops"))]
+                for data in line
+            ]
             return Line
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -654,7 +673,8 @@ class Parser:
     # Funciones para campos especificos de line por índice
     def getLineByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de line en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de line en la posicion index ordenados en una lista como en el archivo
+        Yaml.\n
         Salida: [<id>,<name>,<corridor>,<[<[<station>,<arrivalTime>,<departureTime>]>,...]>]
         :param index: Indice de value de line que queremos obtener.
         :return: Devuelve el value de line en la posicion index.
@@ -694,7 +714,8 @@ class Parser:
     # Funciones para campos especificos de rollingStock
     def getRollingStockData(self):
         """
-        Funcion que devuelve todos los campos de line en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de line en la posicion index ordenados en una lista como en el archivo
+        Yaml.\n
         Salida: [<id>,<name>,<{<seat>:<quantity>}>]
         :return: Devuelve el value de line en la posicion index.
         """
@@ -703,11 +724,11 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             rollingStock = self.getRollingStock()
             RollingStock = [[
-                            data.get("id"),
-                            data.get("name"),
-                            json.dumps(self.extractSeatsFromRollingStock(data.get("seats")))]
-                            for data in rollingStock
-                            ]
+                data.get("id"),
+                data.get("name"),
+                json.dumps(self.extractSeatsFromRollingStock(data.get("seats")))]
+                for data in rollingStock
+            ]
             return RollingStock
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -719,7 +740,8 @@ class Parser:
     # Funciones para campos especificos de rollingStock por índice
     def getRollingStockByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de line en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de line en la posicion index ordenados en una lista como en el archivo
+        Yaml.\n
         Salida: [<id>,<name>,<{<seat>:<quantity>}>]
         :param index: Indice de value de line que queremos obtener.
         :return: Devuelve el value de line en la posicion index.
@@ -729,7 +751,8 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             RollingStock.append(self.getRollingStock()[index].get("id"))
             RollingStock.append(self.getRollingStock()[index].get("name"))
-            RollingStock.append(json.dumps(self.extractSeatsFromRollingStock(self.getRollingStock()[index].get("seats"))))
+            RollingStock.append(
+                json.dumps(self.extractSeatsFromRollingStock(self.getRollingStock()[index].get("seats"))))
             return RollingStock
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -758,8 +781,10 @@ class Parser:
     # Funciones para campos especificos de service
     def getServiceData(self):
         """
-        Funcion que devuelve todos los campos de service en la posicion index ordenados en una lista como en el archivo Yaml.\n
-        Salida: [<id>,<date>,<line>,<trainServiceProvider>,<timeSlot>,<rollingStock>,<[[<origin>,<destination>,<{<seat>:<price>}>],...]>,<{"restrictionName":restrictionValue,...}>]
+        Funcion que devuelve todos los campos de service en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
+        Salida: [<id>,<date>,<line>,<trainServiceProvider>,<timeSlot>,<rollingStock>,<[[<origin>,<destination>,
+        <{<seat>:<price>}>],...]>,<{"restrictionName":restrictionValue,...}>]
         :return: Devuelve el value de service en la posicion index.
         """
         Service = []
@@ -767,20 +792,21 @@ class Parser:
             if self.supplyData is None: raise EmptySupplyData
             service = self.getService()
             Service = [[
-                        data.get("id"),
-                        data.get("date"),
-                        data.get("line"),
-                        data.get("train_service_provider"),
-                        data.get("time_slot"),
-                        data.get("rolling_stock"),
-                        self.extractSeatsPriceFromServiceOdt(data.get("origin_destination_tuples"))]
-                        +
-                        [{str(restriction):data.get(str(restriction))} for restriction in [
-                            key for key in list(data.keys()) if key not in ["id","date","line","train_service_provider",
-                                                                            "time_slot","rolling_stock",
-                                                                            "origin_destination_tuples"]]]
-                        for data in service
-                        ]
+                           data.get("id"),
+                           data.get("date"),
+                           data.get("line"),
+                           data.get("train_service_provider"),
+                           data.get("time_slot"),
+                           data.get("rolling_stock"),
+                           self.extractSeatsPriceFromServiceOdt(data.get("origin_destination_tuples"))]
+                       +
+                       [{str(restriction): data.get(str(restriction))} for restriction in [
+                           key for key in list(data.keys()) if
+                           key not in ["id", "date", "line", "train_service_provider",
+                                       "time_slot", "rolling_stock",
+                                       "origin_destination_tuples"]]]
+                       for data in service
+                       ]
             return Service
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -792,8 +818,10 @@ class Parser:
     # Funciones para campos especificos de service por índice
     def getServiceByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de service en la posicion index ordenados en una lista como en el archivo Yaml.\n
-        Salida: [<id>,<date>,<line>,<trainServiceProvider>,<timeSlot>,<rollingStock>,<[[<origin>,<destination>,<{<seat>:<price>}>],...]>,<{"restrictionName":restrictionValue,...}>]
+        Funcion que devuelve todos los campos de service en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
+        Salida: [<id>,<date>,<line>,<trainServiceProvider>,<timeSlot>,<rollingStock>,<[[<origin>,<destination>,
+        <{<seat>:<price>}>],...]>,<{"restrictionName":restrictionValue,...}>]
         :param index: Indice de value de service que queremos obtener.
         :return: Devuelve el value de service en la posicion index.
         """
@@ -806,8 +834,9 @@ class Parser:
             Service.append(self.getService()[index].get("train_service_provider"))
             Service.append(self.getService()[index].get("time_slot"))
             Service.append(self.getService()[index].get("rolling_stock"))
-            Service.append(self.extractSeatsPriceFromServiceOdt(self.getService()[index].get("origin_destination_tuples")))
-            Service.append({"capacity_constraints":self.getService()[index].get("capacity_constraints")})
+            Service.append(
+                self.extractSeatsPriceFromServiceOdt(self.getService()[index].get("origin_destination_tuples")))
+            Service.append({"capacity_constraints": self.getService()[index].get("capacity_constraints")})
             return Service
         except IndexError:
             print("Se ha sobrepasado el índice máximo")
@@ -837,8 +866,10 @@ class Parser:
     # Funciones para campos especificos de market
     def getMarketData(self):
         """
-        Funcion que devuelve todos los campos de market en la posicion index ordenados en una lista como en el archivo Yaml.\n
-        Salida: [<id>,<departure_station>,<[<departure_station_coords>]>,<arrival_station>,<timeSlot>,<[<arrival_station_coords>]>]
+        Funcion que devuelve todos los campos de market en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
+        Salida: [<id>,<departure_station>,<[<departure_station_coords>]>,<arrival_station>,<timeSlot>,
+        <[<arrival_station_coords>]>]
         :return: Devuelve el value de market en la posicion index.
         """
         Market = []
@@ -846,15 +877,15 @@ class Parser:
             if self.demandData is None: raise EmptyDemandData
             market = self.getMarket()
             Market = [
-                        [
-                            market[index].get("id"),
-                            market[index].get("departure_station"),
-                            json.dumps(market[index].get("departure_station_coords")),
-                            market[index].get("arrival_station"),
-                            json.dumps(market[index].get("arrival_station_coords"))]
+                [
+                    market[index].get("id"),
+                    market[index].get("departure_station"),
+                    json.dumps(market[index].get("departure_station_coords")),
+                    market[index].get("arrival_station"),
+                    json.dumps(market[index].get("arrival_station_coords"))]
 
-                        for index in range(0,len(market))
-                    ]
+                for index in range(0, len(market))
+            ]
 
             return Market
         except Exception as e:
@@ -864,8 +895,10 @@ class Parser:
     # Funciones para campos especificos de market por índice
     def getMarketByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de market en la posicion index ordenados en una lista como en el archivo Yaml.\n
-        Salida: [<id>,<departure_station>,<[<departure_station_coords>]>,<arrival_station>,<timeSlot>,<[<arrival_station_coords>]>]
+        Funcion que devuelve todos los campos de market en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
+        Salida: [<id>,<departure_station>,<[<departure_station_coords>]>,<arrival_station>,<timeSlot>,
+        <[<arrival_station_coords>]>]
         :param index: Indice de value de market que queremos obtener.
         :return: Devuelve el value de market en la posicion index.
         """
@@ -888,8 +921,10 @@ class Parser:
     # Funciones para campos especificos de day
     def getDayData(self):
         """
-        Funcion que devuelve todos los campos de day en la posicion index ordenados en una lista como en el archivo Yaml.\n
-        Salida: [<id>,<departure_station>,<[<departure_station_coords>]>,<arrival_station>,<timeSlot>,<[<arrival_station_coords>]>]
+        Funcion que devuelve todos los campos de day en la posicion index ordenados en una lista como en el archivo
+        Yaml.\n
+        Salida: [<id>,<departure_station>,<[<departure_station_coords>]>,<arrival_station>,<timeSlot>,
+        <[<arrival_station_coords>]>]
         :return: Devuelve el value de day en la posicion index.
         """
         Day = []
@@ -897,13 +932,13 @@ class Parser:
             if self.demandData is None: raise EmptyDemandData
             day = self.getDay()
             Day = [
-                        [
-                            day[index].get("id"),
-                            str(day[index].get("date")),
-                            day[index].get("demandPattern")]
+                [
+                    day[index].get("id"),
+                    str(day[index].get("date")),
+                    day[index].get("demandPattern")]
 
-                        for index in range(0, len(day))
-                    ]
+                for index in range(0, len(day))
+            ]
 
             return Day
         except Exception as e:
@@ -913,7 +948,8 @@ class Parser:
     # Funciones para campos especificos de day por índice
     def getDayByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de day en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de day en la posicion index ordenados en una lista como en el archivo
+        Yaml.\n
         Salida: [<id>,<date>,<demandPattern>]
         :param index: Indice de value de day que queremos obtener.
         :return: Devuelve el value de day en la posicion index.
@@ -935,8 +971,10 @@ class Parser:
     # Funciones para campos especificos de demmandPattern
     def getDemandPatternData(self):
         """
-        Funcion que devuelve todos los campos de demandPattern en la posicion index ordenados en una lista como en el archivo Yaml.\n
-        Salida: [<id>,<name>,<[<[<market>,<potential_demand>,<{"low":<lowValue>,"high":<highValue>}>,<{<id_1>:<percentage_1>,...,<id_n>:<percentage_n>}>]*n_markets>]>]
+        Funcion que devuelve todos los campos de demandPattern en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
+        Salida: [<id>,<name>,<[<[<market>,<potential_demand>,<{"low":<lowValue>,"high":<highValue>}>,
+        <{<id_1>:<percentage_1>,...,<id_n>:<percentage_n>}>]*n_markets>]>]
         :return: Devuelve el value de demandPattern en la posicion index.
         """
         DemandPattern = []
@@ -944,13 +982,13 @@ class Parser:
             if self.demandData is None: raise EmptyDemandData
             demandPattern = self.getDemandPattern()
             DemandPattern = [
-                        [
-                            demandPattern[index].get("id"),
-                            demandPattern[index].get("name"),
-                            self.extractMarketsFromDemmandPattern(demandPattern[index].get("markets"))]
+                [
+                    demandPattern[index].get("id"),
+                    demandPattern[index].get("name"),
+                    self.extractMarketsFromDemmandPattern(demandPattern[index].get("markets"))]
 
-                        for index in range(0,len(demandPattern))
-                    ]
+                for index in range(0, len(demandPattern))
+            ]
 
             return DemandPattern
         except Exception as e:
@@ -960,8 +998,10 @@ class Parser:
     # Funciones para campos especificos de demmandPattern por índice
     def getDemandPatternByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de demandPattern en la posicion index ordenados en una lista como en el archivo Yaml.\n
-        Salida: [<id>,<name>,<[<[<market>,<potential_demand>,<{"low":<lowValue>,"high":<highValue>}>,<{<id_1>:<percentage_1>,...,<id_n>:<percentage_n>}>]*n_markets>]>]
+        Funcion que devuelve todos los campos de demandPattern en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
+        Salida: [<id>,<name>,<[<[<market>,<potential_demand>,<{"low":<lowValue>,"high":<highValue>}>,
+        <{<id_1>:<percentage_1>,...,<id_n>:<percentage_n>}>]*n_markets>]>]
         :param index: Indice de value de demandPattern que queremos obtener.
         :return: Devuelve el value de demandPattern en la posicion index.
         """
@@ -980,7 +1020,7 @@ class Parser:
             return -1
 
     # Funciones auxiliares para demmandPattern
-    def extractMarketsFromDemmandPattern(self,marketsData):
+    def extractMarketsFromDemmandPattern(self, marketsData):
         markets = []
         data = deepcopy(marketsData)
         while data:
@@ -1003,8 +1043,10 @@ class Parser:
     # Funciones para campos especificos de userPattern
     def getUserPatternData(self):
         """
-        Funcion que devuelve todos los campos de userPattern en la posicion index ordenados en una lista como en el archivo Yaml.\n
-        Salida: [<id>,<departure_station>,<[<departure_station_coords>]>,<arrival_station>,<timeSlot>,<[<arrival_station_coords>]>]
+        Funcion que devuelve todos los campos de userPattern en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
+        Salida: [<id>,<departure_station>,<[<departure_station_coords>]>,<arrival_station>,<timeSlot>,
+        <[<arrival_station_coords>]>]
         :return: Devuelve el value de userPattern en la posicion index.
         """
         UserPattern = []
@@ -1012,25 +1054,26 @@ class Parser:
             if self.demandData is None: raise EmptyDemandData
             userPattern = self.getUserPattern()
             UserPattern = [
-                        [
-                            userPattern[index].get("id"),
-                            userPattern[index].get("name"),
-                            json.dumps(userPattern[index].get("rules")),
-                            self.reformatVariableSets(userPattern[index].get("variables")),
-                            userPattern[index].get("arrival_time"),
-                            json.dumps(userPattern[index].get("arrival_time_kwargs")),
-                            userPattern[index].get("purchase_day"),
-                            json.dumps(userPattern[index].get("purchase_day_kwargs")),
-                            json.dumps(userPattern[index].get("forbidden_departure_hours")),
-                            json.dumps(self.extractSeatsFromUserPattern(userPattern[index].get("seats"))),
-                            json.dumps(self.extractTrainServiceProvidersFromUserPattern(userPattern[index].get("train_service_providers"))),
-                            userPattern[index].get("early_stop"),
-                            userPattern[index].get("utility_threshold"),
-                            userPattern[index].get("error"),
-                            json.dumps(userPattern[index].get("error_kwargs"))]
+                [
+                    userPattern[index].get("id"),
+                    userPattern[index].get("name"),
+                    json.dumps(userPattern[index].get("rules")),
+                    self.reformatVariableSets(userPattern[index].get("variables")),
+                    userPattern[index].get("arrival_time"),
+                    json.dumps(userPattern[index].get("arrival_time_kwargs")),
+                    userPattern[index].get("purchase_day"),
+                    json.dumps(userPattern[index].get("purchase_day_kwargs")),
+                    json.dumps(userPattern[index].get("forbidden_departure_hours")),
+                    json.dumps(self.extractSeatsFromUserPattern(userPattern[index].get("seats"))),
+                    json.dumps(self.extractTrainServiceProvidersFromUserPattern(
+                        userPattern[index].get("train_service_providers"))),
+                    userPattern[index].get("early_stop"),
+                    userPattern[index].get("utility_threshold"),
+                    userPattern[index].get("error"),
+                    json.dumps(userPattern[index].get("error_kwargs"))]
 
-                        for index in range(0, len(userPattern))
-                    ]
+                for index in range(0, len(userPattern))
+            ]
 
             return UserPattern
         except Exception as e:
@@ -1040,7 +1083,8 @@ class Parser:
     # Funciones para campos especificos de userPattern por índice
     def getUserPatternByIndex(self, index):
         """
-        Funcion que devuelve todos los campos de userPattern en la posicion index ordenados en una lista como en el archivo Yaml.\n
+        Funcion que devuelve todos los campos de userPattern en la posicion index ordenados en una lista como en el
+        archivo Yaml.\n
         Salida: [<id>,<name>,{'R0':<rule_0>,...,'Rn':<rule_n>},{"name":<name>,"type":<type>,"support":<support>,
         "sets":{<name_set_0>:<set_0>,...,<name_set_n>:<set_n>}/"labels":[<label_0>,...,<label_n>]},<arrival_time>,
         {"loc":<locAtkValue>,"scale":<scaleAtkValue>},<purchase_day>,{"low":<lowValue>,"high":<highValue>},
@@ -1066,7 +1110,8 @@ class Parser:
             UserPattern.append(json.dumps(self.getUserPattern()[index].get("purchase_day_kwargs")))
             UserPattern.append(json.dumps(self.getUserPattern()[index].get("forbidden_departure_hours")))
             UserPattern.append(json.dumps(self.extractSeatsFromUserPattern(self.getUserPattern()[index].get("seats"))))
-            UserPattern.append(json.dumps(self.extractTrainServiceProvidersFromUserPattern(self.getUserPattern()[index].get("train_service_providers"))))
+            UserPattern.append(json.dumps(self.extractTrainServiceProvidersFromUserPattern(
+                self.getUserPattern()[index].get("train_service_providers"))))
             UserPattern.append(self.getUserPattern()[index].get("early_stop"))
             UserPattern.append(self.getUserPattern()[index].get("utility_threshold"))
             UserPattern.append(self.getUserPattern()[index].get("error"))
@@ -1100,18 +1145,19 @@ class Parser:
         return tsp
 
     @staticmethod
-    def reformatVariableSets(variableData:dict):
+    def reformatVariableSets(variableData: dict):
         outputData = []
         for varData in variableData:
-            if "labels" in varData.keys(): outputData.append(varData)
+            if "labels" in varData.keys():
+                outputData.append(varData)
             else:
                 data = deepcopy(varData)
-                variables = {"name":data.get("name"),"type":data.get("type"),"support":data.get("support")}
+                variables = {"name": data.get("name"), "type": data.get("type"), "support": data.get("support")}
                 setsData = data.get("sets")
                 sets = {}
                 while setsData:
-                    sets.update({str(setsData[0]):data.get(setsData[0])})
+                    sets.update({str(setsData[0]): data.get(setsData[0])})
                     setsData.pop(0)
-                variables.update({"sets":sets})
+                variables.update({"sets": sets})
                 outputData.append(variables)
         return outputData

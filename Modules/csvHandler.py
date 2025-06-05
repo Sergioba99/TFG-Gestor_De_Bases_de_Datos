@@ -3,6 +3,7 @@ import os
 from pathlib import Path
 from tkinter import filedialog
 
+
 class CsvFileNotFound(Exception):
     """
         Excepcion que indica que no hay datos de resultados cargados en el programa
@@ -14,13 +15,14 @@ class CsvFileNotFound(Exception):
             "correcto y se ha cargado correctamente")
         super().__init__(self.message)
 
+
 class csvReader:
     def __init__(self):
         self.csvReader = csv.DictReader
         self.workingDirectory = os.getcwd()
         self.defaultInputDataFolder = self.workingDirectory + "/inputData"
-        self.csvFilePath:str = ""
-        self.csvFileName:str = ""
+        self.csvFilePath: str = ""
+        self.csvFileName: str = ""
         self.csvData = []
         Path(self.defaultInputDataFolder).mkdir(parents=True, exist_ok=True)
 
@@ -50,7 +52,7 @@ class csvReader:
 
     def getRawDataFromCsv(self):
         try:
-            with open(self.csvFilePath,mode="r", encoding='utf-8') as file:
+            with open(self.csvFilePath, mode="r", encoding='utf-8') as file:
                 sample = file.read(100)
                 sniffer = csv.Sniffer()
                 delimiter = sniffer.sniff(sample).delimiter
@@ -78,9 +80,11 @@ class csvReader:
             print(e)
             return -1
 
+
 class csvWriter:
-    def __init__(self,csvFileName,data,columnsName = None):
-        if columnsName is not None: self.columnsName = columnsName
+    def __init__(self, csvFileName, data, columnsName=None):
+        if columnsName is not None:
+            self.columnsName = columnsName
         else:
             self.columnsName = ("id",
                                 "user_pattern",
@@ -102,7 +106,7 @@ class csvWriter:
         self.workingDirectory = os.getcwd()
         self.defaultOutputDataFolder = self.workingDirectory + "/outputData"
         self.csvSavePath: str = ""
-        self.csvFileName: str = csvFileName+".csv"
+        self.csvFileName: str = csvFileName + ".csv"
         self.csvData = data
         Path(self.defaultOutputDataFolder).mkdir(parents=True, exist_ok=True)
 
@@ -120,9 +124,10 @@ class csvWriter:
             # print(self.saveFilePath)
             if self.csvSavePath != "":
                 with open(self.csvSavePath, 'w', encoding='utf-8') as file:
-                    writer = self.csvWriter(file,delimiter=",",lineterminator="\n")
+                    writer = self.csvWriter(file, delimiter=",", lineterminator="\n")
                     writer.writerow(self.columnsName)
                     writer.writerows(self.csvData)
         except Exception as e:
             print("Error: " + str(e))
-        finally: del self
+        finally:
+            del self

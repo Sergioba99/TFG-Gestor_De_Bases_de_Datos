@@ -1,6 +1,7 @@
-from Modules.yamlParser import Parser
 from Modules import SQLHandler
 from Modules import csvHandler
+from Modules.yamlParser import Parser
+
 
 class SupplyLoger:
     """
@@ -17,13 +18,13 @@ class SupplyLoger:
 
     # Funciones para introducir datos a la base de datos de la oferta
     # Funcion principal
-    def logSupplyTestData(self,observations=""):
+    def logSupplyTestData(self, observations=""):
         """
         Introduce todos los datos de un test a la base de datos de la oferta apoyandose en subfunciones para este fin
         :return:
         """
         testData = self.yml.supplyFileName
-        self.testID = self.sqlSupply.insertTestsData(testData,observations)
+        self.testID = self.sqlSupply.insertTestsData(testData, observations)
         # self.testID = self.sqlSupply.executeSelectTestsIDQuery(f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
         if self.testID:
             self.testID = self.testID[0]
@@ -76,7 +77,7 @@ class SupplyLoger:
         data = self.yml.getRollingStockData()
         ids = self.sqlSupply.insertRollingStockData(data)
         self.sqlSupply.insertAuxRollingStockData(ids, self.testID)
-            
+
     def logSeatData(self):
         """
         Introduce los datos de los asientos a la base de datos de la oferta
@@ -102,7 +103,7 @@ class SupplyLoger:
         """
         data = self.yml.getLineData()
         self.sqlSupply.insertLineData(data)
-        self.sqlSupply.insertStopsData(data,self.testID)
+        self.sqlSupply.insertStopsData(data, self.testID)
 
     def logServiceData(self):
         """
@@ -114,23 +115,24 @@ class SupplyLoger:
         self.sqlSupply.insertAuxServiceData(data, self.testID)
         self.sqlSupply.insertOdtData(data, self.testID)
         self.sqlSupply.insertRestrictionsData(data)
-        self.sqlSupply.insertSeatsPriceData(data,self.testID)
+        self.sqlSupply.insertSeatsPriceData(data, self.testID)
+
 
 class DemandLoger:
-    def __init__(self,yml:Parser,sqlDemand:SQLHandler.SqlDemand):
-        self.yml = yml              # objeto del módulo yamlParser para extraer los datos del yaml
+    def __init__(self, yml: Parser, sqlDemand: SQLHandler.SqlDemand):
+        self.yml = yml  # objeto del módulo yamlParser para extraer los datos del yaml
         self.sqlDemand = sqlDemand  # objeto del módulo SQLHandler que se encarga de la base de datos de la demanda
         self.testID = None
 
     # Funciones para introducir datos a la base de datos de la demanda
     # Funcion principal
-    def logDemandTestData(self,observations=""):
+    def logDemandTestData(self, observations=""):
         """
         Introduce todos los datos de un test a la base de datos de la demanda apoyandose en subfunciones para este fin
         :return:
         """
         testData = self.yml.demandFileName
-        self.sqlDemand.insertTestData(testData,observations)
+        self.sqlDemand.insertTestData(testData, observations)
         self.testID = self.sqlDemand.executeSelectTestsIDQuery(
             f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
         print("Tests -> Data: " + str([self.testID, testData]))
@@ -182,17 +184,18 @@ class DemandLoger:
         self.sqlDemand.insertDayData(data)
         self.sqlDemand.insertAuxDayData(data, self.testID)
 
+
 class ResultsLoger:
-    def __init__(self,csvReader:csvHandler.csvReader,sqlResults:SQLHandler.SqlResults):
-        self.csv = csvReader            # objeto del módulo csvHandler para extraer los datos del csv
-        self.sqlResults = sqlResults    # objeto del modulo SQLHandler encargado de la base de datos de los resultados
+    def __init__(self, csvReader: csvHandler.csvReader, sqlResults: SQLHandler.SqlResults):
+        self.csv = csvReader  # objeto del módulo csvHandler para extraer los datos del csv
+        self.sqlResults = sqlResults  # objeto del modulo SQLHandler encargado de la base de datos de los resultados
         self.testID = None
 
     # Funciones para introducir datos a la base de datos de resultados
 
-    def logResultsTestData(self,observations=""):
+    def logResultsTestData(self, observations=""):
         testData = self.csv.csvFileName
-        self.sqlResults.insertTestData(testData,observations)
+        self.sqlResults.insertTestData(testData, observations)
         self.testID = self.sqlResults.executeSelectTestsIDQuery(
             f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
         print("Tests -> Data: " + str([self.testID, testData]))
@@ -208,4 +211,4 @@ class ResultsLoger:
 
         data = self.csv.csvData
         self.sqlResults.insertResultsData(data)
-        self.sqlResults.insertAuxReslutsData(data,self.testID)
+        self.sqlResults.insertAuxReslutsData(data, self.testID)

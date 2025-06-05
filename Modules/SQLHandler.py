@@ -1,9 +1,10 @@
-#Importamos las librerias necesarias para que el módulo SQLHandler funcione
+# Importamos las librerias necesarias para que el módulo SQLHandler funcione
 import json
 import os
 import sqlite3
 from pathlib import Path
-import yaml
+
+
 # Excepcion personalizada para test vacios en la base de datos de la oferta
 class EmptyTestData(Exception):
     """
@@ -16,26 +17,32 @@ class EmptyTestData(Exception):
             "o a que la base de datos se encuentra vacia")
         super().__init__(self.message)
 
+
 class SqlSupply:
     """
     Módulo que se encarga de gestionar la entrada y salida de datos de la base de datos de la oferta
-    :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>/Database/supplyDb.db
+    :param db: Direccion de la base de datos de la oferta, por defecto será:
+    <currentWorkingDirectory>/Database/supplyDb.db
     """
-    #Inicializacion del objeto SqlSupply, encargado de manejar las interacciones con la base de datos de la oferta
-    def __init__(self,db=None):
-        self.workingDirectory = os.getcwd()                                     #Directorio de trabajo
-        self.defaultDatabaseFolder = self.workingDirectory + "/Database"       #Directorio para las bases de datos
-        Path(self.defaultDatabaseFolder).mkdir(parents=True, exist_ok=True)     #Generamos la carpeta Database en caso de no existir
-        self.defaultSupplyPath = self.defaultDatabaseFolder + "/supplyDb.db"   #Direccion de la base de datos por defecto
-        self.conector = sqlite3.connect(db if db is not None                    #Creamos la conexion con la base de datos de la oferta
-                                           else self.defaultSupplyPath)         #Si la base de datos no existe, se generara automaticamente
-        self.cursor = self.conector.cursor()                                    #Creamos el cursor para la base de datos
-        self.enableForeignKeys()                                                #Habilitamos el uso de las claves foraneas en la base de datos
 
-        self.generateDatabaseTables()                                           #Generamos las tablas de la base de datos si estas no existen
+    # Inicializacion del objeto SqlSupply, encargado de manejar las interacciones con la base de datos de la oferta
+    def __init__(self, db=None):
+        self.workingDirectory = os.getcwd()  # Directorio de trabajo
+        self.defaultDatabaseFolder = self.workingDirectory + "/Database"  # Directorio para las bases de datos
+        Path(self.defaultDatabaseFolder).mkdir(parents=True,
+                                               exist_ok=True)  # Generamos la carpeta Database en caso de no existir
+        self.defaultSupplyPath = self.defaultDatabaseFolder + "/supplyDb.db"  # Direccion de la base de datos por
+        # defecto
+        self.conector = sqlite3.connect(db if db is not None  # Creamos la conexion con la base de datos de la oferta
+                                        else self.defaultSupplyPath)  # Si la base de datos no existe, se generara
+        # automaticamente
+        self.cursor = self.conector.cursor()  # Creamos el cursor para la base de datos
+        self.enableForeignKeys()  # Habilitamos el uso de las claves foraneas en la base de datos
+
+        self.generateDatabaseTables()  # Generamos las tablas de la base de datos si estas no existen
 
     def enableForeignKeys(self):
-        self.cursor.execute("PRAGMA foreign_keys = ON")     #Habilita las claves foraneas usando los PRAGMA de sqlite3
+        self.cursor.execute("PRAGMA foreign_keys = ON")  # Habilita las claves foraneas usando los PRAGMA de sqlite3
         self.conector.commit()
 
     def initCursor(self):
@@ -45,7 +52,7 @@ class SqlSupply:
         """
         self.cursor = self.conector.cursor()
 
-    def executeSelectTestsIDQuery(self,query):
+    def executeSelectTestsIDQuery(self, query):
         try:
             self.initCursor()
             self.cursor.execute(query)
@@ -61,7 +68,7 @@ class SqlSupply:
             self.cursor.close()
         return -1
 
-    def executeQuery(self,query):
+    def executeQuery(self, query):
         try:
             self.initCursor()
             self.cursor.execute(query)
@@ -72,7 +79,7 @@ class SqlSupply:
             if strippedQuery.startswith("SELECT"):
                 cols = [item[0] for item in self.cursor.description]
                 result = self.cursor.fetchall()
-                return cols,result
+                return cols, result
 
         except sqlite3.Error as e:
             print(e)
@@ -702,7 +709,7 @@ class SqlSupply:
         finally:
             self.cursor.close()
 
-    #Funciones para introducir los datos a la base de datos de la oferta
+    # Funciones para introducir los datos a la base de datos de la oferta
     def insertCorridorData(self, corridorData):
         """
         Inserta los datos del corredor en la tabla CORRIDOR
@@ -716,10 +723,10 @@ class SqlSupply:
             data = [corridor[:2]
                     for corridor in corridorData]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,data)
+            self.cursor.executemany(query, data)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error: "+str(e))
+            print("Sqlite Error: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -731,7 +738,7 @@ class SqlSupply:
             self.cursor.close()
         return id
 
-    def insertAuxCorridorData(self,corridorData,testID):
+    def insertAuxCorridorData(self, corridorData, testID):
         """
         Inserta los datos auxiliares del corredor en la tabla AUX_CORRIDOR
         :param corridorData: Datos del corredor
@@ -741,13 +748,13 @@ class SqlSupply:
         self.initCursor()
         try:
             query = "INSERT OR IGNORE INTO AUX_CORRIDOR (CORRIDOR_ID,TEST_ID) VALUES (?,?)"
-            data = [[corridor[0],testID]
+            data = [[corridor[0], testID]
                     for corridor in corridorData]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,data)
+            self.cursor.executemany(query, data)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error AUX_CORRIDOR: "+str(e))
+            print("Sqlite Error AUX_CORRIDOR: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -758,7 +765,7 @@ class SqlSupply:
         finally:
             self.cursor.close()
 
-    def insertCorridorStationsData(self,corridorData,testID):
+    def insertCorridorStationsData(self, corridorData, testID):
         """
         Inserta los datos de las estaciones del corredor en la tabla CORRIDOR_STATIONS
         :param corridorData: Datos del corredor
@@ -766,9 +773,9 @@ class SqlSupply:
         """
         self.initCursor()
         try:
-            #query = ("INSERT OR IGNORE INTO CORRIDOR_STATIONS (CORRIDOR,STATIONS) "
+            # query = ("INSERT OR IGNORE INTO CORRIDOR_STATIONS (CORRIDOR,STATIONS) "
             #            "VALUES ({corridor},json(\"{stations}\")) ")
-            #for line in corridorData[2]:
+            # for line in corridorData[2]:
             #    queryFormated = query.format(corridor = corridorData[0],stations = str(line))
             #    self.cursor.execute(queryFormated)
             query = ("INSERT OR IGNORE INTO CORRIDOR_STATIONS (TEST_ID,CORRIDOR,STATIONS) "
@@ -780,10 +787,10 @@ class SqlSupply:
             # for n,line in enumerate(lines):
             #     print(f"Ramal {n}: {line}")
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,inputData)
+            self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error CORRIDOR_STATIONS: "+str(e))
+            print("Sqlite Error CORRIDOR_STATIONS: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -804,10 +811,10 @@ class SqlSupply:
         try:
             query = "INSERT OR IGNORE INTO TIME_SLOT (ID,START,END) VALUES (?,?,?)"
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,timeSlotData)
+            self.cursor.executemany(query, timeSlotData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error TIME_SLOT: "+str(e))
+            print("Sqlite Error TIME_SLOT: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -818,7 +825,7 @@ class SqlSupply:
         finally:
             self.cursor.close()
 
-    def insertAuxTimeSlotData(self,timeSlotData,testID):
+    def insertAuxTimeSlotData(self, timeSlotData, testID):
         """
         Inserta los datos auxiliares de los slots de tiempo en la tabla AUX_TIME_SLOT
         :param timeSlotData: Datos de los slots de tiempo
@@ -828,13 +835,13 @@ class SqlSupply:
         self.initCursor()
         try:
             query = "INSERT OR IGNORE INTO AUX_TIME_SLOT (TIME_SLOT_ID,TEST_ID) VALUES (?,?)"
-            inputData = [[timeSlot[0],testID]
+            inputData = [[timeSlot[0], testID]
                          for timeSlot in timeSlotData]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,inputData)
+            self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error AUX_TIME_SLOT: "+str(e))
+            print("Sqlite Error AUX_TIME_SLOT: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -855,10 +862,10 @@ class SqlSupply:
         try:
             query = "INSERT OR IGNORE INTO STATIONS (ID,NAME,CITY,SHORT_NAME,COORDINATES) VALUES (?,?,?,?,json(?))"
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,stationsData)
+            self.cursor.executemany(query, stationsData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error STATIONS: "+str(e))
+            print("Sqlite Error STATIONS: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -869,7 +876,7 @@ class SqlSupply:
         finally:
             self.cursor.close()
 
-    def insertAuxStationsData(self,stationsData,testID):
+    def insertAuxStationsData(self, stationsData, testID):
         """
         Inserta los datos auxiliares de las estaciones en la tabla AUX_STATIONS
         :param stationsData: Datos de las estaciones
@@ -879,13 +886,13 @@ class SqlSupply:
         self.initCursor()
         try:
             query = "INSERT OR IGNORE INTO AUX_STATIONS (STATIONS_ID,TEST_ID) VALUES (?,?)"
-            inputData = [[stations[0],testID]
+            inputData = [[stations[0], testID]
                          for stations in stationsData]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,inputData)
+            self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error AUX_STATIONS: "+str(e))
+            print("Sqlite Error AUX_STATIONS: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -896,7 +903,7 @@ class SqlSupply:
         finally:
             self.cursor.close()
 
-    def insertTestsData(self, testName,observations=""):
+    def insertTestsData(self, testName, observations=""):
         """
         Inserta los datos del test en la tabla TESTS.
         :param testName: Nombre del test actual.
@@ -908,11 +915,11 @@ class SqlSupply:
             query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}') RETURNING ID"
             self.cursor.execute(query)
             id = self.cursor.fetchone()
-            query =  f"UPDATE TESTS SET OBSERVATIONS = '{observations}' WHERE TESTS.NAME = '{testName}'"
+            query = f"UPDATE TESTS SET OBSERVATIONS = '{observations}' WHERE TESTS.NAME = '{testName}'"
             self.cursor.execute(query)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error: "+str(e))
+            print("Sqlite Error: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -938,10 +945,10 @@ class SqlSupply:
             for data in rollingStockData:
                 self.cursor.execute(query, data)
                 result = self.cursor.fetchone()
-                if result:id.append(result)
+                if result: id.append(result)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error ROLLING_STOCK: "+str(e))
+            print("Sqlite Error ROLLING_STOCK: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -953,7 +960,7 @@ class SqlSupply:
             self.cursor.close()
         return id
 
-    def insertAuxRollingStockData(self,rollingStockData,testID):
+    def insertAuxRollingStockData(self, rollingStockData, testID):
         """
         Inserta los datos auxiliares del stock rodante en la tabla AUX_ROLLING_STOCK
         :param rollingStockData: Datos del stock rodante
@@ -963,13 +970,13 @@ class SqlSupply:
         self.initCursor()
         try:
             query = "INSERT OR IGNORE INTO AUX_ROLLING_STOCK (ROLLING_STOCK_ID,TEST_ID) VALUES (?,?)"
-            inputData = [[rollingStock[0],testID]
+            inputData = [[rollingStock[0], testID]
                          for rollingStock in rollingStockData]
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error AUX_ROLLING_STOCK: "+str(e))
+            print("Sqlite Error AUX_ROLLING_STOCK: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -997,7 +1004,7 @@ class SqlSupply:
                 if result: id.append(result)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error SEAT: "+str(e))
+            print("Sqlite Error SEAT: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -1009,7 +1016,7 @@ class SqlSupply:
             self.cursor.close()
         return id
 
-    def insertAuxSeatData(self,seatData,testID):
+    def insertAuxSeatData(self, seatData, testID):
         """
         Inserta los datos auxiliares de los asientos en la tabla AUX_SEAT
         :param seatData: Datos de los asientos
@@ -1025,7 +1032,7 @@ class SqlSupply:
             self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error AUX_SEAT: "+str(e))
+            print("Sqlite Error AUX_SEAT: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -1051,10 +1058,10 @@ class SqlSupply:
             for data in TspData:
                 self.cursor.execute(query, data)
                 result = self.cursor.fetchone()
-                if result:id.append(result)
+                if result: id.append(result)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error TRAIN_SERVICE_PROVIDER: "+str(e))
+            print("Sqlite Error TRAIN_SERVICE_PROVIDER: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -1066,7 +1073,7 @@ class SqlSupply:
             self.cursor.close()
         return id
 
-    def insertAuxTrainServiceProviderData(self, TspData,testID):
+    def insertAuxTrainServiceProviderData(self, TspData, testID):
         """
         Inserta los datos auxiliares del proveedor de servicios feroviarios en la tabla AUX_CORRIDOR
         :param TspData: Datos del proveedor de servicios ferroviarios
@@ -1082,7 +1089,7 @@ class SqlSupply:
             self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error AUX_TRAIN_SERVICE_PROVIDER: "+str(e))
+            print("Sqlite Error AUX_TRAIN_SERVICE_PROVIDER: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -1108,7 +1115,7 @@ class SqlSupply:
             self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error LINE: "+str(e))
+            print("Sqlite Error LINE: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -1119,7 +1126,7 @@ class SqlSupply:
         finally:
             self.cursor.close()
 
-    def insertStopsData(self, lineData,testID):
+    def insertStopsData(self, lineData, testID):
         """
         Inserta los datos de las paradas de cada una de las líneas en la tabla STOPS
         :param lineData: Datos de las líneas
@@ -1127,15 +1134,16 @@ class SqlSupply:
         """
         self.initCursor()
         try:
-            query = "INSERT OR IGNORE INTO STOPS (TEST_ID,LINE_ID,STATION,ARRIVAL_TIME,DEPARTURE_TIME) VALUES (?,?,?,?,?)"
-            inputData = [[testID,line[0]]+stop
+            query = ("INSERT OR IGNORE INTO STOPS (TEST_ID,LINE_ID,STATION,ARRIVAL_TIME,DEPARTURE_TIME) VALUES (?,?,?,"
+                     "?,?)")
+            inputData = [[testID, line[0]] + stop
                          for line in lineData
                          for stop in line[3]]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,inputData)
+            self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error STOPS: "+str(e))
+            print("Sqlite Error STOPS: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -1156,23 +1164,24 @@ class SqlSupply:
         try:
             inputData = [service[:6]
                          for service in serviceData]
-            query = "INSERT OR IGNORE INTO SERVICE (ID,DATE,LINE,TRAIN_SERVICE_PROVIDER,TIME_SLOT,ROLLING_STOCK) VALUES (?,?,?,?,?,?)"
+            query = ("INSERT OR IGNORE INTO SERVICE (ID,DATE,LINE,TRAIN_SERVICE_PROVIDER,TIME_SLOT,ROLLING_STOCK) "
+                     "VALUES (?,?,?,?,?,?)")
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Service Sqlite Error SERVICE: "+str(e))
+            print("Service Sqlite Error SERVICE: " + str(e))
             self.conector.rollback()
         except Exception as e:
-            print("Service Error: "+str(e))
+            print("Service Error: " + str(e))
             self.conector.rollback()
         except sqlite3.ProgrammingError as e:
-            print("Service Sqlite programming Error: "+str(e))
+            print("Service Sqlite programming Error: " + str(e))
             self.conector.rollback()
         finally:
             self.cursor.close()
 
-    def insertAuxServiceData(self, serviceData,testID):
+    def insertAuxServiceData(self, serviceData, testID):
         """
         Inserta los datos auxiliares de los servicios en la tabla AUX_SERVICE
         :param serviceData: Datos del corredor
@@ -1188,13 +1197,13 @@ class SqlSupply:
             self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Aux Service Sqlite Error: "+str(e))
+            print("Aux Service Sqlite Error: " + str(e))
             self.conector.rollback()
         except Exception as e:
-            print("Aux Service Error: "+str(e))
+            print("Aux Service Error: " + str(e))
             self.conector.rollback()
         except sqlite3.ProgrammingError as e:
-            print("Aux Service Sqlite P. Error: "+str(e))
+            print("Aux Service Sqlite P. Error: " + str(e))
             self.conector.rollback()
         finally:
             self.cursor.close()
@@ -1207,26 +1216,27 @@ class SqlSupply:
         """
         self.initCursor()
         try:
-            query = "INSERT OR IGNORE INTO ORIGIN_DESTINATION_TUPLES (ID,TEST_ID,SERVICE_ID,ORIGIN,DESTINATION,SEATS) VALUES (?,?,?,?,?,?)"
+            query = ("INSERT OR IGNORE INTO ORIGIN_DESTINATION_TUPLES (ID,TEST_ID,SERVICE_ID,ORIGIN,DESTINATION,"
+                     "SEATS) VALUES (?,?,?,?,?,?)")
             inputData = [[f"{testID}-{service[0]}-{odt[0]}-{odt[1]}",
                           testID,
                           service[0],
                           odt[0],
                           odt[1],
                           json.dumps(str(list(odt[2].keys())))]
-                          for service in serviceData
-                          for odt in service[6]]
+                         for service in serviceData
+                         for odt in service[6]]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,inputData)
+            self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("ODT Sqlite Error: "+str(e))
+            print("ODT Sqlite Error: " + str(e))
             self.conector.rollback()
         except Exception as e:
-            print("ODT Error: "+str(e))
+            print("ODT Error: " + str(e))
             self.conector.rollback()
         except sqlite3.ProgrammingError as e:
-            print("ODT Sqlite P. Error: "+str(e))
+            print("ODT Sqlite P. Error: " + str(e))
             self.conector.rollback()
         finally:
             self.cursor.close()
@@ -1246,16 +1256,16 @@ class SqlSupply:
                          for service in serviceData
                          for restriction in service[7:]]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,inputData)
+            self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Restrictions Sqlite Error: "+str(e))
+            print("Restrictions Sqlite Error: " + str(e))
             self.conector.rollback()
         except Exception as e:
-            print("Restrictions  Error: "+str(e))
+            print("Restrictions  Error: " + str(e))
             self.conector.rollback()
         except sqlite3.ProgrammingError as e:
-            print("Restrictions Sqlite P. Error: "+str(e))
+            print("Restrictions Sqlite P. Error: " + str(e))
             self.conector.rollback()
         finally:
             self.cursor.close()
@@ -1276,21 +1286,21 @@ class SqlSupply:
                          for odt in service[6]
                          for key in list(odt[2].keys())]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query,inputData)
+            self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Seats Price Sqlite Error: "+str(e))
+            print("Seats Price Sqlite Error: " + str(e))
             self.conector.rollback()
         except Exception as e:
-            print("Seats Price Error: "+str(e))
+            print("Seats Price Error: " + str(e))
             self.conector.rollback()
         except sqlite3.ProgrammingError as e:
-            print("Seats Price Sqlite P. Error: "+str(e))
+            print("Seats Price Sqlite P. Error: " + str(e))
             self.conector.rollback()
         finally:
             self.cursor.close()
 
-    #Funciones para eliminar un test y lo que cuelgue de este
+    # Funciones para eliminar un test y lo que cuelgue de este
     def deleteTestEntryOld(self):
         """
         Borra un test elegido por el usuario y todos los datos relacionados con este. Si los datos son comunes a otros
@@ -1299,10 +1309,10 @@ class SqlSupply:
         """
         try:
             self.initCursor()
-            names,testNames = self.selectTestName()
+            names, testNames = self.selectTestName()
             if names == "" or testNames == []: raise EmptyTestData
             print(names)
-            test = int(input("Introduce el numero del test que quieras borrar: "))-1
+            test = int(input("Introduce el numero del test que quieras borrar: ")) - 1
             query = f"""DELETE FROM TESTS
                         WHERE TESTS.NAME = '{testNames[test]}'"""
             self.cursor.execute(query)
@@ -1317,7 +1327,7 @@ class SqlSupply:
             self.deleteUnusedRollingStockData()
 
         except sqlite3.Error as e:
-            print("Sqlite Error: "+str(e))
+            print("Sqlite Error: " + str(e))
         except EmptyTestData as e:
             print(e)
         except Exception as e:
@@ -1373,7 +1383,7 @@ class SqlSupply:
             self.conector.commit()
 
         except sqlite3.Error as e:
-            print("Sqlite Error: "+str(e))
+            print("Sqlite Error: " + str(e))
         except Exception as e:
             print(e)
         except sqlite3.ProgrammingError as e:
@@ -1493,8 +1503,8 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    #Funciones para seleccionar los datos de la base datos para volcarlos en el yaml
-    #Funciones auxiliares
+    # Funciones para seleccionar los datos de la base datos para volcarlos en el yaml
+    # Funciones auxiliares
     def selectTestName(self):
         """
         Extrae el nombre de los tests que actualmente se encuentran en la base de datos
@@ -1507,19 +1517,19 @@ class SqlSupply:
                        FROM TESTS"""
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            for key,name in enumerate(data):
+            for key, name in enumerate(data):
                 testNames.append(name[0])
-                names = names+f"{key+1}.{name[0]}\n"
+                names = names + f"{key + 1}.{name[0]}\n"
         except sqlite3.Error as e:
-            print("Sqlite Error: "+str(e))
+            print("Sqlite Error: " + str(e))
         except Exception as e:
             print(e)
         except sqlite3.ProgrammingError as e:
             print(e)
         finally:
-            return names,testNames
+            return names, testNames
 
-    def formatStopsForLine(self,lineID,testName):
+    def formatStopsForLine(self, lineID, testName):
         """
         Extrae los datos de la tabla STOPS y los reordena para posteriormente agregarlos al archivo yaml de la oferta
         bajo la propiedad line
@@ -1565,13 +1575,13 @@ class SqlSupply:
         """
         formatedData = []
         try:
-            for k,e in zip(seatsData.keys(),seatsData.values()):
-                formatedData.append({"hard_type":int(k),"quantity":int(e)})
+            for k, e in zip(seatsData.keys(), seatsData.values()):
+                formatedData.append({"hard_type": int(k), "quantity": int(e)})
             return formatedData
         except Exception as e:
             print(e)
 
-    def formatOdtForService(self,serviceID,testName):
+    def formatOdtForService(self, serviceID, testName):
         """
         Extrae los datos de la tabla ORIGIN_DESTINATION_TUPLES y los reordena para introducirlos posteriormente
         en el apartado origin_destination_tuples de la propiedad service dentro del archivo de oferta
@@ -1590,7 +1600,8 @@ class SqlSupply:
                         FROM
                             ORIGIN_DESTINATION_TUPLES
                         WHERE ORIGIN_DESTINATION_TUPLES.SERVICE_ID = '{serviceID}'
-                        AND ORIGIN_DESTINATION_TUPLES.TEST_ID = (SELECT TESTS.ID FROM TESTS WHERE TESTS.NAME = '{testName}')
+                        AND ORIGIN_DESTINATION_TUPLES.TEST_ID = (SELECT TESTS.ID FROM TESTS WHERE TESTS.NAME = '{
+            testName}')
                         ORDER BY ORIGIN_DESTINATION_TUPLES.ORIGIN ASC"""
 
             self.cursor.execute(query)
@@ -1605,7 +1616,7 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def formatSeatsPriceForOdt(self,odtID):
+    def formatSeatsPriceForOdt(self, odtID):
         """
         Extrae los datos del precio de los asientos para cada una de las tuplas de origen-destino de la tabla
         SEATS_PRICE y las ordena
@@ -1624,7 +1635,7 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"seat": element[0],"price": element[1]} for element in data]
+            formatedData = [{"seat": element[0], "price": element[1]} for element in data]
             return formatedData
         except sqlite3.Error as e:
             print("Sqlite Error: " + str(e))
@@ -1633,7 +1644,7 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def formatCapacityConstraints(self,serviceID):
+    def formatCapacityConstraints(self, serviceID):
         """
         Extrae los datos de la tabla RESTRICTIONS correspondientes a la restriccion \"capacity_constraints\"
         :param serviceID: ID del servicio asociado a esa restriccion
@@ -1649,7 +1660,7 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = json.loads(self.cursor.fetchall()[0][0])
-            #if data is None: data = str(data).replace("None","null")
+            # if data is None: data = str(data).replace("None","null")
             return data
         except sqlite3.Error as e:
             print("Sqlite Error: " + str(e))
@@ -1658,7 +1669,7 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def formatCorridorStationsForCorridor(self,corridorID, testName):
+    def formatCorridorStationsForCorridor(self, corridorID, testName):
         """
         Extrae los datos de la tabla CORRIDOR_STATIONS y los formatea para introducirlos a stations dentro de
         corridor
@@ -1684,14 +1695,15 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def buildCorridorStationsFromLines(self,lines):
+    def buildCorridorStationsFromLines(self, lines):
         """
         Reconstruye la estructura original del corredor a partir de las diferentes líneas almacenadas en la
         tabla CORRIDOR_STATIONS
         :param lines: Líneas que forman el corredor
         :return:
         """
-        if not lines or not all(isinstance(line,list) and len(line)>1 for line in lines):#si no hay mínimo 2 estaciones no continua
+        if not lines or not all(isinstance(line, list) and len(line) > 1 for line in
+                                lines):  # si no hay mínimo 2 estaciones no continua
             raise ValueError("No hay suficientes estaciones en alguno de los caminos")
 
         def buildSubLines(subLines):
@@ -1702,25 +1714,29 @@ class SqlSupply:
             """
             corridorStations = {}
             for line in subLines:
-                org = line.pop(0)   #extraemos el primer elemento de la lista line
-                if org not in corridorStations:     #Si este elemento no se encuentra en la variable corridorStations, añade una lista vacia con org como key al diccionario
+                org = line.pop(0)  # extraemos el primer elemento de la lista line
+                if org not in corridorStations:  # Si este elemento no se encuentra en la variable corridorStations,
+                    # añade una lista vacia con org como key al diccionario
                     corridorStations[org] = []
-                if line:    #Si line no está vacia, añade al diccionario toda la variable line a la key org
+                if line:  # Si line no está vacia, añade al diccionario toda la variable line a la key org
                     corridorStations[org].append(line)
 
             outputData = []
 
-            #reconstruimos la estructura empleando para ello el diccionario creado anteriormente
-            for org, sub in corridorStations.items(): #recorremos el diccionario extrayendo los pares (key, value)
-                if sub: #Si el diccionario contiene algún value, introducimos como origen la key y como destino volvemos a llamar a la función buildSubLines
-                    outputData.append({"org": org,"des":buildSubLines(sub)})
-                else:   #Si el diccionario no contiene valores en la clave org, introducimos como origen la clave org y el destino como una lista vacia qe índica el final del ramal
+            # reconstruimos la estructura empleando para ello el diccionario creado anteriormente
+            for org, sub in corridorStations.items():  # recorremos el diccionario extrayendo los pares (key, value)
+                if sub:  # Si el diccionario contiene algún value, introducimos como origen la key y como destino
+                    # volvemos a llamar a la función buildSubLines
+                    outputData.append({"org": org, "des": buildSubLines(sub)})
+                else:  # Si el diccionario no contiene valores en la clave org, introducimos como origen la clave org
+                    # y el destino como una lista vacia qe índica el final del ramal
                     outputData.append({"org": org, "des": []})
 
             return outputData
+
         return buildSubLines(lines)
 
-    #Funciones principales
+    # Funciones principales
     def getDataForDumpYamlOld(self):
         """
         (Deprecated)Genera la estructra necesaria para reconstruir el archivo de oferta mediante subfunciones para cada
@@ -1733,7 +1749,8 @@ class SqlSupply:
             self.initCursor()
             names, testNames = self.selectTestName()
             print(names)
-            testName = testNames[int(input("Introduce el numero del test que quieres extraer de la base de datos: "))-1]
+            testName = testNames[
+                int(input("Introduce el numero del test que quieres extraer de la base de datos: ")) - 1]
 
             data.update(self.getDataForStations(testName))
             data.update(self.getDataForSeat(testName))
@@ -1752,9 +1769,9 @@ class SqlSupply:
             print(e)
         finally:
             self.cursor.close()
-            return testName,data
+            return testName, data
 
-    def getDataForDumpYaml(self,testName):
+    def getDataForDumpYaml(self, testName):
         """
         Genera la estructra necesaria para reconstruir el archivo de oferta mediante subfunciones para cada
         uno de los apartados dentro del archivo yaml.
@@ -1783,7 +1800,7 @@ class SqlSupply:
             self.cursor.close()
             return data
 
-    def getDataForStations(self,testName):
+    def getDataForStations(self, testName):
         """
         Obtiene los datos de las estaciones y los formatea para que sigan la estructra de stations dentro del archivo
         yaml de la oferta
@@ -1807,9 +1824,9 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id":element[0],"name":element[1],"city":element[2],
-                             "short_name":element[3],"coordinates":json.loads(element[4])} for element in data]
-            outputData = {"stations":formatedData}
+            formatedData = [{"id": element[0], "name": element[1], "city": element[2],
+                             "short_name": element[3], "coordinates": json.loads(element[4])} for element in data]
+            outputData = {"stations": formatedData}
             return outputData
         except sqlite3.Error as e:
             print("Sqlite Error: " + str(e))
@@ -1820,7 +1837,8 @@ class SqlSupply:
 
     def getDataForTimeSlot(self, testName):
         """
-        Obtiene los datos de los slots de tiempo y los formatea para que sigan la estructra de timeSlot dentro del archivo
+        Obtiene los datos de los slots de tiempo y los formatea para que sigan la estructra de timeSlot dentro del
+        archivo
         yaml de la oferta
         :param testName: Nombre del test que se está extrayendo
         :return:
@@ -1839,7 +1857,7 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0],"start": element[1],"end": element[2]}
+            formatedData = [{"id": element[0], "start": element[1], "end": element[2]}
                             for element in data]
             outputData = {"timeSlot": formatedData}
             return outputData
@@ -1850,7 +1868,7 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForLine(self,testName):
+    def getDataForLine(self, testName):
         """
         Obtiene los datos de las líneas y los formatea para que sigan la estructra de line dentro del archivo
         yaml de la oferta
@@ -1872,8 +1890,8 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0],"name": element[1],"corridor": element[2],
-                             "stops": self.formatStopsForLine(element[0],testName)} for element in data]
+            formatedData = [{"id": element[0], "name": element[1], "corridor": element[2],
+                             "stops": self.formatStopsForLine(element[0], testName)} for element in data]
             outputData = {"line": formatedData}
             return outputData
         except sqlite3.Error as e:
@@ -1883,7 +1901,7 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForSeat(self,testName):
+    def getDataForSeat(self, testName):
         """
         Obtiene los datos de los asientos y los formatea para que sigan la estructra de seat dentro del archivo
         yaml de la oferta
@@ -1905,7 +1923,7 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0],"name": element[1],"hard_type": int(element[2]),
+            formatedData = [{"id": element[0], "name": element[1], "hard_type": int(element[2]),
                              "soft_type": int(element[3])} for element in data]
             outputData = {"seat": formatedData}
             return outputData
@@ -1916,7 +1934,7 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForCorridor(self,testName):
+    def getDataForCorridor(self, testName):
         """
         Obtiene los datos de los corredores y los formatea para que sigan la estructra de corridor dentro del archivo
         yaml de la oferta
@@ -1938,7 +1956,7 @@ class SqlSupply:
             self.cursor.execute(query)
             data = self.cursor.fetchall()
             formatedData = [{"id": element[0], "name": element[1], "stations":
-                self.formatCorridorStationsForCorridor(element[0],testName)}
+                self.formatCorridorStationsForCorridor(element[0], testName)}
                             for element in data]
             outputData = {"corridor": formatedData}
             return outputData
@@ -1949,9 +1967,10 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForRollingStock(self,testName):
+    def getDataForRollingStock(self, testName):
         """
-        Obtiene los datos del stock rodante y los formatea para que sigan la estructra de rollingStock dentro del archivo
+        Obtiene los datos del stock rodante y los formatea para que sigan la estructra de rollingStock dentro del
+        archivo
         yaml de la oferta
         :param testName: Nombre del test que se está extrayendo
         :return:
@@ -1971,8 +1990,9 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0],"name": element[1],"seats": self.formatSeatsForRollingStock(json.loads(element[2]))}
-                            for element in data]
+            formatedData = [
+                {"id": element[0], "name": element[1], "seats": self.formatSeatsForRollingStock(json.loads(element[2]))}
+                for element in data]
             outputData = {"rollingStock": formatedData}
             return outputData
         except sqlite3.Error as e:
@@ -1982,7 +2002,7 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForTrainServiceProvider(self,testName):
+    def getDataForTrainServiceProvider(self, testName):
         """
         Obtiene los datos de los proveedores de servicios ferroviarios y los formatea para que sigan la estructra de
         trainServiceProvider dentro del archivo yaml de la oferta
@@ -1996,14 +2016,16 @@ class SqlSupply:
                             TRAIN_SERVICE_PROVIDER.ROLLING_STOCK
                         FROM 
                             TRAIN_SERVICE_PROVIDER
-                        WHERE TRAIN_SERVICE_PROVIDER.ID IN (SELECT AUX_TRAIN_SERVICE_PROVIDER.TRAIN_SERVICE_PROVIDER_ID FROM AUX_TRAIN_SERVICE_PROVIDER
-                                                            INNER JOIN TESTS ON TESTS.ID = AUX_TRAIN_SERVICE_PROVIDER.TEST_ID
+                        WHERE TRAIN_SERVICE_PROVIDER.ID IN (SELECT 
+                        AUX_TRAIN_SERVICE_PROVIDER.TRAIN_SERVICE_PROVIDER_ID FROM AUX_TRAIN_SERVICE_PROVIDER
+                                                            INNER JOIN TESTS ON TESTS.ID = 
+                                                            AUX_TRAIN_SERVICE_PROVIDER.TEST_ID
                                                             WHERE TESTS.NAME = '{testName}')
                         ORDER BY TRAIN_SERVICE_PROVIDER.ID ASC"""
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0],"name": element[1],"rolling_stock":json.loads(element[2])}
+            formatedData = [{"id": element[0], "name": element[1], "rolling_stock": json.loads(element[2])}
                             for element in data]
             outputData = {"trainServiceProvider": formatedData}
             return outputData
@@ -2014,7 +2036,7 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForService(self,testName):
+    def getDataForService(self, testName):
         """
         Obtiene los datos de los servicios y los formatea para que sigan la estructra de service dentro del archivo
         yaml de la oferta
@@ -2039,9 +2061,11 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0],"date": element[1],"line": element[2],"train_service_provider": element[3],
-                             "time_slot": element[4],"rolling_stock": element[5],"origin_destination_tuples": self.formatOdtForService(element[0],testName),
-                             "capacity_constraints": self.formatCapacityConstraints(element[0])} for element in data]
+            formatedData = [
+                {"id": element[0], "date": element[1], "line": element[2], "train_service_provider": element[3],
+                 "time_slot": element[4], "rolling_stock": element[5],
+                 "origin_destination_tuples": self.formatOdtForService(element[0], testName),
+                 "capacity_constraints": self.formatCapacityConstraints(element[0])} for element in data]
             outputData = {"service": formatedData}
             return outputData
         except sqlite3.Error as e:
@@ -2058,14 +2082,16 @@ class SqlSupply:
                             TRAIN_SERVICE_PROVIDER.ROLLING_STOCK
                         FROM 
                             TRAIN_SERVICE_PROVIDER
-                        WHERE TRAIN_SERVICE_PROVIDER.ID IN (SELECT AUX_TRAIN_SERVICE_PROVIDER.TRAIN_SERVICE_PROVIDER_ID FROM AUX_TRAIN_SERVICE_PROVIDER
-                                                            INNER JOIN TESTS ON TESTS.ID = AUX_TRAIN_SERVICE_PROVIDER.TEST_ID
+                        WHERE TRAIN_SERVICE_PROVIDER.ID IN (SELECT 
+                        AUX_TRAIN_SERVICE_PROVIDER.TRAIN_SERVICE_PROVIDER_ID FROM AUX_TRAIN_SERVICE_PROVIDER
+                                                            INNER JOIN TESTS ON TESTS.ID = 
+                                                            AUX_TRAIN_SERVICE_PROVIDER.TEST_ID
                                                             WHERE TESTS.NAME = '{testName}')
                         ORDER BY TRAIN_SERVICE_PROVIDER.ID ASC"""
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0],"name": element[1],"rolling_stock":json.loads(element[2])}
+            formatedData = [{"id": element[0], "name": element[1], "rolling_stock": json.loads(element[2])}
                             for element in data]
             outputData = {"trainServiceProvider": formatedData}
             return outputData
@@ -2076,20 +2102,25 @@ class SqlSupply:
         except sqlite3.ProgrammingError as e:
             print(e)
 
+
 class SqlDemand:
     """
         Módulo que se encarga de gestionar la entrada y salida de datos de la base de datos de la demanda
-        :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>/Database/demandDb.db
+        :param db: Direccion de la base de datos de la oferta, por defecto será:
+        <currentWorkingDirectory>/Database/demandDb.db
     """
+
     # Inicializacion del objeto SqlDemand, encargado de manejar las interacciones con la base de datos de la oferta
     def __init__(self, db=None):
         self.workingDirectory = os.getcwd()  # Directorio de trabajo
         self.defaultDatabaseFolder = self.workingDirectory + "/Database"  # Directorio para las bases de datos
         Path(self.defaultDatabaseFolder).mkdir(parents=True,
                                                exist_ok=True)  # Generamos la carpeta Database en caso de no existir
-        self.defaultDemandPath = self.defaultDatabaseFolder + "/demandDb.db"  # Direccion de la base de datos por defecto
+        self.defaultDemandPath = self.defaultDatabaseFolder + "/demandDb.db"  # Direccion de la base de datos por
+        # defecto
         self.conector = sqlite3.connect(db if db is not None  # Creamos la conexion con la base de datos de la oferta
-                                        else self.defaultDemandPath)  # Si la base de datos no existe, se generara automaticamente
+                                        else self.defaultDemandPath)  # Si la base de datos no existe, se generara
+        # automaticamente
         self.cursor = self.conector.cursor()  # Creamos el cursor para la base de datos
         self.enableForeignKeys()  # Habilitamos el uso de las claves foraneas en la base de datos
 
@@ -2122,7 +2153,7 @@ class SqlDemand:
             self.cursor.close()
         return -1
 
-    def executeQuery(self,query):
+    def executeQuery(self, query):
         try:
             self.initCursor()
             self.cursor.execute(query)
@@ -2162,8 +2193,8 @@ class SqlDemand:
         self.createAuxMarketTable()
         self.createAuxDemandPatternTable()
         self.createAuxDayTable()
-    
-    #Funciones para la creacion de las tablas de la base de datos
+
+    # Funciones para la creacion de las tablas de la base de datos
     def createTestsTable(self):
         """
         Genera la tabla TESTS en la base de datos, si no existe
@@ -2497,8 +2528,8 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    #Funciones para insertar datos en la base de datos de la demanda
-    def insertTestData(self,testName,observations=""):
+    # Funciones para insertar datos en la base de datos de la demanda
+    def insertTestData(self, testName, observations=""):
         """
         Inserta los datos del test en la tabla TESTS
         :param testName: Nombre del test actual
@@ -2508,11 +2539,11 @@ class SqlDemand:
         try:
             query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}')"
             self.cursor.execute(query)
-            query =  f"UPDATE TESTS SET OBSERVATIONS = '{observations}' WHERE TESTS.NAME = '{testName}'"
+            query = f"UPDATE TESTS SET OBSERVATIONS = '{observations}' WHERE TESTS.NAME = '{testName}'"
             self.cursor.execute(query)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error: "+str(e))
+            print("Sqlite Error: " + str(e))
         except Exception as e:
             print(e)
         except sqlite3.ProgrammingError as e:
@@ -2520,7 +2551,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertMarketData(self,marketData):
+    def insertMarketData(self, marketData):
         """
         Inserta los datos del test en la tabla MARKET
         :param marketData: Datos del mercado
@@ -2528,14 +2559,16 @@ class SqlDemand:
         """
         self.initCursor()
         try:
-            query = ("INSERT OR IGNORE INTO MARKET (ID,DEPARTURE_STATION,DEPARTURE_STATION_COORDS,ARRIVAL_STATION,ARRIVAL_STATION_COORDS) "
-                     "VALUES (?,?,?,?,?)")
-             
+            query = (
+                "INSERT OR IGNORE INTO MARKET (ID,DEPARTURE_STATION,DEPARTURE_STATION_COORDS,ARRIVAL_STATION,"
+                "ARRIVAL_STATION_COORDS) "
+                "VALUES (?,?,?,?,?)")
+
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query, marketData)
             self.conector.commit()
         except sqlite3.Error as e:
-            print("Sqlite Error: "+str(e))
+            print("Sqlite Error: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -2546,7 +2579,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertDemandPatternData(self,demandPatternData):
+    def insertDemandPatternData(self, demandPatternData):
         """
         Inserta los datos del test en la tabla DEMAND_PATTERN
         :param demandPatternData: Datos del patron de demanda
@@ -2556,7 +2589,7 @@ class SqlDemand:
         try:
             query = ("INSERT OR IGNORE INTO DEMAND_PATTERN (ID,NAME) "
                      "VALUES (?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
             inputData = [demandPattern[:2]
                          for demandPattern in demandPatternData]
@@ -2574,7 +2607,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertUserPatternData(self,userPatternData):
+    def insertUserPatternData(self, userPatternData):
         """
         Inserta los datos del test en la tabla USER_PATTERN
         :param userPatternData: Datos del patron de usuario
@@ -2585,9 +2618,9 @@ class SqlDemand:
             query = ("INSERT OR IGNORE INTO USER_PATTERN (ID,NAME,RULES,ARRIVAL_TIME,ARRIVAL_TIME_KWARGS,PURCHASE_DAY,"
                      "PURCHASE_DAY_KWARGS,FORBIDDEN_DEPARTURE_HOURS,SEATS,TRAIN_SERVICE_PROVIDERS,EARLY_STOP,"
                      "UTILITY_THRESHOLD,ERROR,ERROR_KWARGS) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
-            inputData = [userPattern[:3]+userPattern[4:]
+            inputData = [userPattern[:3] + userPattern[4:]
                          for userPattern in userPatternData]
             self.cursor.executemany(query, inputData)
 
@@ -2604,7 +2637,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertMarketsData(self,demandPatternData):
+    def insertMarketsData(self, demandPatternData):
         """
         Inserta los datos del test en la tabla MARKETS
         :param demandPatternData: Datos del patron de demanda
@@ -2614,7 +2647,7 @@ class SqlDemand:
         try:
             query = ("INSERT OR IGNORE INTO MARKETS (DEMAND_PATTERN_ID,MARKET,POTENTIAL_DEMAND,POTENTIAL_DEMAND_KWARGS)"
                      " VALUES (?,?,?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
             inputData = [[demandPattern[0]] + market[:3]
                          for demandPattern in demandPatternData
@@ -2634,7 +2667,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertUserPatternDistributionData(self,demandPatternData):
+    def insertUserPatternDistributionData(self, demandPatternData):
         """
         Inserta los datos del test en la tabla USER_PATTERN_DISTRIBUTION
         :param demandPatternData: Datos del patron de demanda
@@ -2642,14 +2675,16 @@ class SqlDemand:
         """
         self.initCursor()
         try:
-            query = ("INSERT OR IGNORE INTO USER_PATTERN_DISTRIBUTION (MARKET_ID,DEMAND_PATTERN_ID,USER_PATTERN_ID,PERCENTAGE) "
-                     "VALUES (?,?,?,?)")
-             
+            query = (
+                "INSERT OR IGNORE INTO USER_PATTERN_DISTRIBUTION (MARKET_ID,DEMAND_PATTERN_ID,USER_PATTERN_ID,"
+                "PERCENTAGE) "
+                "VALUES (?,?,?,?)")
+
             self.cursor.execute("BEGIN TRANSACTION")
             inputData = [[data[0], demandPattern[0], uID, per]
                          for demandPattern in demandPatternData
                          for data in demandPattern[2]
-                         for uID,per in data[3].items()]
+                         for uID, per in data[3].items()]
             self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
@@ -2664,7 +2699,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertVariableData(self,userPatternData):
+    def insertVariableData(self, userPatternData):
         """
         Inserta los datos del test en la tabla VARIABLE
         :param userPatternData: Datos del patron de usuario
@@ -2674,9 +2709,10 @@ class SqlDemand:
         try:
             query = ("INSERT OR IGNORE INTO VARIABLE (USER_PATTERN_ID,NAME,TYPE,SUPPORT,SETS,LABELS)"
                      "VALUES (?,?,?,?,?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
-            inputData = [[userPattern[0],data.get("name"),data.get("type"),json.dumps(data.get("support")),json.dumps(data.get("sets")),json.dumps(data.get("labels"))]
+            inputData = [[userPattern[0], data.get("name"), data.get("type"), json.dumps(data.get("support")),
+                          json.dumps(data.get("sets")), json.dumps(data.get("labels"))]
                          for userPattern in userPatternData
                          for data in userPattern[3]]
             self.cursor.executemany(query, inputData)
@@ -2693,7 +2729,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertDayData(self,dayData):
+    def insertDayData(self, dayData):
         """
         Inserta los datos del test en la tabla DAY
         :param dayData: Datos del día del que se va a realizar el test
@@ -2703,7 +2739,7 @@ class SqlDemand:
         try:
             query = ("INSERT OR IGNORE INTO DAY (ID,DATE,DEMAND_PATTERN)"
                      "VALUES (?,?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query, dayData)
             self.conector.commit()
@@ -2719,7 +2755,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertAuxDemandPatternData(self,demandPatternData,testID):
+    def insertAuxDemandPatternData(self, demandPatternData, testID):
         """
         Inserta los datos del test en la tabla AUX_DEMAND_PATTERN
         :param demandPatternData: Datos del patron de demanda
@@ -2730,9 +2766,9 @@ class SqlDemand:
         try:
             query = ("INSERT OR IGNORE INTO AUX_DEMAND_PATTERN (DEMAND_PATTERN_ID,TEST_ID)"
                      "VALUES (?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
-            inputData = [[demandPattern[0],testID] for demandPattern in demandPatternData]
+            inputData = [[demandPattern[0], testID] for demandPattern in demandPatternData]
             self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
@@ -2747,7 +2783,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertAuxMarketData(self,marketData,testID):
+    def insertAuxMarketData(self, marketData, testID):
         """
         Inserta los datos del test en la tabla AUX_MARKET
         :param marketData: Datos de los mercados
@@ -2758,9 +2794,9 @@ class SqlDemand:
         try:
             query = ("INSERT OR IGNORE INTO AUX_MARKET (MARKET_ID,TEST_ID)"
                      "VALUES (?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
-            inputData = [[market[0],testID] for market in marketData]
+            inputData = [[market[0], testID] for market in marketData]
             self.cursor.executemany(query, inputData)
             self.conector.commit()
 
@@ -2776,7 +2812,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertAuxUserPatternData(self,userPatternData,testID):
+    def insertAuxUserPatternData(self, userPatternData, testID):
         """
         Inserta los datos del test en la tabla AUX_USER_PATTERN
         :param userPatternData: Datos de los mercados
@@ -2787,9 +2823,9 @@ class SqlDemand:
         try:
             query = ("INSERT OR IGNORE INTO AUX_USER_PATTERN (USER_PATTERN_ID,TEST_ID)"
                      "VALUES (?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
-            inputData = [[userPattern[0],testID] for userPattern in userPatternData]
+            inputData = [[userPattern[0], testID] for userPattern in userPatternData]
             self.cursor.executemany(query, inputData)
             self.conector.commit()
 
@@ -2805,7 +2841,7 @@ class SqlDemand:
         finally:
             self.cursor.close()
 
-    def insertAuxDayData(self,dayData,testID):
+    def insertAuxDayData(self, dayData, testID):
         """
         Inserta los datos del test en la tabla AUX_DAY
         :param dayData: Datos de los días
@@ -2815,7 +2851,7 @@ class SqlDemand:
         self.initCursor()
         try:
             query = ("INSERT OR IGNORE INTO AUX_DAY (DAY_ID,TEST_ID) VALUES (?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
             inputData = [[day[0], testID] for day in dayData]
             self.cursor.executemany(query, inputData)
@@ -2993,8 +3029,8 @@ class SqlDemand:
             print(e)
             self.conector.rollback()
 
-    #Funciones para seleccionar los datos de la base datos para volcarlos en el yaml
-    #Funciones auxiliares
+    # Funciones para seleccionar los datos de la base datos para volcarlos en el yaml
+    # Funciones auxiliares
     def selectTestName(self):
         """
         Extrae el nombre de los tests que actualmente se encuentran en la base de datos
@@ -3007,11 +3043,11 @@ class SqlDemand:
                        FROM TESTS"""
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            for key,name in enumerate(data):
+            for key, name in enumerate(data):
                 testNames.append(name[0])
-                names = names+f"{key+1}.{name[0]}\n"
+                names = names + f"{key + 1}.{name[0]}\n"
         except sqlite3.Error as e:
-            print("Sqlite Error: "+str(e))
+            print("Sqlite Error: " + str(e))
             self.conector.rollback()
         except Exception as e:
             print(e)
@@ -3020,20 +3056,21 @@ class SqlDemand:
             print(e)
             self.conector.rollback()
         finally:
-            return names,testNames
+            return names, testNames
 
-    def extractSetsFromVariable(self,variableSets):
+    def extractSetsFromVariable(self, variableSets):
         try:
             data = {}
-            for set,value in variableSets.items():
-                data.update({str(set):value})
+            for set, value in variableSets.items():
+                data.update({str(set): value})
             return data
         except Exception as e:
             print(e)
 
-    def selectAndFormatVariablesForUserPattern(self,userPatternID):
+    def selectAndFormatVariablesForUserPattern(self, userPatternID):
         """
-                Extrae los datos de la tabla VARIABLES y los reordena para posteriormente agregarlos al archivo yaml de la demanda
+                Extrae los datos de la tabla VARIABLES y los reordena para posteriormente agregarlos al archivo yaml
+                de la demanda
                 bajo la propiedad userPattern
                 :param userPatternID: ID del patron de usuario al que pertencen las variables
                 :return: Variables de userPattern
@@ -3056,10 +3093,11 @@ class SqlDemand:
             for element in data:
                 variableData = {"name": element[0], "type": element[1]}
                 if not json.loads(element[4]):
-                    variableData.update({"support": json.loads(element[2]),"sets": list(json.loads(element[3]).keys())})
+                    variableData.update(
+                        {"support": json.loads(element[2]), "sets": list(json.loads(element[3]).keys())})
                     variableData.update(self.extractSetsFromVariable(json.loads(element[3])))
                 else:
-                    variableData.update({"labels":json.loads(element[4])})
+                    variableData.update({"labels": json.loads(element[4])})
 
                 formatedData.append(variableData)
             return formatedData
@@ -3070,9 +3108,10 @@ class SqlDemand:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def selectAndExtractUserPatternDistributionForMarkets(self,demandPatternID,marketID):
+    def selectAndExtractUserPatternDistributionForMarkets(self, demandPatternID, marketID):
         """
-        Extrae los datos de la tabla USER_PATTERN_DISTRIBUTION y los reordena para posteriormente agregarlos a la propiedad markets
+        Extrae los datos de la tabla USER_PATTERN_DISTRIBUTION y los reordena para posteriormente agregarlos a la
+        propiedad markets
         bajo la propiedad user_pattern_distribution
         :param demandPatternID: ID del patron de demanda al que pertencen los mercados
         :param marketID: ID del mercado al que pertenece la distribucion del patron de usuario que vamos a obtener
@@ -3101,7 +3140,7 @@ class SqlDemand:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def selectAndExtractMarketsForDemandPattern(self,demandPatternID):
+    def selectAndExtractMarketsForDemandPattern(self, demandPatternID):
         """
         Extrae los datos de la tabla MARKETS y los reordena para posteriormente agregarlos al archivo yaml de la demanda
         bajo la propiedad userPattern
@@ -3122,9 +3161,11 @@ class SqlDemand:
             data = self.cursor.fetchall()
             formatedData = []
             for element in data:
-                formatedData.append({"market":element[0],"potential_demand":element[1],
-                                     "potential_demand_kwargs":json.loads(element[2]),
-                                     "user_pattern_distribution":self.selectAndExtractUserPatternDistributionForMarkets(demandPatternID,element[0])})
+                formatedData.append({"market": element[0], "potential_demand": element[1],
+                                     "potential_demand_kwargs": json.loads(element[2]),
+                                     "user_pattern_distribution":
+                                         self.selectAndExtractUserPatternDistributionForMarkets(
+                                         demandPatternID, element[0])})
             return formatedData
         except sqlite3.Error as e:
             print("Sqlite Error: " + str(e))
@@ -3133,25 +3174,25 @@ class SqlDemand:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def formatTspForUserPattern(self,tspData):
+    def formatTspForUserPattern(self, tspData):
         formatedData = []
         try:
-            for key,value in tspData.items():
-                formatedData.append({"id":int(key),"utility":value})
+            for key, value in tspData.items():
+                formatedData.append({"id": int(key), "utility": value})
             return formatedData
         except Exception as e:
             print(e)
 
-    def formatSeatsForUserPattern(self,seatData):
+    def formatSeatsForUserPattern(self, seatData):
         formatedData = []
         try:
-            for key,value in seatData.items():
-                formatedData.append({"id":int(key),"utility":value})
+            for key, value in seatData.items():
+                formatedData.append({"id": int(key), "utility": value})
             return formatedData
         except Exception as e:
             print(e)
 
-    #Funciones principales
+    # Funciones principales
     def getDataForDumpYamlOld(self):
         """
         (Deprecated)Genera la estructra necesaria para reconstruir el archivo de demanda mediante subfunciones para cada
@@ -3164,7 +3205,8 @@ class SqlDemand:
             self.initCursor()
             names, testNames = self.selectTestName()
             print(names)
-            testName = testNames[int(input("Introduce el numero del test que quieres extraer de la base de datos: "))-1]
+            testName = testNames[
+                int(input("Introduce el numero del test que quieres extraer de la base de datos: ")) - 1]
 
             data.update(self.getDataForMarket(testName))
             data.update(self.getDataForUserPattern(testName))
@@ -3179,9 +3221,9 @@ class SqlDemand:
             print(e)
         finally:
             self.cursor.close()
-            return testName,data
+            return testName, data
 
-    def getDataForDumpYaml(self,testName):
+    def getDataForDumpYaml(self, testName):
         """
         Genera la estructra necesaria para reconstruir el archivo de demanda mediante subfunciones para cada
         uno de los apartados dentro del archivo yaml.
@@ -3206,7 +3248,7 @@ class SqlDemand:
             self.cursor.close()
             return data
 
-    def getDataForMarket(self,testName):
+    def getDataForMarket(self, testName):
         """
         Obtiene los datos de los mercados y los formatea para que sigan la estructra de market dentro del archivo
         yaml de la demanda
@@ -3232,7 +3274,7 @@ class SqlDemand:
             data = self.cursor.fetchall()
             formatedData = [
                 {"id": int(element[0]), "departure_station": element[1], "departure_station_coords": json.loads(element[
-                                                                                                                 2]),
+                                                                                                                    2]),
                  "arrival_station": element[3], "arrival_station_coords": json.loads(element[4])} for element in data]
             outputData = {"market": formatedData}
             return outputData
@@ -3243,9 +3285,10 @@ class SqlDemand:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForUserPattern(self,testName):
+    def getDataForUserPattern(self, testName):
         """
-        Obtiene los datos de los patrones de usuario y los formatea para que sigan la estructra de userPattern dentro del archivo
+        Obtiene los datos de los patrones de usuario y los formatea para que sigan la estructra de userPattern dentro
+        del archivo
         yaml de la demanda
         :param testName: Nombre del test que se está extrayendo
         :return:
@@ -3276,12 +3319,15 @@ class SqlDemand:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": int(element[0]), "name": element[1], "rules": json.loads(element[2]),"variables":
+            formatedData = [{"id": int(element[0]), "name": element[1], "rules": json.loads(element[2]), "variables":
                 self.selectAndFormatVariablesForUserPattern(element[0]),
-                             "arrival_time": element[3], "arrival_time_kwargs": json.loads(element[4]),"purchase_day":element[5],
-                             "purchase_day_kwargs":json.loads(element[6]),"forbidden_departure_hours":json.loads(element[7]),
-                             "seats": self.formatTspForUserPattern(json.loads(element[8])), "train_service_providers": self.formatTspForUserPattern(json.loads(element[9])),
-                             "early_stop": element[10],"utility_threshold": element[11],"error":element[12],
+                             "arrival_time": element[3], "arrival_time_kwargs": json.loads(element[4]),
+                             "purchase_day": element[5],
+                             "purchase_day_kwargs": json.loads(element[6]),
+                             "forbidden_departure_hours": json.loads(element[7]),
+                             "seats": self.formatTspForUserPattern(json.loads(element[8])),
+                             "train_service_providers": self.formatTspForUserPattern(json.loads(element[9])),
+                             "early_stop": element[10], "utility_threshold": element[11], "error": element[12],
                              "error_kwargs": json.loads(element[13])} for element in data]
             outputData = {"userPattern": formatedData}
             return outputData
@@ -3292,9 +3338,10 @@ class SqlDemand:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForDemandPattern(self,testName):
+    def getDataForDemandPattern(self, testName):
         """
-        Obtiene los datos de los patrones de usuario y los formatea para que sigan la estructra de userPattern dentro del archivo
+        Obtiene los datos de los patrones de usuario y los formatea para que sigan la estructra de userPattern dentro
+        del archivo
         yaml de la demanda
         :param testName: Nombre del test que se está extrayendo
         :return:
@@ -3314,7 +3361,7 @@ class SqlDemand:
             self.cursor.execute(query)
             data = self.cursor.fetchall()
             formatedData = [{"id": int(element[0]), "name": element[1],
-                             "markets":self.selectAndExtractMarketsForDemandPattern(element[0])} for element in data]
+                             "markets": self.selectAndExtractMarketsForDemandPattern(element[0])} for element in data]
             outputData = {"demandPattern": formatedData}
             return outputData
         except sqlite3.Error as e:
@@ -3324,7 +3371,7 @@ class SqlDemand:
         except sqlite3.ProgrammingError as e:
             print(e)
 
-    def getDataForDay(self,testName):
+    def getDataForDay(self, testName):
         """
         Obtiene los datos de los días y los formatea para que sigan la estructra de day dentro del archivo
         yaml de la demanda
@@ -3357,10 +3404,12 @@ class SqlDemand:
         except sqlite3.ProgrammingError as e:
             print(e)
 
+
 class SqlResults:
     """
         Módulo que se encarga de gestionar la entrada y salida de datos de la base de datos de los resultados
-        :param db: Direccion de la base de datos de la oferta, por defecto será: <currentWorkingDirectory>/Database/resultsDb.db
+        :param db: Direccion de la base de datos de la oferta, por defecto será:
+        <currentWorkingDirectory>/Database/resultsDb.db
     """
 
     # Inicializacion del objeto SqlDemand, encargado de manejar las interacciones con la base de datos de la oferta
@@ -3369,9 +3418,11 @@ class SqlResults:
         self.defaultDatabaseFolder = self.workingDirectory + "/Database"  # Directorio para las bases de datos
         Path(self.defaultDatabaseFolder).mkdir(parents=True,
                                                exist_ok=True)  # Generamos la carpeta Database en caso de no existir
-        self.defaultResultsPath = self.defaultDatabaseFolder + "/resultsDb.db"  # Direccion de la base de datos por defecto
+        self.defaultResultsPath = self.defaultDatabaseFolder + "/resultsDb.db"  # Direccion de la base de datos por
+        # defecto
         self.conector = sqlite3.connect(db if db is not None  # Creamos la conexion con la base de datos de la oferta
-                                        else self.defaultResultsPath)  # Si la base de datos no existe, se generara automaticamente
+                                        else self.defaultResultsPath)  # Si la base de datos no existe, se generara
+        # automaticamente
         self.cursor = self.conector.cursor()  # Creamos el cursor para la base de datos
         self.enableForeignKeys()  # Habilitamos el uso de las claves foraneas en la base de datos
 
@@ -3530,7 +3581,7 @@ class SqlResults:
             self.cursor.close()
 
     # Funciones para insertar datos en la base de datos de la demanda
-    def insertTestData(self, testName,observations=""):
+    def insertTestData(self, testName, observations=""):
         """
         Inserta los datos del test en la tabla TESTS
         :param testName: Nombre del test actual
@@ -3565,7 +3616,7 @@ class SqlResults:
                 "ARRIVAL_TIME,PURCHASE_DAY,SERVICE,SERVICE_DEPARTURE_TIME,SERVICE_ARRIVAL_TIME,SEAT,PRICE,UTILITY,"
                 "BEST_SERVICE,BEST_SEAT,BEST_UTILITY) "
                 "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query, resultsData)
             self.conector.commit()
@@ -3575,7 +3626,7 @@ class SqlResults:
         except Exception as e:
             print(e)
         except sqlite3.ProgrammingError as e:
-            print("results data: "+str(e))
+            print("results data: " + str(e))
         finally:
             self.cursor.close()
 
@@ -3588,10 +3639,10 @@ class SqlResults:
         """
         self.initCursor()
         try:
-            data = [(item[0],testID)for item in resultsData]
+            data = [(item[0], testID) for item in resultsData]
             query = ("INSERT OR IGNORE INTO AUX_RESULTS (RESULTS_ID,TEST_ID) "
                      "VALUES (?,?)")
-             
+
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query, data)
             self.conector.commit()
@@ -3601,7 +3652,7 @@ class SqlResults:
         except Exception as e:
             print(e)
         except sqlite3.ProgrammingError as e:
-            print("aux results data: "+str(e))
+            print("aux results data: " + str(e))
         finally:
             self.cursor.close()
 
@@ -3616,7 +3667,7 @@ class SqlResults:
             self.initCursor()
             names, testNames = self.selectTestName()
             if names == "" or testNames == []: raise EmptyTestData
-            #print(names)
+            # print(names)
             test = int(input("Introduce el numero del test que quieras borrar: ")) - 1
             query = f"""DELETE FROM TESTS WHERE TESTS.NAME = '{testNames[test]}'"""
 
@@ -3709,7 +3760,7 @@ class SqlResults:
             return names, testNames
 
     # Funciones principales
-    def getDataForDumpCsv(self,testName):
+    def getDataForDumpCsv(self, testName):
         try:
             query = f"""SELECT *
                         FROM 
@@ -3729,11 +3780,12 @@ class SqlResults:
         except sqlite3.ProgrammingError as e:
             print(e)
 
+
 class SqlTools:
     def __init__(self):
         self.connector = sqlite3.connect(":memory:")
 
-    def validateSyntaxQuery(self,query):
+    def validateSyntaxQuery(self, query):
         try:
             self.connector.execute(f"EXPLAIN QUERY PLAN {query}")
             return True
@@ -3748,7 +3800,7 @@ class SqlTools:
             print(f"Query invalida: {e}")
             return False
 
-    def validateQueryOnDb(self,query,conn):
+    def validateQueryOnDb(self, query, conn):
         try:
             conn.execute(f"EXPLAIN QUERY PLAN {query}")
             return True, ""
@@ -3758,4 +3810,4 @@ class SqlTools:
             return False, str(e)
         except sqlite3.Error as e:
             print(f"Query invalida: {e}")
-            return False , str(e)
+            return False, str(e)
