@@ -83,8 +83,8 @@ class SupplyLoger:
         :return:
         """
         data = self.yml.getSeatData()
-        self.sqlSupply.insertSeatData(data)
-        self.sqlSupply.insertAuxSeatData(data, self.testID)
+        ids = self.sqlSupply.insertSeatData(data)
+        self.sqlSupply.insertAuxSeatData(ids, self.testID)
 
     def logTrainServiceProviderData(self):
         """
