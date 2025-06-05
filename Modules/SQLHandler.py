@@ -1,6 +1,7 @@
 # Importamos las librerias necesarias para que el módulo SQLHandler funcione
 import json
 import os
+import datetime
 import sqlite3
 from pathlib import Path
 
@@ -3385,7 +3386,7 @@ mercados
             formatedData = []
             for element in data:
                 formatedData.append(
-                    {"market": element[0], "potential_demand": element[1],
+                    {"market": int(element[0]), "potential_demand": element[1],
                      "potential_demand_kwargs": json.loads(element[2]),
                      "user_pattern_distribution":
                          self.selectAndExtractUserPatternDistributionForMarkets(
@@ -3648,8 +3649,10 @@ mercados
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": int(element[0]), "date": element[1],
-                             "demandPattern": element[2]} for element in data]
+            formatedData = [{"id": int(element[0]), "date": datetime.date(
+                *map(int,element[1].split("-"))),
+                             "demandPattern": int(element[2])} for element in
+                            data]
             outputData = {"day": formatedData}
             return outputData
         except sqlite3.Error as e:
