@@ -317,15 +317,15 @@ class SqlSupply:
         self.initCursor()
         try:
             query = """ CREATE TABLE IF NOT EXISTS SEAT (
-                            ID          TEXT PRIMARY KEY,
+                            ID          INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                            
+                            ID_ON_FILE  TEXT,
 
                             NAME        TEXT,
 
                             HARD_TYPE   TEXT,
                             
-                            SOFT_TYPE   TEXT,
-                            
-                            UNIQUE(ID,NAME,HARD_TYPE,SOFT_TYPE)
+                            SOFT_TYPE   TEXT
                         );"""
             self.cursor.execute(query)
             self.conector.commit()
@@ -378,8 +378,7 @@ class SqlSupply:
                             ID     INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,
                             ODT_ID TEXT    REFERENCES ORIGIN_DESTINATION_TUPLES (ID) ON DELETE CASCADE
                                                                                      ON UPDATE CASCADE,
-                            SEAT   TEXT    REFERENCES SEAT (ID) ON DELETE CASCADE
-                                                                ON UPDATE CASCADE,
+                            SEAT   TEXT,
                             PRICE  REAL,
                             UNIQUE(ODT_ID,SEAT,PRICE)
                         );"""
@@ -936,8 +935,10 @@ class SqlSupply:
         try:
             query = "INSERT OR IGNORE INTO ROLLING_STOCK (ID_ON_FILE,NAME,SEATS) VALUES (?,?,json(?)) RETURNING ID"
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query, rollingStockData)
-            id = self.cursor.fetchall()
+            for data in rollingStockData:
+                self.cursor.execute(query, data)
+                result = self.cursor.fetchone()
+                if result:id.append(result)
             self.conector.commit()
         except sqlite3.Error as e:
             print("Sqlite Error ROLLING_STOCK: "+str(e))
@@ -962,10 +963,10 @@ class SqlSupply:
         self.initCursor()
         try:
             query = "INSERT OR IGNORE INTO AUX_ROLLING_STOCK (ROLLING_STOCK_ID,TEST_ID) VALUES (?,?)"
-            inpuyData = [[rollingStock[0],testID]
+            inputData = [[rollingStock[0],testID]
                          for rollingStock in rollingStockData]
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query, inpuyData)
+            self.cursor.executemany(query, inputData)
             self.conector.commit()
         except sqlite3.Error as e:
             print("Sqlite Error AUX_ROLLING_STOCK: "+str(e))
@@ -986,10 +987,14 @@ class SqlSupply:
         :return:
         """
         self.initCursor()
+        id = []
         try:
-            query = "INSERT OR IGNORE INTO SEAT (ID,NAME,HARD_TYPE,SOFT_TYPE) VALUES (?,?,?,?)"
+            query = "INSERT OR IGNORE INTO SEAT (ID_ON_FILE,NAME,HARD_TYPE,SOFT_TYPE) VALUES (?,?,?,?) RETURNING ID"
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query, seatData)
+            for data in seatData:
+                self.cursor.execute(query, data)
+                result = self.cursor.fetchone()
+                if result: id.append(result)
             self.conector.commit()
         except sqlite3.Error as e:
             print("Sqlite Error SEAT: "+str(e))
@@ -1002,6 +1007,7 @@ class SqlSupply:
             self.conector.rollback()
         finally:
             self.cursor.close()
+        return id
 
     def insertAuxSeatData(self,seatData,testID):
         """
@@ -1042,8 +1048,10 @@ class SqlSupply:
             query = ("INSERT OR IGNORE INTO TRAIN_SERVICE_PROVIDER (ID_ON_FILE,NAME,ROLLING_STOCK) VALUES (?,?,"
                      "json(?)) RETURNING ID")
             self.cursor.execute("BEGIN TRANSACTION")
-            self.cursor.executemany(query, TspData)
-            id = self.cursor.fetchall()
+            for data in TspData:
+                self.cursor.execute(query, data)
+                result = self.cursor.fetchone()
+                if result:id.append(result)
             self.conector.commit()
         except sqlite3.Error as e:
             print("Sqlite Error TRAIN_SERVICE_PROVIDER: "+str(e))
@@ -1884,7 +1892,7 @@ class SqlSupply:
         """
         try:
             query = f"""SELECT
-                            SEAT.ID,
+                            SEAT.ID_ON_FILE,
                             SEAT.NAME,
                             SEAT.HARD_TYPE,
                             SEAT.SOFT_TYPE
