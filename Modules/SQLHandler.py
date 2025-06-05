@@ -172,11 +172,9 @@ class SqlSupply:
             query = """ CREATE TABLE IF NOT EXISTS AUX_CORRIDOR (
                             ID  INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
 
-                            CORRIDOR_ID TEXT REFERENCES CORRIDOR (ID) ON 
-                            DELETE CASCADE
-                                                                      ON 
-                                                                      UPDATE 
-                                                                      CASCADE,
+                            CORRIDOR_ID TEXT REFERENCES CORRIDOR (ID) 
+                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE,
 
                             TEST_ID     REFERENCES TESTS (ID) ON DELETE CASCADE
                                                               ON UPDATE CASCADE,
@@ -202,16 +200,13 @@ class SqlSupply:
         try:
             query = """ CREATE TABLE IF NOT EXISTS CORRIDOR_STATIONS (
                             ID       INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
-                            TEST_ID          REFERENCES TESTS (ID) ON DELETE 
-                            CASCADE
-                                                                   ON UPDATE 
-                                                                   CASCADE,
+                            TEST_ID          REFERENCES TESTS (ID) 
+                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE,
                             
-                            CORRIDOR TEXT    REFERENCES CORRIDOR (ID) ON 
-                            DELETE CASCADE
-                                                                      ON 
-                                                                      UPDATE 
-                                                                      CASCADE,
+                            CORRIDOR TEXT    REFERENCES CORRIDOR (ID) 
+                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE,
                             STATIONS JSON,
                             UNIQUE(TEST_ID,CORRIDOR, STATIONS)
                         );"""
@@ -238,11 +233,9 @@ class SqlSupply:
 
                             NAME        TEXT,
                             
-                            CORRIDOR    TEXT REFERENCES CORRIDOR (ID) ON 
-                            DELETE CASCADE
-                                                                      ON 
-                                                                      UPDATE 
-                                                                      CASCADE,
+                            CORRIDOR    TEXT REFERENCES CORRIDOR (ID)
+                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE,
                             
                             UNIQUE(ID,NAME,CORRIDOR)
                         );"""
@@ -267,15 +260,12 @@ class SqlSupply:
         try:
             query = """ CREATE TABLE IF NOT EXISTS ORIGIN_DESTINATION_TUPLES (
                             ID          TEXT UNIQUE PRIMARY KEY,
-                            TEST_ID     TEXT REFERENCES TESTS (ID) ON DELETE 
-                            CASCADE
-                                                                   ON UPDATE 
-                                                                   CASCADE,
-                            SERVICE_ID  TEXT REFERENCES SERVICE (ID) ON 
-                            DELETE CASCADE
-                                                                     ON 
-                                                                     UPDATE 
-                                                                     CASCADE,
+                            TEST_ID     TEXT REFERENCES TESTS (ID) 
+                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE,
+                            SERVICE_ID  TEXT REFERENCES SERVICE (ID) 
+                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE,
                             ORIGIN      TEXT,
                             
                             DESTINATION TEXT,
@@ -331,9 +321,10 @@ class SqlSupply:
             query = """ CREATE TABLE IF NOT EXISTS AUX_ROLLING_STOCK (
                             ID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
 
-                            ROLLING_STOCK_ID TEXT REFERENCES ROLLING_STOCK (
-                            ID) ON DELETE CASCADE
-                                                                                ON UPDATE CASCADE,
+                            ROLLING_STOCK_ID TEXT 
+                                             REFERENCES ROLLING_STOCK (ID)
+                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE,
 
                             TEST_ID     REFERENCES TESTS (ID) ON DELETE CASCADE
                                                               ON UPDATE CASCADE,
@@ -420,9 +411,10 @@ class SqlSupply:
         try:
             query = """ CREATE TABLE IF NOT EXISTS SEATS_PRICE (
                             ID     INTEGER UNIQUE PRIMARY KEY AUTOINCREMENT,
-                            ODT_ID TEXT    REFERENCES 
-                            ORIGIN_DESTINATION_TUPLES (ID) ON DELETE CASCADE
-                                                                                     ON UPDATE CASCADE,
+                            ODT_ID TEXT    
+                                   REFERENCES ORIGIN_DESTINATION_TUPLES (ID) 
+                                   ON DELETE CASCADE
+                                   ON UPDATE CASCADE,
                             SEAT   TEXT,
                             PRICE  REAL,
                             UNIQUE(ODT_ID,SEAT,PRICE)
@@ -450,20 +442,20 @@ class SqlSupply:
 
                             DATE                      DATE,
                             
-                            LINE                      TEXT REFERENCES LINE (
-                            ID) ON DELETE CASCADE
-                                                                                ON UPDATE CASCADE,
+                            LINE                      TEXT REFERENCES LINE (ID) 
+                                                           ON DELETE CASCADE
+                                                           ON UPDATE CASCADE,
                             TRAIN_SERVICE_PROVIDER    TEXT REFERENCES 
                             TRAIN_SERVICE_PROVIDER (ID) ON DELETE CASCADE
-                                                                                                  ON UPDATE CASCADE,
+                                                        ON UPDATE CASCADE,
                                                                                                   
                             TIME_SLOT                 TEXT REFERENCES 
                             TIME_SLOT (ID) ON DELETE CASCADE
-                                                                                     ON UPDATE CASCADE,
+                                           ON UPDATE CASCADE,
                                                                                      
                             ROLLING_STOCK             TEXT REFERENCES 
                             ROLLING_STOCK (ID) ON DELETE CASCADE
-                                                                                         ON UPDATE CASCADE,
+                                               ON UPDATE CASCADE,
                                                                                          
                             UNIQUE(ID,DATE,LINE,TRAIN_SERVICE_PROVIDER,
                             TIME_SLOT,ROLLING_STOCK)
@@ -489,10 +481,9 @@ class SqlSupply:
             query = """ CREATE TABLE IF NOT EXISTS AUX_SERVICE (
                             ID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
 
-                            SERVICE_ID TEXT REFERENCES SERVICE (ID) ON DELETE 
-                            CASCADE
-                                                                    ON UPDATE 
-                                                                    CASCADE,
+                            SERVICE_ID TEXT REFERENCES SERVICE (ID) 
+                                            ON DELETE CASCADE
+                                            ON UPDATE CASCADE,
 
                             TEST_ID     REFERENCES TESTS (ID) ON DELETE CASCADE
                                                               ON UPDATE CASCADE,
@@ -547,11 +538,9 @@ class SqlSupply:
             query = """ CREATE TABLE IF NOT EXISTS AUX_STATIONS (
                             ID INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
                             
-                            STATIONS_ID TEXT REFERENCES STATIONS (ID) ON 
-                            DELETE CASCADE
-                                                                      ON 
-                                                                      UPDATE 
-                                                                      CASCADE,
+                            STATIONS_ID TEXT REFERENCES STATIONS (ID) 
+                                             ON DELETE CASCADE
+                                             ON UPDATE CASCADE,
 
                             TEST_ID     REFERENCES TESTS (ID) ON DELETE CASCADE
                                                               ON UPDATE CASCADE,
@@ -578,16 +567,15 @@ class SqlSupply:
         try:
             query = """ CREATE TABLE IF NOT EXISTS STOPS (
                             ID             INTEGER PRIMARY KEY AUTOINCREMENT,
-                            TEST_ID        TEXT    REFERENCES TESTS (ID) ON 
-                            DELETE CASCADE
-                                                                         ON 
-                                                                         UPDATE CASCADE,
-                            LINE_ID        TEXT    REFERENCES LINE (ID) ON 
-                            DELETE CASCADE
-                                                                             ON UPDATE CASCADE,
+                            TEST_ID        TEXT    REFERENCES TESTS (ID) 
+                                                   ON DELETE CASCADE
+                                                   ON UPDATE CASCADE,
+                            LINE_ID        TEXT    REFERENCES LINE (ID) 
+                                                   ON DELETE CASCADE
+                                                   ON UPDATE CASCADE,
                             STATION        TEXT    REFERENCES STATIONS (ID) 
-                            ON DELETE CASCADE
-                                                                                     ON UPDATE CASCADE,
+                                                   ON DELETE CASCADE
+                                                   ON UPDATE CASCADE,
                             ARRIVAL_TIME   INTEGER,
                             DEPARTURE_TIME INTEGER,
                             UNIQUE(TEST_ID,LINE_ID,STATION,ARRIVAL_TIME,
@@ -640,14 +628,13 @@ class SqlSupply:
                             ID              INTEGER UNIQUE PRIMARY KEY 
                             AUTOINCREMENT,
 
-                            TIME_SLOT_ID    REFERENCES TIME_SLOT (ID) ON 
-                            DELETE CASCADE
-                                                                        ON 
-                                                                        UPDATE CASCADE,
+                            TIME_SLOT_ID    REFERENCES TIME_SLOT (ID) 
+                                            ON DELETE CASCADE
+                                            ON UPDATE CASCADE,
 
-                            TEST_ID         REFERENCES TESTS (ID) ON DELETE 
-                            CASCADE
-                                                              ON UPDATE CASCADE,
+                            TEST_ID         REFERENCES TESTS (ID) 
+                                            ON DELETE CASCADE
+                                            ON UPDATE CASCADE,
 
                             UNIQUE(TIME_SLOT_ID,TEST_ID)                      
                                                                     
@@ -703,7 +690,7 @@ class SqlSupply:
 
                             TRAIN_SERVICE_PROVIDER_ID REFERENCES 
                             TRAIN_SERVICE_PROVIDER (ID) ON DELETE CASCADE
-                                                                                             ON UPDATE CASCADE,
+                                                        ON UPDATE CASCADE,
 
                             TEST_ID     REFERENCES TESTS (ID) ON DELETE CASCADE
                                                               ON UPDATE CASCADE,
@@ -754,9 +741,9 @@ class SqlSupply:
         try:
             query = """ CREATE TABLE IF NOT EXISTS RESTRICTIONS (
                             ID          INTEGER PRIMARY KEY AUTOINCREMENT,
-                            SERVICE_ID  TEXT    REFERENCES SERVICE (ID) ON 
-                            DELETE CASCADE
-                                                                                ON UPDATE CASCADE,
+                            SERVICE_ID  TEXT    REFERENCES SERVICE (ID) 
+                                                ON DELETE CASCADE
+                                                ON UPDATE CASCADE,
                             TYPE        TEXT,
                             RESTRICTION JSON,
                             UNIQUE(SERVICE_ID,TYPE)
@@ -2194,14 +2181,14 @@ class SqlSupply:
                             TRAIN_SERVICE_PROVIDER.ROLLING_STOCK
                         FROM 
                             TRAIN_SERVICE_PROVIDER
-                        WHERE TRAIN_SERVICE_PROVIDER.ID IN (SELECT 
-                        AUX_TRAIN_SERVICE_PROVIDER.TRAIN_SERVICE_PROVIDER_ID 
+                        WHERE TRAIN_SERVICE_PROVIDER.ID IN (
+                        SELECT 
+                            AUX_TRAIN_SERVICE_PROVIDER.TRAIN_SERVICE_PROVIDER_ID 
                         FROM AUX_TRAIN_SERVICE_PROVIDER
-                                                            INNER JOIN TESTS 
-                                                            ON TESTS.ID = 
-                                                            AUX_TRAIN_SERVICE_PROVIDER.TEST_ID
-                                                            WHERE TESTS.NAME 
-                                                            = '{testName}')
+                            INNER JOIN TESTS ON TESTS.ID = 
+                            AUX_TRAIN_SERVICE_PROVIDER.TEST_ID
+                            WHERE TESTS.NAME 
+                            = '{testName}')
                         ORDER BY TRAIN_SERVICE_PROVIDER.ID ASC"""
 
             self.cursor.execute(query)
@@ -2261,38 +2248,6 @@ class SqlSupply:
             print(e)
         except sqlite3.ProgrammingError as e:
             print(e)
-
-        try:
-            query = f"""SELECT
-                            TRAIN_SERVICE_PROVIDER.ID,
-                            TRAIN_SERVICE_PROVIDER.NAME,
-                            TRAIN_SERVICE_PROVIDER.ROLLING_STOCK
-                        FROM 
-                            TRAIN_SERVICE_PROVIDER
-                        WHERE TRAIN_SERVICE_PROVIDER.ID IN (SELECT 
-                        AUX_TRAIN_SERVICE_PROVIDER.TRAIN_SERVICE_PROVIDER_ID 
-                        FROM AUX_TRAIN_SERVICE_PROVIDER
-                                                            INNER JOIN TESTS 
-                                                            ON TESTS.ID = 
-                                                            AUX_TRAIN_SERVICE_PROVIDER.TEST_ID
-                                                            WHERE TESTS.NAME 
-                                                            = '{testName}')
-                        ORDER BY TRAIN_SERVICE_PROVIDER.ID ASC"""
-
-            self.cursor.execute(query)
-            data = self.cursor.fetchall()
-            formatedData = [{"id": element[0], "name": element[1],
-                             "rolling_stock": json.loads(element[2])}
-                            for element in data]
-            outputData = {"trainServiceProvider": formatedData}
-            return outputData
-        except sqlite3.Error as e:
-            print("Sqlite Error: " + str(e))
-        except Exception as e:
-            print(e)
-        except sqlite3.ProgrammingError as e:
-            print(e)
-
 
 class SqlDemand:
     """
@@ -2525,10 +2480,10 @@ class SqlDemand:
             query = """ CREATE TABLE IF NOT EXISTS MARKETS (
                             DEMAND_PATTERN_ID       TEXT REFERENCES 
                             DEMAND_PATTERN (ID) ON DELETE CASCADE
-                                                                                        ON UPDATE CASCADE,
-                            MARKET                  TEXT REFERENCES MARKET (
-                            ID) ON DELETE CASCADE
-                                                                                ON UPDATE CASCADE,
+                                                ON UPDATE CASCADE,
+                            MARKET                  TEXT REFERENCES MARKET (ID)
+                                                         ON DELETE CASCADE
+                                                         ON UPDATE CASCADE,
                             POTENTIAL_DEMAND        TEXT,
                             POTENTIAL_DEMAND_KWARGS JSON,
                             UNIQUE(DEMAND_PATTERN_ID,MARKET,POTENTIAL_DEMAND)
@@ -2553,16 +2508,15 @@ class SqlDemand:
         self.initCursor()
         try:
             query = """ CREATE TABLE IF NOT EXISTS USER_PATTERN_DISTRIBUTION (
-                            MARKET_ID         TEXT REFERENCES MARKET (ID) ON 
-                            DELETE CASCADE
-                                                                          ON 
-                                                                          UPDATE CASCADE,
-                            DEMAND_PATTERN_ID TEXT REFERENCES DEMAND_PATTERN 
-                            (ID) ON DELETE CASCADE
-                                                                                  ON UPDATE CASCADE,
-                            USER_PATTERN_ID   TEXT REFERENCES USER_PATTERN (
-                            ID) ON DELETE CASCADE
-                                                                                ON UPDATE CASCADE,
+                            MARKET_ID         TEXT REFERENCES MARKET (ID) 
+                                                   ON DELETE CASCADE
+                                                   ON UPDATE CASCADE,
+                            DEMAND_PATTERN_ID TEXT REFERENCES DEMAND_PATTERN (ID) 
+                                                   ON DELETE CASCADE
+                                                   ON UPDATE CASCADE,
+                            USER_PATTERN_ID   TEXT REFERENCES USER_PATTERN (ID)
+                                                   ON DELETE CASCADE
+                                                   ON UPDATE CASCADE,
                             PERCENTAGE        REAL,
                             UNIQUE(MARKET_ID,DEMAND_PATTERN_ID,
                             USER_PATTERN_ID,PERCENTAGE)
@@ -2587,8 +2541,8 @@ class SqlDemand:
         try:
             query = """ CREATE TABLE IF NOT EXISTS VARIABLE (
                             USER_PATTERN_ID TEXT REFERENCES USER_PATTERN (ID) 
-                            ON DELETE CASCADE
-                                                                              ON UPDATE CASCADE,
+                                                 ON DELETE CASCADE
+                                                 ON UPDATE CASCADE,
                             NAME            TEXT,
                             TYPE            TEXT,
                             SUPPORT         JSON,
@@ -2618,15 +2572,12 @@ class SqlDemand:
                             ID        INTEGER PRIMARY KEY AUTOINCREMENT
                                               NOT NULL
                                               UNIQUE,
-                            MARKET_ID TEXT    REFERENCES MARKET (ID) ON 
-                            DELETE CASCADE
-                                                                     ON 
-                                                                     UPDATE 
-                                                                     CASCADE,
-                            TEST_ID   INTEGER REFERENCES TESTS (ID) ON DELETE 
-                            CASCADE
-                                                                    ON UPDATE 
-                                                                    CASCADE,
+                            MARKET_ID TEXT    REFERENCES MARKET (ID) 
+                                              ON DELETE CASCADE
+                                              ON UPDATE CASCADE,
+                            TEST_ID   INTEGER REFERENCES TESTS (ID) 
+                                              ON DELETE CASCADE
+                                              ON UPDATE CASCADE,
                             UNIQUE(MARKET_ID,TEST_ID)
                         );"""
             self.cursor.execute(query)
@@ -2653,10 +2604,10 @@ class SqlDemand:
                                                       NOT NULL,
                             DEMAND_PATTERN_ID TEXT    REFERENCES 
                             DEMAND_PATTERN (ID) ON DELETE CASCADE
-                                                                                     ON UPDATE CASCADE,
+                                                ON UPDATE CASCADE,
                             TEST_ID           INTEGER REFERENCES TESTS (ID) 
-                            ON DELETE CASCADE
-                                                                            ON UPDATE CASCADE,
+                                                      ON DELETE CASCADE
+                                                      ON UPDATE CASCADE,
                             UNIQUE(DEMAND_PATTERN_ID,TEST_ID)
                         );"""
             self.cursor.execute(query)
@@ -2681,13 +2632,12 @@ class SqlDemand:
                             ID              INTEGER PRIMARY KEY AUTOINCREMENT
                                                     NOT NULL
                                                     UNIQUE,
-                            USER_PATTERN_ID TEXT    REFERENCES USER_PATTERN (
-                            ID) ON DELETE CASCADE
-                                                                                 ON UPDATE CASCADE,
-                            TEST_ID         INTEGER REFERENCES TESTS (ID) ON 
-                            DELETE CASCADE
-                                                                          ON 
-                                                                          UPDATE CASCADE,
+                            USER_PATTERN_ID TEXT    REFERENCES USER_PATTERN (ID)
+                                                    ON DELETE CASCADE
+                                                    ON UPDATE CASCADE,
+                            TEST_ID         INTEGER REFERENCES TESTS (ID)
+                                                    ON DELETE CASCADE
+                                                    ON UPDATE CASCADE,
                             UNIQUE(USER_PATTERN_ID,TEST_ID)
                         );"""
             self.cursor.execute(query)
@@ -2709,12 +2659,11 @@ class SqlDemand:
         self.initCursor()
         try:
             query = """CREATE TABLE IF NOT EXISTS DAY (
-                            ID             TEXT PRIMARY KEY
-                                                UNIQUE,
+                            ID             TEXT PRIMARY KEY UNIQUE,
                             DATE           DATE,
-                            DEMAND_PATTERN TEXT REFERENCES DEMAND_PATTERN (
-                            ID) ON DELETE CASCADE
-                                                                               ON UPDATE CASCADE,
+                            DEMAND_PATTERN TEXT REFERENCES DEMAND_PATTERN (ID) 
+                                                ON DELETE CASCADE
+                                                ON UPDATE CASCADE,
                             UNIQUE(ID,DATE,DEMAND_PATTERN)
                         );"""
             self.cursor.execute(query)
@@ -2737,17 +2686,14 @@ class SqlDemand:
         try:
             query = """ CREATE TABLE IF NOT EXISTS AUX_DAY (
                                     ID              INTEGER PRIMARY KEY 
-                                    AUTOINCREMENT
-                                                            NOT NULL
-                                                            UNIQUE,
-                                    DAY_ID TEXT    REFERENCES DAY (ID) ON 
-                                    DELETE CASCADE
-                                                                       ON 
-                                                                       UPDATE 
-                                                                       CASCADE,
-                                    TEST_ID         INTEGER REFERENCES TESTS 
-                                    (ID) ON DELETE CASCADE
-                                                                                  ON UPDATE CASCADE,
+                                    AUTOINCREMENT NOT NULL UNIQUE,
+                                    
+                                    DAY_ID TEXT    REFERENCES DAY (ID) 
+                                                   ON DELETE CASCADE
+                                                   ON UPDATE CASCADE,
+                                    TEST_ID         INTEGER REFERENCES TESTS (ID)
+                                                            ON DELETE CASCADE
+                                                            ON UPDATE CASCADE,
                                     UNIQUE(DAY_ID,TEST_ID));"""
             self.cursor.execute(query)
             self.conector.commit()
@@ -3550,9 +3496,9 @@ mercados
                             MARKET
                         WHERE MARKET.ID IN (SELECT AUX_MARKET.MARKET_ID FROM 
                         AUX_MARKET
-                                              INNER JOIN TESTS ON TESTS.ID = 
-                                              AUX_MARKET.TEST_ID
-                                              WHERE TESTS.NAME = '{testName}')
+                        INNER JOIN TESTS ON TESTS.ID = 
+                        AUX_MARKET.TEST_ID
+                        WHERE TESTS.NAME = '{testName}')
                         ORDER BY MARKET.ID ASC"""
 
             self.cursor.execute(query)
