@@ -10,7 +10,7 @@ from Modules.SQLHandler import *
 from Modules.configManager import Config
 from Modules.csvHandler import *
 from Modules.dataLoger import *
-from Modules.yalmWriter import Writer
+from Modules.yamlWriter import Writer
 
 class UI:
     """

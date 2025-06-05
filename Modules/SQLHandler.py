@@ -123,7 +123,9 @@ class SqlSupply:
         try:
             query = """ CREATE TABLE IF NOT EXISTS CORRIDOR (
                             ID          TEXT PRIMARY KEY,
+                            
                             NAME        TEXT,
+                            
                             UNIQUE(ID,NAME)
                         );"""
             self.cursor.execute(query)
@@ -207,6 +209,7 @@ class SqlSupply:
                             
                             CORRIDOR    TEXT REFERENCES CORRIDOR (ID) ON DELETE CASCADE
                                                                       ON UPDATE CASCADE,
+                            
                             UNIQUE(ID,NAME,CORRIDOR)
                         );"""
             self.cursor.execute(query)
@@ -258,13 +261,13 @@ class SqlSupply:
         self.initCursor()
         try:
             query = """ CREATE TABLE IF NOT EXISTS ROLLING_STOCK (
-                            ID                  TEXT PRIMARY KEY UNIQUE,
+                            ID          INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                            
+                            ID_ON_FILE  TEXT,
                             
                             NAME                TEXT,
                             
-                            SEATS               JSON,
-                            
-                            UNIQUE(ID,NAME)
+                            SEATS               JSON
                         );"""
             self.cursor.execute(query)
             self.conector.commit()
@@ -604,11 +607,12 @@ class SqlSupply:
         self.initCursor()
         try:
             query = """ CREATE TABLE IF NOT EXISTS TRAIN_SERVICE_PROVIDER (
-                            ID                          TEXT PRIMARY KEY,
+                            ID          INTEGER PRIMARY KEY AUTOINCREMENT UNIQUE,
+                            
+                            ID_ON_FILE  TEXT,
 
                             NAME                        TEXT,
-                            ROLLING_STOCK               JSON,
-                            UNIQUE(ID,NAME)
+                            ROLLING_STOCK               JSON
                         );"""
             self.cursor.execute(query)
             self.conector.commit()
@@ -707,6 +711,7 @@ class SqlSupply:
         :return:
         """
         self.initCursor()
+        id = []
         try:
             query = "INSERT OR IGNORE INTO CORRIDOR (ID,NAME) VALUES (?,?)"
             data = [corridor[:2]
@@ -725,6 +730,7 @@ class SqlSupply:
             self.conector.rollback()
         finally:
             self.cursor.close()
+        return id
 
     def insertAuxCorridorData(self,corridorData,testID):
         """
@@ -768,9 +774,12 @@ class SqlSupply:
             #    self.cursor.execute(queryFormated)
             query = ("INSERT OR IGNORE INTO CORRIDOR_STATIONS (TEST_ID,CORRIDOR,STATIONS) "
                      "VALUES (?,?,?) ")
-            inputData = [[testID,corridor[0], json.dumps(line)]
+            inputData = [[testID, corridor[0], json.dumps(line)]
                          for corridor in corridorData
                          for line in corridor[2]]
+            # lines = [[line] for corridor in corridorData for line in corridor[2]]
+            # for n,line in enumerate(lines):
+            #     print(f"Ramal {n}: {line}")
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query,inputData)
             self.conector.commit()
@@ -897,8 +906,9 @@ class SqlSupply:
         """
         self.initCursor()
         try:
-            query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}')"
+            query = f"INSERT OR IGNORE INTO TESTS (NAME) VALUES ('{testName}') RETURNING ID"
             self.cursor.execute(query)
+            id = self.cursor.fetchone()
             query =  f"UPDATE TESTS SET OBSERVATIONS = '{observations}' WHERE TESTS.NAME = '{testName}'"
             self.cursor.execute(query)
             self.conector.commit()
@@ -913,6 +923,7 @@ class SqlSupply:
             self.conector.rollback()
         finally:
             self.cursor.close()
+        return id
 
     def insertRollingStockData(self, rollingStockData):
         """
@@ -921,10 +932,12 @@ class SqlSupply:
         :return:
         """
         self.initCursor()
+        id = []
         try:
-            query = "INSERT OR IGNORE INTO ROLLING_STOCK (ID,NAME,SEATS) VALUES (?,?,json(?))"
+            query = "INSERT OR IGNORE INTO ROLLING_STOCK (ID_ON_FILE,NAME,SEATS) VALUES (?,?,json(?)) RETURNING ID"
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query, rollingStockData)
+            id = self.cursor.fetchall()
             self.conector.commit()
         except sqlite3.Error as e:
             print("Sqlite Error ROLLING_STOCK: "+str(e))
@@ -937,6 +950,7 @@ class SqlSupply:
             self.conector.rollback()
         finally:
             self.cursor.close()
+        return id
 
     def insertAuxRollingStockData(self,rollingStockData,testID):
         """
@@ -1023,10 +1037,13 @@ class SqlSupply:
         :return:
         """
         self.initCursor()
+        id = []
         try:
-            query = "INSERT OR IGNORE INTO TRAIN_SERVICE_PROVIDER (ID,NAME,ROLLING_STOCK) VALUES (?,?,json(?))"
+            query = ("INSERT OR IGNORE INTO TRAIN_SERVICE_PROVIDER (ID_ON_FILE,NAME,ROLLING_STOCK) VALUES (?,?,"
+                     "json(?)) RETURNING ID")
             self.cursor.execute("BEGIN TRANSACTION")
             self.cursor.executemany(query, TspData)
+            id = self.cursor.fetchall()
             self.conector.commit()
         except sqlite3.Error as e:
             print("Sqlite Error TRAIN_SERVICE_PROVIDER: "+str(e))
@@ -1039,6 +1056,7 @@ class SqlSupply:
             self.conector.rollback()
         finally:
             self.cursor.close()
+        return id
 
     def insertAuxTrainServiceProviderData(self, TspData,testID):
         """
@@ -1911,7 +1929,8 @@ class SqlSupply:
 
             self.cursor.execute(query)
             data = self.cursor.fetchall()
-            formatedData = [{"id": element[0], "name": element[1], "stations": self.formatCorridorStationsForCorridor(element[0],testName)}
+            formatedData = [{"id": element[0], "name": element[1], "stations":
+                self.formatCorridorStationsForCorridor(element[0],testName)}
                             for element in data]
             outputData = {"corridor": formatedData}
             return outputData
@@ -1931,7 +1950,7 @@ class SqlSupply:
         """
         try:
             query = f"""SELECT
-                            ROLLING_STOCK.ID,
+                            ROLLING_STOCK.ID_ON_FILE,
                             ROLLING_STOCK.NAME,
                             ROLLING_STOCK.SEATS
                         FROM 
@@ -1964,7 +1983,7 @@ class SqlSupply:
         """
         try:
             query = f"""SELECT
-                            TRAIN_SERVICE_PROVIDER.ID,
+                            TRAIN_SERVICE_PROVIDER.ID_ON_FILE,
                             TRAIN_SERVICE_PROVIDER.NAME,
                             TRAIN_SERVICE_PROVIDER.ROLLING_STOCK
                         FROM 

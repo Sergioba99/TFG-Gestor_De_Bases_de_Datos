@@ -23,17 +23,19 @@ class SupplyLoger:
         :return:
         """
         testData = self.yml.supplyFileName
-        self.sqlSupply.insertTestsData(testData,observations)
-        self.testID = self.sqlSupply.executeSelectTestsIDQuery(f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
-        print("Tests -> Data: " + str([self.testID, testData]))
-        self.logCorridorData()
-        self.logRollingStockData()
-        self.logStationsData()
-        self.logLineData()
-        self.logTimeSlotData()
-        self.logTrainServiceProviderData()
-        self.logSeatData()
-        self.logServiceData()
+        self.testID = self.sqlSupply.insertTestsData(testData,observations)
+        # self.testID = self.sqlSupply.executeSelectTestsIDQuery(f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
+        if self.testID:
+            self.testID = self.testID[0]
+            print("Tests -> Data: " + str([self.testID, testData]))
+            self.logCorridorData()
+            self.logRollingStockData()
+            self.logStationsData()
+            self.logLineData()
+            self.logTimeSlotData()
+            self.logTrainServiceProviderData()
+            self.logSeatData()
+            self.logServiceData()
         self.testID = None
 
     # Funciones auxiliares
@@ -72,8 +74,8 @@ class SupplyLoger:
         :return:
         """
         data = self.yml.getRollingStockData()
-        self.sqlSupply.insertRollingStockData(data)
-        self.sqlSupply.insertAuxRollingStockData(data, self.testID)
+        ids = self.sqlSupply.insertRollingStockData(data)
+        self.sqlSupply.insertAuxRollingStockData(ids, self.testID)
             
     def logSeatData(self):
         """
@@ -90,8 +92,8 @@ class SupplyLoger:
         :return:
         """
         data = self.yml.getTrainServiceProviderData()
-        self.sqlSupply.insertTrainServiceProviderData(data)
-        self.sqlSupply.insertAuxTrainServiceProviderData(data, self.testID)
+        ids = self.sqlSupply.insertTrainServiceProviderData(data)
+        self.sqlSupply.insertAuxTrainServiceProviderData(ids, self.testID)
 
     def logLineData(self):
         """

@@ -70,7 +70,8 @@ class Parser:
         try:
             f = filedialog.askopenfilename(title="Seleccionar archivo de oferta",
                                            initialdir=self.defaultInputDataFolder,
-                                           filetypes=[("Archivos YAML", "*.yml"), ("Todos los archivos", "*.*")],
+                                           filetypes=[("Archivos YAML", ("*.yml","*.yaml")), ("Todos los archivos",
+                                                                                           "*.*")],
                                            defaultextension=".yml")
             if f != "":
                 self.supplyFilePath = f.replace("/", "/")
@@ -96,7 +97,7 @@ class Parser:
         try:
             f = filedialog.askopenfilename(title="Seleccionar archivo de demanda",
                                            initialdir=self.defaultInputDataFolder,
-                                           filetypes=[("Archivos YAML", "*.yml"), ("Todos los archivos", "*.*")],
+                                           filetypes=[("Archivos YAML", ("*.yml","*.yaml")), ("Todos los archivos", "*.*")],
                                            defaultextension=".yml")
             if f != "":
                 self.demandFilePath = f.replace("/", "/")
@@ -525,34 +526,54 @@ class Parser:
             return -1
 
     # Funciones auxiliares de corridor
-    def extractStationsFromCorridor(self,stationsData: list):
+    def extractStationsFromCorridor(self,stationsData: list, stations=None):
         """
         Extrae las estaciones por las que va a pasar el corredor a partir de los datos obtenidos directamente del
         archivo Yaml. Esta funcion devuelve una lista ordenada con todas las estaciones siendo el primer elemento el
         punto de partida del corredor y el ultimo elemento el final del corredor.
         :param stationsData: lista en las que estan contenidos los IDs de todas las estaciones por las que va a pasar el
         corredor
+        :param stations: ruta actual acumulada (se utiliza internamente al llamar recursivamente).
         :return: Devuelve una lista ordenada con las paradas del corredor.
         """
-        stations = []
-        allStations = []
+        if stations is None:
+            stations = []
+
+        # Se hace una copia de stationsData para evitar modificar el original
         data = deepcopy(stationsData)
-        counter = 1
-        while data:
-            if type(data) == list:
-                stations.append(data[0].get("org"))
-                l2 = data[0].get("des")
+        allStations = []
+
+        if isinstance(data, list):
+            # Se recorre cada elemento de la lista (cada elemento representa un inicio o ramal)
+            for item in data:
+                newStations = stations.copy()
+                newStations.append(item.get("org"))
+                l2 = item.get("des")
+                if l2:
+                    # Si existen destinos, se llama recursivamente (ya sea que l2 sea lista o diccionario)
+                    if isinstance(l2, (list, dict)):
+                        allStations.extend(self.extractStationsFromCorridor(l2, newStations))
+                    else:
+                        allStations.append(newStations)
+                else:
+                    # No hay más destinos: se agrega la ruta completa
+                    allStations.append(newStations)
+        elif isinstance(data, dict):
+            # Caso en el que data es un único diccionario
+            newStations = stations.copy()
+            newStations.append(data.get("org"))
+            l2 = data.get("des")
+            if l2:
+                if isinstance(l2, (list, dict)):
+                    allStations.extend(self.extractStationsFromCorridor(l2, newStations))
+                else:
+                    allStations.append(newStations)
             else:
-                stations.append(data.get("org"))
-                l2 = data.get("des")
-            counter += 1
-            if len(l2) > 1:
-                otherLine = self.extractStationsFromCorridor(l2[1])
-                while otherLine:
-                    allStations.append(stations + otherLine[0])
-                    otherLine.pop(0)
-            data = l2 if l2 else []
-        allStations.append(stations)
+                allStations.append(newStations)
+        else:
+            # En caso de que data no tenga el formato esperado, se retorna la ruta actual
+            allStations.append(stations)
+
         return allStations
 
     # Funciones para campos especificos de seats
