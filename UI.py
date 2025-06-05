@@ -14,7 +14,8 @@ from Modules.yamlWriter import Writer
 
 class UI:
     """
-    Clase encargada de la generacion de la ventana principal de la interfaz grafica, asi como de la logica que rige
+    Clase encargada de la generacion de la ventana principal de la interfaz
+    grafica, asi como de la logica que rige
     la aplicacion
     """
 
@@ -22,37 +23,53 @@ class UI:
         self.root = tk.Tk()  # Inicializacion de la ventana
         self.root.withdraw()
         # self.root.geometry("1000x525")  # Ajuste del tamaño de ventana
-        self.root.title("TFG - Gestor de base de datos")  # Establecimiento del nombre de la ventana
+        self.root.title(
+            "TFG - Gestor de base de datos")  # Establecimiento del nombre de
+        # la ventana
         icon = tk.PhotoImage(
-            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.png"))
+            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(
+                os.path.abspath(__file__))), "icon.png"))
         self.root.iconphoto(False, icon)
-        self.root.columnconfigure(0, weight=1)  # Activacion del autoajuste de la columna 0
-        self.root.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
+        self.root.columnconfigure(0,
+                                  weight=1)  # Activacion del autoajuste de
+        # la columna 0
+        self.root.resizable(False,
+                            False)  # Restriccion del redimensionamiento de
+        # la ventana principal
         self.root.protocol("WM_DELETE_WINDOW",
-                           self.onCloseEvent)  # Registro de la función a ejecutar al cerrar la aplicacion
+                           self.onCloseEvent)  # Registro de la función a
+        # ejecutar al cerrar la aplicacion
         self.supplyLoger = SupplyLoger  # Inicializacion del objeto SupplyLoger
         self.demandLoger = DemandLoger  # Inicializacion del objeto DemandLoger
-        self.resultsLoger = ResultsLoger  # Inicializacion del objeto ResultsLoger
+        self.resultsLoger = ResultsLoger  # Inicializacion del objeto
+        # ResultsLoger
         self.ymlParser = Parser()  # Inicializacion del módulo yamlParser
         self.ymlWriter = Writer()  # Inicializacion del módulo yamlWriter
-        self.sqlSupply = SqlSupply()  # Inicializacion del objeto SqlSupply del módulo SQLHandler
-        self.sqlDemand = SqlDemand()  # Inicializacion del objeto SqlDemand del módulo SQLHandler
-        self.sqlResults = SqlResults()  # Inicializacion del objeto SqlResults del módulo SQLHandler
+        self.sqlSupply = SqlSupply()  # Inicializacion del objeto SqlSupply
+        # del módulo SQLHandler
+        self.sqlDemand = SqlDemand()  # Inicializacion del objeto SqlDemand
+        # del módulo SQLHandler
+        self.sqlResults = SqlResults()  # Inicializacion del objeto
+        # SqlResults del módulo SQLHandler
         self.config = Config()  # Inicializacion del módulo configManager
-        self.csvReader = csvReader()  # Inicializacion del objeto csvReader del módulo csvHandler
-        self.csvWriter = csvWriter  # Inicializacion del objeto csvWriter del módulo csvHandler
+        self.csvReader = csvReader()  # Inicializacion del objeto csvReader
+        # del módulo csvHandler
+        self.csvWriter = csvWriter  # Inicializacion del objeto csvWriter del
+        # módulo csvHandler
         self.init_ui()  # Inicializacion de la interfaz
         self.root.deiconify()
 
     def init_ui(self):
         """
-        Funcion encargada de la inicializacion de la ventana principal de la aplicacion
+        Funcion encargada de la inicializacion de la ventana principal de la
+        aplicacion
         :return: None
         """
         # Seccion de importaciones
         # Marco de importacion
         importTitle = tk.Label(self.root, text="Importar a la base de datos")
-        importFrame = tk.LabelFrame(self.root, labelwidget=importTitle, labelanchor="n", padx=5, pady=5)
+        importFrame = tk.LabelFrame(self.root, labelwidget=importTitle,
+                                    labelanchor="n", padx=5, pady=5)
         importFrame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
         importFrame.columnconfigure((0, 1, 2), weight=1)
 
@@ -89,7 +106,8 @@ class UI:
         # Seccion de exportaciones
         # Marco de importacion
         exportTitle = tk.Label(self.root, text="Exportar de la base de datos")
-        exportFrame = tk.LabelFrame(self.root, labelwidget=exportTitle, labelanchor="n", padx=5, pady=5)
+        exportFrame = tk.LabelFrame(self.root, labelwidget=exportTitle,
+                                    labelanchor="n", padx=5, pady=5)
         exportFrame.grid(row=1, column=0, padx=10, pady=10, sticky="nsew")
         exportFrame.columnconfigure((0, 1, 2), weight=1)
 
@@ -125,105 +143,139 @@ class UI:
 
         # Botones para borrar tests completos
         deleteTitle = tk.Label(self.root, text="Eliminar de la base de datos")
-        deleteFrame = tk.LabelFrame(self.root, labelwidget=deleteTitle, labelanchor="n", padx=5, pady=5)
+        deleteFrame = tk.LabelFrame(self.root, labelwidget=deleteTitle,
+                                    labelanchor="n", padx=5, pady=5)
         deleteFrame.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
         deleteFrame.columnconfigure((0, 1, 2), weight=1)
 
         # Boton para borrar tests de oferta
-        tk.Button(deleteFrame, text="Eliminar test de oferta", command=lambda: self.deleteFromDataBase("oferta")).grid(
+        tk.Button(deleteFrame, text="Eliminar test de oferta",
+                  command=lambda: self.deleteFromDataBase("oferta")).grid(
             row=2, column=0, padx=5, pady=5, sticky="nsew")
 
         # Boton para borrar tests de demanda
         tk.Button(deleteFrame, text="Eliminar test de demanda",
-                  command=lambda: self.deleteFromDataBase("demanda")).grid(row=2, column=1, padx=5, pady=5,
-                                                                           sticky="nsew")
+                  command=lambda: self.deleteFromDataBase("demanda")).grid(
+            row=2, column=1, padx=5, pady=5,
+            sticky="nsew")
 
         # Boton para borrar tests de resultados
         tk.Button(deleteFrame, text="Eliminar test de resultados",
-                  command=lambda: self.deleteFromDataBase("resultados")).grid(row=2, column=2, padx=5, pady=5,
-                                                                              sticky="nsew")
+                  command=lambda: self.deleteFromDataBase("resultados")).grid(
+            row=2, column=2, padx=5, pady=5,
+            sticky="nsew")
 
         # Seccion de SQL
         # Marco de SQL
         sqlTitle = tk.Label(self.root, text="SQL")
-        sqlFrame = tk.LabelFrame(self.root, labelwidget=sqlTitle, labelanchor="n", padx=5, pady=5)
+        sqlFrame = tk.LabelFrame(self.root, labelwidget=sqlTitle,
+                                 labelanchor="n", padx=5, pady=5)
         sqlFrame.grid(row=3, column=0, padx=10, pady=10, sticky="nsew")
 
         # Seleccion de querys guardadas
-        tk.Label(sqlFrame, text="Querys almacenadas").grid(row=0, column=0, padx=5, pady=5, sticky="esn")
+        tk.Label(sqlFrame, text="Querys almacenadas").grid(row=0, column=0,
+                                                           padx=5, pady=5,
+                                                           sticky="esn")
 
         # Creacion del selector y sus dependencias
         queryComboboxOption = tk.StringVar()
-        queryCombobox = ttk.Combobox(sqlFrame, textvariable=queryComboboxOption, state="readonly", justify="left",
-                                     postcommand=lambda: self.updateComboboxQuerys(queryCombobox), width=105)
+        queryCombobox = ttk.Combobox(sqlFrame, textvariable=queryComboboxOption,
+                                     state="readonly", justify="left",
+                                     postcommand=lambda:
+                                     self.updateComboboxQuerys(
+                                         queryCombobox), width=105)
         queryCombobox.grid(row=0, column=1, padx=5, pady=5, sticky="nsew")
 
         # Manejo de querys introducidas por el usuario
-        tk.Label(sqlFrame, text="Entrada de querys").grid(row=1, column=0, padx=5, pady=5, sticky="esn", rowspan=2)
+        tk.Label(sqlFrame, text="Entrada de querys").grid(row=1, column=0,
+                                                          padx=5, pady=5,
+                                                          sticky="esn",
+                                                          rowspan=2)
 
-        # Creacion de la entrada de texto para la ejecucion de querys definidas por el usuario y la adicion de estas
+        # Creacion de la entrada de texto para la ejecucion de querys
+        # definidas por el usuario y la adicion de estas
         # al archivo de configuracion
         # queryTextOption = tk.StringVar()
         textFrame = tk.Frame(sqlFrame)
-        textFrame.grid(row=1, column=1, padx=5, pady=5, sticky="nsew", rowspan=3)
+        textFrame.grid(row=1, column=1, padx=5, pady=5, sticky="nsew",
+                       rowspan=3)
 
         queryText = tk.Text(textFrame, width=79, height=10)
         queryText.grid(row=0, column=0, sticky="nsew")
 
-        textScrollY = ttk.Scrollbar(textFrame, orient="vertical", command=queryText.yview)
+        textScrollY = ttk.Scrollbar(textFrame, orient="vertical",
+                                    command=queryText.yview)
         textScrollY.grid(row=0, column=1, sticky="ns")
         queryText.config(yscrollcommand=textScrollY.set)
 
-        textScrollX = ttk.Scrollbar(textFrame, orient="horizontal", command=queryText.xview)
+        textScrollX = ttk.Scrollbar(textFrame, orient="horizontal",
+                                    command=queryText.xview)
         textScrollX.grid(row=1, column=0, sticky="ew")
         queryText.config(xscrollcommand=textScrollX.set)
 
         buttonFrame = tk.Frame(sqlFrame)
         buttonFrame.grid(row=0, column=3, rowspan=5, sticky="nsew")
-        buttonFrame.grid_rowconfigure((tuple([x for x in range(3, 6)] + [1])), weight=1)
+        buttonFrame.grid_rowconfigure((tuple([x for x in range(3, 6)] + [1])),
+                                      weight=1)
 
         # Boton para ejecutar la query del selector
-        tk.Button(buttonFrame, text="Ejecutar", command=lambda: self.executeSqlQuery(queryComboboxOption)).grid(row=0,
-                                                                                                                column=2,
-                                                                                                                padx=5,
-                                                                                                                pady=5,
-                                                                                                                sticky="nsew")
+        tk.Button(buttonFrame, text="Ejecutar",
+                  command=lambda: self.executeSqlQuery(
+                      queryComboboxOption)).grid(row=0,
+                                                 column=2,
+                                                 padx=5,
+                                                 pady=5,
+                                                 sticky="nsew")
 
-        # Boton para borrar la query que aparece en el selector del archivo de configuracion
+        # Boton para borrar la query que aparece en el selector del archivo
+        # de configuracion
         tk.Button(buttonFrame, text="Eliminar",
-                  command=lambda: self.deleteSqlQuery(queryCombobox, queryComboboxOption)).grid(row=0, column=3, padx=5,
-                                                                                                pady=5, sticky="nsew")
+                  command=lambda: self.deleteSqlQuery(queryCombobox,
+                                                      queryComboboxOption)).grid(
+            row=0, column=3, padx=5,
+            pady=5, sticky="nsew")
 
         # Boton para borrar el texto de la entrada de texto
-        tk.Button(buttonFrame, text="Borrar", command=lambda: self.clearQueryText(queryText)).grid(row=2, column=2,
-                                                                                                   padx=5,
-                                                                                                   pady=5,
-                                                                                                   sticky="nsew")
+        tk.Button(buttonFrame, text="Borrar",
+                  command=lambda: self.clearQueryText(queryText)).grid(row=2,
+                                                                       column=2,
+                                                                       padx=5,
+                                                                       pady=5,
+                                                                       sticky="nsew")
 
         # Boton para ejecutar la query introducida por el usuario
-        tk.Button(buttonFrame, text="Ejecutar", command=lambda: self.executeSqlQuery(queryText)).grid(row=2, column=3,
-                                                                                                      padx=5, pady=5,
-                                                                                                      sticky="nsew")
+        tk.Button(buttonFrame, text="Ejecutar",
+                  command=lambda: self.executeSqlQuery(queryText)).grid(row=2,
+                                                                        column=3,
+                                                                        padx=5,
+                                                                        pady=5,
+                                                                        sticky="nsew")
 
         # Boton para añadir la query del usuario a la configuracion
-        tk.Button(buttonFrame, text="Añadir", command=lambda: self.addSqlQuery(queryText)).grid(row=2, column=4, padx=5,
-                                                                                                pady=5, sticky="nsew")
+        tk.Button(buttonFrame, text="Añadir",
+                  command=lambda: self.addSqlQuery(queryText)).grid(row=2,
+                                                                    column=4,
+                                                                    padx=5,
+                                                                    pady=5,
+                                                                    sticky="nsew")
 
         # Boton para cargar una query dentro de un archivo SQL
-        tk.Button(buttonFrame, text="Cargar desde archivo", command=lambda: self.loadSqlQuery(queryText)).grid(row=3,
-                                                                                                               column=2,
-                                                                                                               padx=5,
-                                                                                                               pady=5,
-                                                                                                               sticky="nsew",
-                                                                                                               columnspan=3)
+        tk.Button(buttonFrame, text="Cargar desde archivo",
+                  command=lambda: self.loadSqlQuery(queryText)).grid(row=3,
+                                                                     column=2,
+                                                                     padx=5,
+                                                                     pady=5,
+                                                                     sticky="nsew",
+                                                                     columnspan=3)
 
         # Boton para reiniciar la lista de querys a sus valores por defecto
-        tk.Button(buttonFrame, text="Reiniciar querys almacenadas", command=lambda: self.resetSqlQuerys()).grid(row=4,
-                                                                                                                column=2,
-                                                                                                                padx=5,
-                                                                                                                pady=5,
-                                                                                                                sticky="nsew",
-                                                                                                                columnspan=3)
+        tk.Button(buttonFrame, text="Reiniciar querys almacenadas",
+                  command=lambda: self.resetSqlQuerys()).grid(row=4,
+                                                              column=2,
+                                                              padx=5,
+                                                              pady=5,
+                                                              sticky="nsew",
+                                                              columnspan=3)
 
         # Boton de salida
         tk.Button(self.root,
@@ -248,7 +300,8 @@ class UI:
     # Funcion para importar archivos de oferta
     def importSupplyButtonEvent(self):
         """
-        Funcion encargada de importar un archivo de oferta a la base de datos al presionar el boton 'Importar archivo
+        Funcion encargada de importar un archivo de oferta a la base de datos
+        al presionar el boton 'Importar archivo
         de oferta'
         :return: None
         """
@@ -256,21 +309,32 @@ class UI:
         # print(supplyFile)
         observations = ""
         if supplyFile != -2 and supplyFile != -1:
-            if messagebox.askyesno("Añadir observaciones", "¿Desea añadir observaciones al test que se va a importar?"):
+            if messagebox.askyesno("Añadir observaciones",
+                                   "¿Desea añadir observaciones al test que "
+                                   "se va a importar?"):
                 observations = PersonalizedAsktext(self.root, "Observación",
-                                                   "Introduzca la observación para el test").returnValue()
-            self.supplyLoger(self.ymlParser, self.sqlSupply).logSupplyTestData(observations)
-            messagebox.showinfo("Importar archivo de oferta", "Se ha importado el archivo " + str(
-                self.ymlParser.supplyFileName) + ".yml a la base de datos.")
+                                                   "Introduzca la observación "
+                                                   "para el test").returnValue()
+            self.supplyLoger(self.ymlParser, self.sqlSupply).logSupplyTestData(
+                observations)
+            messagebox.showinfo("Importar archivo de oferta",
+                                "Se ha importado el archivo " + str(
+                                    self.ymlParser.supplyFileName) + ".yml a "
+                                                                     "la base"
+                                                                     " de "
+                                                                     "datos.")
         elif supplyFile == -1:
             messagebox.showerror(title="Error al importar archivo de oferta",
-                                 message="Se ha producido un error al importar el archivo de oferta a la base de "
+                                 message="Se ha producido un error al "
+                                         "importar el archivo de oferta a la "
+                                         "base de "
                                          "datos.")
 
     # Funcion para importar archivos de demanda
     def importDemandButtonEvent(self):
         """
-        Funcion encargada de importar un archivo de demanda a la base de datos al presionar el boton 'Importar
+        Funcion encargada de importar un archivo de demanda a la base de
+        datos al presionar el boton 'Importar
         archivo de demanda'
         :return: None
         """
@@ -278,21 +342,32 @@ class UI:
         # print(demandFile)
         observations = ""
         if demandFile != -2 and demandFile != -1:
-            if messagebox.askyesno("Añadir observaciones", "¿Desea añadir observaciones al test que se va a importar?"):
+            if messagebox.askyesno("Añadir observaciones",
+                                   "¿Desea añadir observaciones al test que "
+                                   "se va a importar?"):
                 observations = PersonalizedAsktext(self.root, "Observación",
-                                                   "Introduzca la observación para el test").returnValue()
-            self.demandLoger(self.ymlParser, self.sqlDemand).logDemandTestData(observations)
-            messagebox.showinfo("Importar archivo de demanda", "Se ha importado el archivo " + str(
-                self.ymlParser.demandFileName) + ".yml a la base de datos")
+                                                   "Introduzca la observación "
+                                                   "para el test").returnValue()
+            self.demandLoger(self.ymlParser, self.sqlDemand).logDemandTestData(
+                observations)
+            messagebox.showinfo("Importar archivo de demanda",
+                                "Se ha importado el archivo " + str(
+                                    self.ymlParser.demandFileName) + ".yml a "
+                                                                     "la base"
+                                                                     " de "
+                                                                     "datos")
         elif demandFile == -1:
             messagebox.showerror(title="Error al importar archivo de demanda",
-                                 message="Se ha producido un error al importar el archivo de demanda a la base de "
+                                 message="Se ha producido un error al "
+                                         "importar el archivo de demanda a la "
+                                         "base de "
                                          "datos")
 
     # Funcion para importar archivos de resultados
     def importResultsButtonEvent(self):
         """
-        Funcion encargada de importar un archivo de resultados a la base de datos al presionar el boton 'Importar
+        Funcion encargada de importar un archivo de resultados a la base de
+        datos al presionar el boton 'Importar
         archivo de resultados'
         :return: None
         """
@@ -300,16 +375,25 @@ class UI:
         # print(resultsFile)
         observations = ""
         if resultsFile != -2 and resultsFile != -1:
-            if messagebox.askyesno("Añadir observaciones", "¿Desea añadir observaciones al test que se va a importar?"):
+            if messagebox.askyesno("Añadir observaciones",
+                                   "¿Desea añadir observaciones al test que "
+                                   "se va a importar?"):
                 observations = PersonalizedAsktext(self.root, "Observación",
-                                                   "Introduzca la observación para el test").returnValue()
-            self.resultsLoger(self.csvReader, self.sqlResults).logResultsTestData(observations)
-            messagebox.showinfo("Importar archivo de resultados", "Se ha importado el archivo " + str(
-                self.csvReader.csvFileName) + ".csv a la base de datos")
+                                                   "Introduzca la observación "
+                                                   "para el test").returnValue()
+            self.resultsLoger(self.csvReader,
+                              self.sqlResults).logResultsTestData(observations)
+            messagebox.showinfo("Importar archivo de resultados",
+                                "Se ha importado el archivo " + str(
+                                    self.csvReader.csvFileName) + ".csv a la "
+                                                                  "base de "
+                                                                  "datos")
         elif resultsFile == -1:
-            messagebox.showerror(title="Error al importar archivo de resultados",
-                                 message="Se ha producido un error al importar el archivo de resultados a la base de "
-                                         "datos")
+            messagebox.showerror(
+                title="Error al importar archivo de resultados",
+                message="Se ha producido un error al importar el archivo de "
+                        "resultados a la base de "
+                        "datos")
 
     # Funciones para exportar datos
     # Funcion para exportar archivos de oferta
@@ -328,7 +412,8 @@ class UI:
 
         except EmptyTestData:
             message = (
-                "No existen datos de ningun test dentro de la base de datos, esto puede deberse a un error "
+                "No existen datos de ningun test dentro de la base de datos, "
+                "esto puede deberse a un error "
                 "o a que la base de datos se encuentra vacia.")
             messagebox.showerror("Error al borrar tests", message=message)
 
@@ -351,7 +436,8 @@ class UI:
 
         except EmptyTestData:
             message = (
-                "No existen datos de ningun test dentro de la base de datos, esto puede deberse a un error "
+                "No existen datos de ningun test dentro de la base de datos, "
+                "esto puede deberse a un error "
                 "o a que la base de datos se encuentra vacia.")
             messagebox.showerror("Error al borrar tests", message=message)
 
@@ -374,7 +460,8 @@ class UI:
 
         except EmptyTestData:
             message = (
-                "No existen datos de ningun test dentro de la base de datos, esto puede deberse a un error "
+                "No existen datos de ningun test dentro de la base de datos, "
+                "esto puede deberse a un error "
                 "o a que la base de datos se encuentra vacia.")
             messagebox.showerror("Error al borrar tests", message=message)
 
@@ -384,7 +471,8 @@ class UI:
     # Funcion para borrar tests de las bases de datos
     def deleteFromDataBase(self, db):
         """
-        Funcion encargada de eliminar los test seleccionados por el usuario de la base de datos seleccionada.
+        Funcion encargada de eliminar los test seleccionados por el usuario
+        de la base de datos seleccionada.
         :param db: Nombre de la base de datos objetivo.
         :return: None
         """
@@ -400,11 +488,14 @@ class UI:
                 selectedTests = deepcopy(selectTest.selectedTests)
                 del selectTest
 
-                # Si existen test seleccionados para borrar, se eliminan de la base de datos
+                # Si existen test seleccionados para borrar, se eliminan de
+                # la base de datos
                 if selectedTests:
                     self.sqlSupply.deleteTestEntry(selectedTests)
                     messagebox.showinfo(title="Test eliminados",
-                                        message="Los tests seleccionados han sido eliminados de la base de datos de "
+                                        message="Los tests seleccionados han "
+                                                "sido eliminados de la base "
+                                                "de datos de "
                                                 "la oferta.")
 
             elif db == "demanda":
@@ -417,7 +508,9 @@ class UI:
                 if selectedTests:
                     self.sqlDemand.deleteTestEntry(selectedTests)
                     messagebox.showinfo(title="Test eliminados",
-                                        message="Los tests seleccionados han sido eliminados de la base de datos de "
+                                        message="Los tests seleccionados han "
+                                                "sido eliminados de la base "
+                                                "de datos de "
                                                 "la demanda.")
 
             elif db == "resultados":
@@ -430,12 +523,15 @@ class UI:
                 if selectedTests:
                     self.sqlResults.deleteTestEntry(selectedTests)
                     messagebox.showinfo(title="Test eliminados",
-                                        message="Los tests seleccionados han sido eliminados de la base de datos de "
+                                        message="Los tests seleccionados han "
+                                                "sido eliminados de la base "
+                                                "de datos de "
                                                 "la demanda.")
 
         except EmptyTestData:
             message = (
-                "No existen datos de ningun test dentro de la base de datos, esto puede deberse a un error "
+                "No existen datos de ningun test dentro de la base de datos, "
+                "esto puede deberse a un error "
                 "o a que la base de datos se encuentra vacia.")
             messagebox.showerror("Error al borrar tests", message=message)
 
@@ -443,7 +539,8 @@ class UI:
             print(e)
 
         finally:
-            # Cerramos el cursor empleado para eliminar los test de la base de datos correspondiente
+            # Cerramos el cursor empleado para eliminar los test de la base
+            # de datos correspondiente
             if db == "oferta":
                 self.sqlSupply.cursor.close()
             elif db == "demanda":
@@ -454,18 +551,23 @@ class UI:
     # Funcion para ejecutar querys de SQL
     def executeSqlQuery(self, query=None):
         """
-        Funcion encargada de la ejecucion de las sentencias SQL, tanto las que se encuentren por defecto en la
+        Funcion encargada de la ejecucion de las sentencias SQL, tanto las
+        que se encuentren por defecto en la
         aplicacion,
-        las que haya guardado el usuario y las que sean introducidas manualmente por el usuario sin guardarlas.
-        :param query: Objeto de entrada para SQL a ejecutar o nombre de la sentencia almacenada
+        las que haya guardado el usuario y las que sean introducidas
+        manualmente por el usuario sin guardarlas.
+        :param query: Objeto de entrada para SQL a ejecutar o nombre de la
+        sentencia almacenada
         :return: None
         """
         try:
             cols, results = None, None
 
-            # Si el nombre existe dentro de las sentencias almacenadas, se cargan los datos desde la configuracion,
+            # Si el nombre existe dentro de las sentencias almacenadas,
+            # se cargan los datos desde la configuracion,
             # si no,
-            # se coge la query del objeto de entrada manual de la ventana principal
+            # se coge la query del objeto de entrada manual de la ventana
+            # principal
             if type(query) is tk.StringVar:
                 if query.get() in self.config.getSQLQuerysNames():
                     qname = query.get()
@@ -490,30 +592,43 @@ class UI:
 
             else:
                 raise TypeError
-            # Ejecutamos la sentencia en la base de datos objetivo y obtenemos los datos en caso de que sea una
+            # Ejecutamos la sentencia en la base de datos objetivo y
+            # obtenemos los datos en caso de que sea una
             # sentencia SELECT
             tools = SqlTools()
             if db == "oferta":
-                validQuery, error = tools.validateQueryOnDb(q, self.sqlSupply.conector)
+                validQuery, error = tools.validateQueryOnDb(q,
+                                                            self.sqlSupply.conector)
                 if validQuery:
                     cols, results = self.sqlSupply.executeQuery(q)
                 else:
                     messagebox.showerror(title="Error detectado en la query",
-                                         message="Se ha detectado un error en la query introducida.\nError: " + error)
+                                         message="Se ha detectado un error en "
+                                                 "la query "
+                                                 "introducida.\nError: " +
+                                                 error)
             elif db == "demanda":
-                validQuery, error = tools.validateQueryOnDb(q, self.sqlDemand.conector)
+                validQuery, error = tools.validateQueryOnDb(q,
+                                                            self.sqlDemand.conector)
                 if validQuery:
                     cols, results = self.sqlDemand.executeQuery(q)
                 else:
                     messagebox.showerror(title="Error detectado en la query",
-                                         message="Se ha detectado un error en la query introducida.\nError: " + error)
+                                         message="Se ha detectado un error en "
+                                                 "la query "
+                                                 "introducida.\nError: " +
+                                                 error)
             elif db == "resultados":
-                validQuery, error = tools.validateQueryOnDb(q, self.sqlResults.conector)
+                validQuery, error = tools.validateQueryOnDb(q,
+                                                            self.sqlResults.conector)
                 if validQuery:
                     cols, results = self.sqlResults.executeQuery(q)
                 else:
                     messagebox.showerror(title="Error detectado en la query",
-                                         message="Se ha detectado un error en la query introducida.\nError: " + error)
+                                         message="Se ha detectado un error en "
+                                                 "la query "
+                                                 "introducida.\nError: " +
+                                                 error)
             # print(cols,results)
 
             if cols is not None and results is not None:
@@ -526,11 +641,14 @@ class UI:
         try:
             q = str(query.get())
             opt = messagebox.askyesno(title="Confirmar eliminación",
-                                      message="¿Esta seguro de que desea eliminar " + q + " de la lista?")
+                                      message="¿Esta seguro de que desea "
+                                              "eliminar " + q + " de la lista?")
             if opt:
                 self.config.removeSQLQuery(q)
                 self.updateComboboxQuerys(queryCombobox)
-                messagebox.showinfo(title="Borrar query", message="La query " + q + " ha sido eliminada.")
+                messagebox.showinfo(title="Borrar query",
+                                    message="La query " + q + " ha sido "
+                                                              "eliminada.")
         except Exception as e:
             print(e)
 
@@ -539,7 +657,8 @@ class UI:
         try:
             q = str(query.get("1.0", tk.END))
             name = PersonalizedAskstring(self.root, "Nombre de la query",
-                                         "Escribe un nombre para identificar la query SQL").returnValue()
+                                         "Escribe un nombre para identificar "
+                                         "la query SQL").returnValue()
             if name is not None and name != "":
                 db = SelectDataBase(self.root).value
                 self.config.addSQLQuery(name, db, q)
@@ -553,10 +672,12 @@ class UI:
     # Funcion para añadir una query SQL desde un archivo
     def loadSqlQuery(self, queryText):
         try:
-            f = filedialog.askopenfilename(title="Selecciona el archivo con la query",
-                                           defaultextension=".sql",
-                                           filetypes=[("Archivos SQL", "*.sql"), ("Todos los archivos", "*.*")],
-                                           initialdir=getcwd())
+            f = filedialog.askopenfilename(
+                title="Selecciona el archivo con la query",
+                defaultextension=".sql",
+                filetypes=[("Archivos SQL", "*.sql"),
+                           ("Todos los archivos", "*.*")],
+                initialdir=getcwd())
             if f:
                 with open(file=f, mode="r") as file:
                     query = file.read()
@@ -567,13 +688,16 @@ class UI:
 
                     else:
                         messagebox.showerror(title="Error de sintaxis",
-                                             message="Se ha detectado un error de sintaxis en la sentencia del "
+                                             message="Se ha detectado un "
+                                                     "error de sintaxis en la "
+                                                     "sentencia del "
                                                      "archivo.")
 
         except Exception as e:
             print(e)
 
-    # Funcion que actualiza la lista de sentencias SQL en el objeto combobox que muestra las sentencias guardadas
+    # Funcion que actualiza la lista de sentencias SQL en el objeto combobox
+    # que muestra las sentencias guardadas
     def updateComboboxQuerys(self, queryCombobox):
         querysInConfig = self.config.getSQLQuerysNames()
         if querysInConfig != -2 and querysInConfig != -1:
@@ -582,17 +706,22 @@ class UI:
             queryCombobox['values'] = querysInConfig
             queryCombobox.current(0)
 
-    # Funcion que reinicia la lista de querys almacenadas a sus valores por defecto
+    # Funcion que reinicia la lista de querys almacenadas a sus valores por
+    # defecto
     def resetSqlQuerys(self):
         opt = messagebox.askyesno(title="Reiniciar lista de querys",
-                                  message="¿Está seguro de que quiere reiniciar la lista de querys almacenadas?\n"
+                                  message="¿Está seguro de que quiere "
+                                          "reiniciar la lista de querys "
+                                          "almacenadas?\n"
                                           "Esta acción es irreversible.")
         if opt:
             self.config.resetConfig()
 
     # Funcion para manejar el cierre del programa
     def onCloseEvent(self):
-        respuesta = messagebox.askyesno("Salir", "¿Seguro que quieres salir? Se guardaran los datos antes de salir.")
+        respuesta = messagebox.askyesno("Salir",
+                                        "¿Seguro que quieres salir? Se "
+                                        "guardaran los datos antes de salir.")
         if respuesta:  # Si el usuario acepta, se cierra la ventana
             print("Guardando datos antes de salir...")
             self.config.saveConfig()
@@ -600,13 +729,15 @@ class UI:
 
 
 class SelectDataBase(tk.Toplevel):
-    """Clase encargada de generar una ventana personalizada para la seleccion de la base de datos objetivo"""
+    """Clase encargada de generar una ventana personalizada para la seleccion
+    de la base de datos objetivo"""
 
     def __init__(self, master):
         super().__init__(master)
         self.withdraw()
         icon = tk.PhotoImage(
-            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.png"))
+            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(
+                os.path.abspath(__file__))), "icon.png"))
         self.iconphoto(False, icon)
         self.title("Seleccion de base de datos")
         width = 350
@@ -621,23 +752,35 @@ class SelectDataBase(tk.Toplevel):
         self.value = tk.StringVar()  # Almacena la opción seleccionada
 
         labelFrame = tk.Frame(self)
-        # labelFrame.grid(selectedRow=0, column=0, padx=5, pady=5, sticky="nsew")
+        # labelFrame.grid(selectedRow=0, column=0, padx=5, pady=5,
+        # sticky="nsew")
         labelFrame.pack(anchor="n", padx=5, pady=5)
-        tk.Label(labelFrame, text="Selecciona la base de datos en la que se ejecutara la query").pack(anchor="center",
-                                                                                                      fill="both",
-                                                                                                      pady=5, padx=5)
+        tk.Label(labelFrame,
+                 text="Selecciona la base de datos en la que se ejecutara la "
+                      "query").pack(
+            anchor="center",
+            fill="both",
+            pady=5, padx=5)
 
         buttonsFrame = tk.Frame(self)
-        # buttonsFrame.grid(selectedRow=1, column=0, padx=5, pady=5, sticky="nsew")
+        # buttonsFrame.grid(selectedRow=1, column=0, padx=5, pady=5,
+        # sticky="nsew")
         buttonsFrame.pack(anchor="s", padx=5, pady=5)
-        tk.Button(buttonsFrame, text="Oferta", command=lambda: self.option("oferta")).pack(side="left", anchor="e",
-                                                                                           fill="both", padx=10)
-        tk.Button(buttonsFrame, text="Demanda", command=lambda: self.option("demanda")).pack(side="left",
-                                                                                             anchor="center",
-                                                                                             fill="both", padx=10)
-        tk.Button(buttonsFrame, text="Resultados", command=lambda: self.option("resultados")).pack(side="left",
-                                                                                                   anchor="w",
-                                                                                                   fill="both", padx=10)
+        tk.Button(buttonsFrame, text="Oferta",
+                  command=lambda: self.option("oferta")).pack(side="left",
+                                                              anchor="e",
+                                                              fill="both",
+                                                              padx=10)
+        tk.Button(buttonsFrame, text="Demanda",
+                  command=lambda: self.option("demanda")).pack(side="left",
+                                                               anchor="center",
+                                                               fill="both",
+                                                               padx=10)
+        tk.Button(buttonsFrame, text="Resultados",
+                  command=lambda: self.option("resultados")).pack(side="left",
+                                                                  anchor="w",
+                                                                  fill="both",
+                                                                  padx=10)
 
         self.deiconify()
         self.transient(master)
@@ -652,7 +795,8 @@ class SelectDataBase(tk.Toplevel):
 
 
 class TableViewFrame(tk.Toplevel):
-    """Clase encargada de generar las ventanas para representar los datos obtenidos mediante SELECT"""
+    """Clase encargada de generar las ventanas para representar los datos
+    obtenidos mediante SELECT"""
 
     def __init__(self, master, cols, data):
         super().__init__(master)
@@ -661,7 +805,8 @@ class TableViewFrame(tk.Toplevel):
         self.data = data
         self.attributes("-topmost", True)
         icon = tk.PhotoImage(
-            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.png"))
+            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(
+                os.path.abspath(__file__))), "icon.png"))
         self.iconphoto(False, icon)
         self.title("Datos seleccionados")
         self.protocol("WM_DELETE_WINDOW",
@@ -690,7 +835,8 @@ class TableViewFrame(tk.Toplevel):
         self.trv.tag_configure("heading", background="#999")
 
         self.contextMenu = tk.Menu(self, tearoff=0)
-        self.contextMenu.add_command(label="Copiar", command=lambda: self.cellCopy())
+        self.contextMenu.add_command(label="Copiar",
+                                     command=lambda: self.cellCopy())
 
         self.trv.bind("<Button-3>", self.showContextMenu)
 
@@ -702,13 +848,16 @@ class TableViewFrame(tk.Toplevel):
                 self.trv.heading(col, text=col)
 
         for i, d in enumerate(self.data):
-            self.trv.insert("", "end", iid=str(i + 1), text=str(i + 1), values=d)
+            self.trv.insert("", "end", iid=str(i + 1), text=str(i + 1),
+                            values=d)
 
-        verticalScroll = ttk.Scrollbar(trvFrame, orient="vertical", command=self.trv.yview)
+        verticalScroll = ttk.Scrollbar(trvFrame, orient="vertical",
+                                       command=self.trv.yview)
         self.trv.configure(yscrollcommand=verticalScroll.set)
         verticalScroll.grid(row=1, column=2, sticky='ns')
 
-        horizontalScroll = ttk.Scrollbar(trvFrame, orient="horizontal", command=self.trv.xview)
+        horizontalScroll = ttk.Scrollbar(trvFrame, orient="horizontal",
+                                         command=self.trv.xview)
         self.trv.configure(xscrollcommand=horizontalScroll.set)
         horizontalScroll.grid(row=2, column=1, sticky="ew")
 
@@ -747,15 +896,20 @@ class TableViewFrame(tk.Toplevel):
 
     def exportData(self, cols, data):
         try:
-            fileName = PersonalizedAskstring(self, "Exportar vista", "Nombre del archivo de datos").returnValue()
+            fileName = PersonalizedAskstring(self, "Exportar vista",
+                                             "Nombre del archivo de "
+                                             "datos").returnValue()
             if fileName is None or fileName == "": return -2
             csv = csvWriter(fileName, data, cols)
             csv.saveFile()
             del csv
-            messagebox.showinfo("Exportar vista", "Se ha generado con éxito el archivo csv con los datos de la vista.")
+            messagebox.showinfo("Exportar vista",
+                                "Se ha generado con éxito el archivo csv con "
+                                "los datos de la vista.")
         except Exception as e:
             messagebox.showerror("Error al exportar vista",
-                                 "Se ha producido un error al exportar los datos de la vista.")
+                                 "Se ha producido un error al exportar los "
+                                 "datos de la vista.")
 
     def showContextMenu(self, event):
         self.selectedRow = self.trv.identify_row(event.y)
@@ -771,13 +925,15 @@ class TableViewFrame(tk.Toplevel):
             self.clipboard_append(cellValue)
             self.update()
 
-    # Funcion para intentar calcular el ancho mínimo de las diferentes columnas del treeview
+    # Funcion para intentar calcular el ancho mínimo de las diferentes
+    # columnas del treeview
     def minWidthCalculator(self, data, cols):
         try:
             data.append(cols)
             minW = [20] * len(data[0])
             for d in data:
-                minW = [max(minW[d.index(item)], len(str(item)) * 8) for item in d]
+                minW = [max(minW[d.index(item)], len(str(item)) * 8) for item in
+                        d]
             return minW
         except Exception as e:
             print(e)
@@ -789,13 +945,15 @@ class TableViewFrame(tk.Toplevel):
 
 
 class SelectTestFromList(tk.Toplevel):
-    """Clase encargada de generar una ventana para la seleccion de los test de una lista"""
+    """Clase encargada de generar una ventana para la seleccion de los test
+    de una lista"""
 
     def __init__(self, master, testNames):
         super().__init__(master)
         self.withdraw()
         icon = tk.PhotoImage(
-            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.png"))
+            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(
+                os.path.abspath(__file__))), "icon.png"))
         self.iconphoto(False, icon)
         self.selectedTests = []
         self.title("Selecciona un test")
@@ -806,7 +964,8 @@ class SelectTestFromList(tk.Toplevel):
         frameTrv = tk.Frame(self)
         frameTrv.grid(row=0, column=0, padx=5, pady=5, sticky="nsew")
 
-        self.trv = ttk.Treeview(frameTrv, selectmode="extended", columns="Tests", show="headings", height=10,
+        self.trv = ttk.Treeview(frameTrv, selectmode="extended",
+                                columns="Tests", show="headings", height=10,
                                 style="Treeview", padding=10)
         self.trv.pack(side="left", fill="both", expand=True)
         self.trv.tag_configure("heading", background="#999")
@@ -815,17 +974,21 @@ class SelectTestFromList(tk.Toplevel):
         self.trv.heading("Tests", text="Tests")
 
         for i, test in enumerate(testNames):
-            self.trv.insert("", "end", iid=str(i + 1), text=str(i + 1), values=test)
+            self.trv.insert("", "end", iid=str(i + 1), text=str(i + 1),
+                            values=test)
 
-        verticalScroll = ttk.Scrollbar(frameTrv, orient="vertical", command=self.trv.yview)
+        verticalScroll = ttk.Scrollbar(frameTrv, orient="vertical",
+                                       command=self.trv.yview)
         self.trv.configure(yscrollcommand=verticalScroll.set)
         verticalScroll.pack(side="right", fill="y")
 
         frameButtons = tk.Frame(self)
         frameButtons.grid(row=1, column=0, padx=5, pady=5, sticky="e")
-        self.okButton = tk.Button(frameButtons, text="Aceptar", command=lambda: self.getTestsNames())
+        self.okButton = tk.Button(frameButtons, text="Aceptar",
+                                  command=lambda: self.getTestsNames())
         self.okButton.pack(side="left", padx=5)
-        self.cancelButton = tk.Button(frameButtons, text="Cancelar", command=lambda: self.destroy())
+        self.cancelButton = tk.Button(frameButtons, text="Cancelar",
+                                      command=lambda: self.destroy())
         self.cancelButton.pack(side="left", padx=5)
 
         self.update_idletasks()
@@ -854,13 +1017,17 @@ class SelectTestFromList(tk.Toplevel):
 
 
 class PersonalizedAskstring(tk.Toplevel):
-    def __init__(self, master, title: str = "TFG - Gestor de base de datos", prompt: str = ""):
+    def __init__(self, master, title: str = "TFG - Gestor de base de datos",
+                 prompt: str = ""):
         super().__init__(master)
         self.withdraw()
         icon = tk.PhotoImage(
-            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.png"))
+            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(
+                os.path.abspath(__file__))), "icon.png"))
         self.iconphoto(False, icon)
-        self.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
+        self.resizable(False,
+                       False)  # Restriccion del redimensionamiento de la
+        # ventana principal
         self.protocol("WM_DELETE_WINDOW",
                       self.onCloseEvent)
         self.title(title)
@@ -893,7 +1060,8 @@ class PersonalizedAskstring(tk.Toplevel):
         entryPrompt.grid(row=0, column=0, sticky="nsew", padx=5, pady=5)
 
         self.entryVar = tk.StringVar(self, "Datos seleccionados")
-        self.entryString = tk.Entry(entryFrame, textvariable=self.entryVar, justify="center")
+        self.entryString = tk.Entry(entryFrame, textvariable=self.entryVar,
+                                    justify="center")
         self.entryString.grid(row=1, column=0, sticky="nsew", pady=5, padx=15)
 
         buttonsFrame = tk.Frame(mainFrame)
@@ -943,13 +1111,17 @@ class PersonalizedAskstring(tk.Toplevel):
 
 
 class PersonalizedAsktext(tk.Toplevel):
-    def __init__(self, master, title: str = "TFG - Gestor de base de datos", prompt: str = ""):
+    def __init__(self, master, title: str = "TFG - Gestor de base de datos",
+                 prompt: str = ""):
         super().__init__(master)
         self.withdraw()
         icon = tk.PhotoImage(
-            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__))), "icon.png"))
+            file=os.path.join(getattr(sys, '_MEIPASS', os.path.dirname(
+                os.path.abspath(__file__))), "icon.png"))
         self.iconphoto(False, icon)
-        self.resizable(False, False)  # Restriccion del redimensionamiento de la ventana principal
+        self.resizable(False,
+                       False)  # Restriccion del redimensionamiento de la
+        # ventana principal
         self.protocol("WM_DELETE_WINDOW",
                       self.onCloseEvent)
         self.title(title)
@@ -986,10 +1158,12 @@ class PersonalizedAsktext(tk.Toplevel):
         textFrame.grid_rowconfigure(0, weight=1)
         textFrame.grid_columnconfigure(0, weight=1)
 
-        self.textString = tk.Text(textFrame, wrap="word", height=16, width=50, font=("Arial", 12))
+        self.textString = tk.Text(textFrame, wrap="word", height=16, width=50,
+                                  font=("Arial", 12))
         self.textString.grid(row=0, column=0, sticky="nsew", )
 
-        scrollbar = tk.Scrollbar(textFrame, orient="vertical", command=self.textString.yview)
+        scrollbar = tk.Scrollbar(textFrame, orient="vertical",
+                                 command=self.textString.yview)
         scrollbar.grid(row=0, column=1, sticky="ns")
         self.textString.configure(yscrollcommand=scrollbar.set)
 

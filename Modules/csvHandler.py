@@ -6,12 +6,14 @@ from tkinter import filedialog
 
 class CsvFileNotFound(Exception):
     """
-        Excepcion que indica que no hay datos de resultados cargados en el programa
+        Excepcion que indica que no hay datos de resultados cargados en el
+        programa
     """
 
     def __init__(self):
         self.message = (
-            "No se encuentran datos de los resultados, asegúrese de que el archivo se encuentra en el directorio "
+            "No se encuentran datos de los resultados, asegúrese de que el "
+            "archivo se encuentra en el directorio "
             "correcto y se ha cargado correctamente")
         super().__init__(self.message)
 
@@ -28,10 +30,12 @@ class csvReader:
 
     def loadCsvFile(self):
         try:
-            f = filedialog.askopenfilename(title="Seleccionar archivo de resultados",
-                                           initialdir=self.defaultInputDataFolder,
-                                           filetypes=[("Archivos CSV", "*.csv"), ("Todos los archivos", "*.*")],
-                                           defaultextension=".csv")
+            f = filedialog.askopenfilename(
+                title="Seleccionar archivo de resultados",
+                initialdir=self.defaultInputDataFolder,
+                filetypes=[("Archivos CSV", "*.csv"),
+                           ("Todos los archivos", "*.*")],
+                defaultextension=".csv")
 
             if f != "":
                 self.csvFilePath = f.replace("/", "/")
@@ -124,7 +128,8 @@ class csvWriter:
             # print(self.saveFilePath)
             if self.csvSavePath != "":
                 with open(self.csvSavePath, 'w', encoding='utf-8') as file:
-                    writer = self.csvWriter(file, delimiter=",", lineterminator="\n")
+                    writer = self.csvWriter(file, delimiter=",",
+                                            lineterminator="\n")
                     writer.writerow(self.columnsName)
                     writer.writerows(self.csvData)
         except Exception as e:

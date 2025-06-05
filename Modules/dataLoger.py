@@ -5,27 +5,33 @@ from Modules.yamlParser import Parser
 
 class SupplyLoger:
     """
-        Clase del módulo dataLoger que se encarga de introducir los datos extraidos de los archivos yaml de la oferta
+        Clase del módulo dataLoger que se encarga de introducir los datos
+        extraidos de los archivos yaml de la oferta
         a la base de datos de la oferta
         :param yml: objeto del módulo yamlParser para extraer los datos del yaml
-        :param sqlSupply: objeto del módulo SQLHandler que se encarga de la base de datos de la oferta
+        :param sqlSupply: objeto del módulo SQLHandler que se encarga de la
+        base de datos de la oferta
         """
 
     def __init__(self, yml: Parser, sqlSupply: SQLHandler.SqlSupply):
-        self.yml = yml  # objeto del módulo yamlParser para extraer los datos del yaml
-        self.sqlSupply = sqlSupply  # objeto del módulo SQLHandler que se encarga de la base de datos de la oferta
+        self.yml = yml  # objeto del módulo yamlParser para extraer los datos
+        # del yaml
+        self.sqlSupply = sqlSupply  # objeto del módulo SQLHandler que se
+        # encarga de la base de datos de la oferta
         self.testID = None
 
     # Funciones para introducir datos a la base de datos de la oferta
     # Funcion principal
     def logSupplyTestData(self, observations=""):
         """
-        Introduce todos los datos de un test a la base de datos de la oferta apoyandose en subfunciones para este fin
+        Introduce todos los datos de un test a la base de datos de la oferta
+        apoyandose en subfunciones para este fin
         :return:
         """
         testData = self.yml.supplyFileName
         self.testID = self.sqlSupply.insertTestsData(testData, observations)
-        # self.testID = self.sqlSupply.executeSelectTestsIDQuery(f"SELECT ID FROM TESTS WHERE TESTS.NAME='{testData}'")
+        # self.testID = self.sqlSupply.executeSelectTestsIDQuery(f"SELECT ID
+        # FROM TESTS WHERE TESTS.NAME='{testData}'")
         if self.testID:
             self.testID = self.testID[0]
             print("Tests -> Data: " + str([self.testID, testData]))
@@ -52,7 +58,8 @@ class SupplyLoger:
 
     def logTimeSlotData(self):
         """
-        Introduce los datos de los slots de tiempo a la base de datos de la oferta
+        Introduce los datos de los slots de tiempo a la base de datos de la
+        oferta
         :return:
         """
         data = self.yml.getTimeSlotData()
@@ -89,7 +96,8 @@ class SupplyLoger:
 
     def logTrainServiceProviderData(self):
         """
-        Introduce los datos de los proveedores de servicios ferroviarios a la base de datos de la oferta
+        Introduce los datos de los proveedores de servicios ferroviarios a la
+        base de datos de la oferta
         :return:
         """
         data = self.yml.getTrainServiceProviderData()
@@ -120,15 +128,18 @@ class SupplyLoger:
 
 class DemandLoger:
     def __init__(self, yml: Parser, sqlDemand: SQLHandler.SqlDemand):
-        self.yml = yml  # objeto del módulo yamlParser para extraer los datos del yaml
-        self.sqlDemand = sqlDemand  # objeto del módulo SQLHandler que se encarga de la base de datos de la demanda
+        self.yml = yml  # objeto del módulo yamlParser para extraer los datos
+        # del yaml
+        self.sqlDemand = sqlDemand  # objeto del módulo SQLHandler que se
+        # encarga de la base de datos de la demanda
         self.testID = None
 
     # Funciones para introducir datos a la base de datos de la demanda
     # Funcion principal
     def logDemandTestData(self, observations=""):
         """
-        Introduce todos los datos de un test a la base de datos de la demanda apoyandose en subfunciones para este fin
+        Introduce todos los datos de un test a la base de datos de la demanda
+        apoyandose en subfunciones para este fin
         :return:
         """
         testData = self.yml.demandFileName
@@ -155,7 +166,8 @@ class DemandLoger:
 
     def logUserPatternData(self):
         """
-        Introduce los datos de los patrones de usuario a la base de datos de la demanda
+        Introduce los datos de los patrones de usuario a la base de datos de
+        la demanda
         :return:
         """
 
@@ -166,7 +178,8 @@ class DemandLoger:
 
     def logDemandPatternData(self):
         """
-        Introduce los datos de los patrones de demanda a la base de datos de la demanda
+        Introduce los datos de los patrones de demanda a la base de datos de
+        la demanda
         :return:
         """
         data = self.yml.getDemandPatternData()
@@ -186,9 +199,12 @@ class DemandLoger:
 
 
 class ResultsLoger:
-    def __init__(self, csvReader: csvHandler.csvReader, sqlResults: SQLHandler.SqlResults):
-        self.csv = csvReader  # objeto del módulo csvHandler para extraer los datos del csv
-        self.sqlResults = sqlResults  # objeto del modulo SQLHandler encargado de la base de datos de los resultados
+    def __init__(self, csvReader: csvHandler.csvReader,
+                 sqlResults: SQLHandler.SqlResults):
+        self.csv = csvReader  # objeto del módulo csvHandler para extraer los
+        # datos del csv
+        self.sqlResults = sqlResults  # objeto del modulo SQLHandler
+        # encargado de la base de datos de los resultados
         self.testID = None
 
     # Funciones para introducir datos a la base de datos de resultados

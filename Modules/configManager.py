@@ -20,16 +20,21 @@ class Config:
 
     def generateDefaultConfig(self):
         """
-        Esta función genera la configuracion inicial para la aplicación, la cual contiene querys de SQL utiles
+        Esta función genera la configuracion inicial para la aplicación,
+        la cual contiene querys de SQL utiles
         y bastante usadas en las bases de datos que maneja el programa.
         :return: None
         """
         try:
             data = {
                 'SQL_Querys': {
-                    "Mostrar test de oferta": {"db": "oferta", "query": "SELECT * FROM TESTS"},
-                    "Mostrar test de demanda": {"db": "demanda", "query": "SELECT * FROM TESTS"},
-                    "Mostrar test de resultados": {"db": "resultados", "query": "SELECT * FROM TESTS"}
+                    "Mostrar test de oferta": {"db": "oferta",
+                                               "query": "SELECT * FROM TESTS"},
+                    "Mostrar test de demanda": {"db": "demanda",
+                                                "query": "SELECT * FROM TESTS"},
+                    "Mostrar test de resultados": {"db": "resultados",
+                                                   "query": "SELECT * FROM "
+                                                            "TESTS"}
                 }
             }
             self.configData = deepcopy(data)
@@ -40,7 +45,8 @@ class Config:
 
     def getConfig(self):
         """
-        Esta función carga la configuración presente en el archivo de configuración y lo almacena dentro de la variable
+        Esta función carga la configuración presente en el archivo de
+        configuración y lo almacena dentro de la variable
         del objeto llamada configData.
         :return: None
         """
@@ -52,7 +58,8 @@ class Config:
 
     def saveConfig(self):
         """
-        Esta función se encarga de volcar la configuración presente en la variable configData al archivo JSON que
+        Esta función se encarga de volcar la configuración presente en la
+        variable configData al archivo JSON que
         almacena
         la configuración de la aplicación.
         :return: None
@@ -66,7 +73,8 @@ class Config:
 
     def getSQLQuerys(self):
         """
-        Esta función devuelve todas las querys almacenadas en el archivo de configuración
+        Esta función devuelve todas las querys almacenadas en el archivo de
+        configuración
         :return: sqlQuerys
         """
 
@@ -103,18 +111,21 @@ class Config:
 
     def addSQLQuery(self, name, db, query):
         """
-        Esta función se encarga de añadir querys de SQL a la lista almacenada en el archivo de configuración
+        Esta función se encarga de añadir querys de SQL a la lista almacenada
+        en el archivo de configuración
         :return: None
         """
         try:
-            self.configData["SQL_Querys"].update({str(name): {"db": str(db), "query": str(query)}})
+            self.configData["SQL_Querys"].update(
+                {str(name): {"db": str(db), "query": str(query)}})
             self.saveConfig()
         except Exception as e:
             print(e)
 
     def removeSQLQuery(self, name):
         """
-        Esta función se encarga de eliminar querys de SQL a la lista almacenada en el archivo de configuración
+        Esta función se encarga de eliminar querys de SQL a la lista
+        almacenada en el archivo de configuración
         :return: None
         """
         try:
