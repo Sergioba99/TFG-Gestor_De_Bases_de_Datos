@@ -1,0 +1,4467 @@
+stations:
+- id: '02002'
+  name: PUENTE GENIL-HERRERA
+  city: PUENTE GENIL
+  short_name: PTE G
+  coordinates:
+    latitude: 37.3579
+    longitude: -4.821638
+- id: '02003'
+  name: ANTEQUERA-SANTA ANA
+  city: ANTEQUERA
+  short_name: ANTEQ
+  coordinates:
+    latitude: 37.069881
+    longitude: -4.719014
+- id: '02030'
+  name: ANTEQUERA AV
+  city: ANTEQUERA
+  short_name: '02030'
+  coordinates:
+    latitude: 37.0334437
+    longitude: -4.5612901
+- id: 03208
+  name: CUENCA FERNANDO ZÓBEL
+  city: CUENCA
+  short_name: 03208
+  coordinates:
+    latitude: 40.035192
+    longitude: -2.14441
+- id: '03213'
+  name: REQUENA UTIEL
+  city: REQUENA
+  short_name: '03213'
+  coordinates:
+    latitude: 39.519834
+    longitude: -1.127601
+- id: '03216'
+  name: VALENCIA JOAQUÍN SOROLLA
+  city: VALENCIA
+  short_name: VALEN
+  coordinates:
+    latitude: 39.459051
+    longitude: -0.382923
+- id: 03309
+  name: VILLENA AV
+  city: VILLENA
+  short_name: 03309
+  coordinates:
+    latitude: 38.585302
+    longitude: -0.873295
+- id: '03410'
+  name: ELCHE AV/ELX AV
+  city: ELCHE
+  short_name: '03410'
+  coordinates:
+    latitude: 38.24551
+    longitude: -0.76675
+- id: '04007'
+  name: GUADALAJARA - YEBES
+  city: GUADALAJARA
+  short_name: '04007'
+  coordinates:
+    latitude: 40.587315
+    longitude: -3.124301
+- id: '04040'
+  name: ZARAGOZA-DELICIAS
+  city: ZARAGOZA
+  short_name: ZARAG
+  coordinates:
+    latitude: 41.658649
+    longitude: -0.911615
+- id: '04104'
+  name: CAMP TARRAGONA
+  city: TARRAGONA
+  short_name: '04104'
+  coordinates:
+    latitude: 41.192066
+    longitude: 1.272666
+- id: '04307'
+  name: FIGUERES VILAFANT
+  city: FIGUERES
+  short_name: '04307'
+  coordinates:
+    latitude: 42.264771
+    longitude: 2.943547
+- id: '05000'
+  name: GRANADA
+  city: GRANADA
+  short_name: '05000'
+  coordinates:
+    latitude: 37.184038
+    longitude: -3.609154
+- id: '05012'
+  name: LOJA
+  city: LOJA
+  short_name: '05012'
+  coordinates:
+    latitude: 37.175372
+    longitude: -4.134841
+- id: 08004
+  name: SEGOVIA GUIOMAR
+  city: SEGOVIA
+  short_name: 08004
+  coordinates:
+    latitude: 40.910577
+    longitude: -4.094564
+- id: 08223
+  name: VIGO URZAIZ
+  city: VIGO
+  short_name: VIGO-
+  coordinates:
+    latitude: 42.234189
+    longitude: -8.713728
+- id: 08240
+  name: MEDINA DEL CAMPO ALTA VELOCIDAD
+  city: MEDINA DEL CAMPO
+  short_name: 08240
+  coordinates:
+    latitude: 41.317459
+    longitude: -4.910071
+- id: 08247
+  name: SANABRIA ALTA VELOCIDAD
+  city: PUEBLA DE SANABRIA
+  short_name: 08247
+  coordinates:
+    latitude: 42.045763
+    longitude: -6.626848
+- id: 08251
+  name: A GUDIÑA-PORTA DE GALICIA
+  city: A GUDIÑA
+  short_name: 08251
+  coordinates:
+    latitude: 42.0606439
+    longitude: -7.132532
+- id: '10600'
+  name: VALLADOLID
+  city: VALLADOLID
+  short_name: '10600'
+  coordinates:
+    latitude: 41.642167
+    longitude: -4.726986
+- id: '11014'
+  name: BURGOS ROSA MANZANO
+  city: BURGOS
+  short_name: '11014'
+  coordinates:
+    latitude: 42.371197
+    longitude: -3.666308
+- id: '14100'
+  name: PALENCIA
+  city: PALENCIA
+  short_name: '14100'
+  coordinates:
+    latitude: 42.015711
+    longitude: -4.534135
+- id: '15100'
+  name: LEÓN
+  city: LEÓN
+  short_name: '15100'
+  coordinates:
+    latitude: 42.596048
+    longitude: -5.582428
+- id: '15211'
+  name: OVIEDO/UVIÉU
+  city: OVIEDO
+  short_name: '15211'
+  coordinates:
+    latitude: 43.366841
+    longitude: -5.854263
+- id: '15402'
+  name: GIJÓN/XIXÓN
+  city: GIJÓN
+  short_name: '15402'
+  coordinates:
+    latitude: 43.539243
+    longitude: -5.675436
+- id: '17000'
+  name: MADRID-CHAMARTÍN-CLARA CAMPOAMOR
+  city: MADRID
+  short_name: '17000'
+  coordinates:
+    latitude: 40.4720993
+    longitude: -3.6824687
+- id: '20400'
+  name: BETANZOS-INFESTA
+  city: BETANZOS
+  short_name: '20400'
+  coordinates:
+    latitude: 43.270698
+    longitude: -8.225847
+- id: '21001'
+  name: BETANZOS-CIDADE
+  city: BETANZOS
+  short_name: '21001'
+  coordinates:
+    latitude: 43.284137
+    longitude: -8.215874
+- id: '21004'
+  name: PONTEDEUME
+  city: PONTEDEUME
+  short_name: '21004'
+  coordinates:
+    latitude: 43.411797
+    longitude: -8.180416
+- id: '21010'
+  name: FERROL
+  city: FERROL
+  short_name: '21010'
+  coordinates:
+    latitude: 43.4880349
+    longitude: -8.231143
+- id: '22100'
+  name: OURENSE
+  city: OURENSE
+  short_name: '22100'
+  coordinates:
+    latitude: 42.350389
+    longitude: -7.872777
+- id: '23004'
+  name: PONTEVEDRA
+  city: PONTEVEDRA
+  short_name: '23004'
+  coordinates:
+    latitude: 42.421969
+    longitude: -8.635546
+- id: '23008'
+  name: VILAGARCIA DE AROUSA
+  city: VILAGARCIA DE AROUSA
+  short_name: '23008'
+  coordinates:
+    latitude: 42.602189
+    longitude: -8.762523
+- id: '30200'
+  name: ZAMORA
+  city: ZAMORA
+  short_name: '30200'
+  coordinates:
+    latitude: 41.515892
+    longitude: -5.739675
+- id: '31400'
+  name: SANTIAGO DE COMPOSTELA
+  city: SANTIAGO DE COMPOSTELA
+  short_name: '31400'
+  coordinates:
+    latitude: 42.870842
+    longitude: -8.544697
+- id: '31412'
+  name: A CORUÑA
+  city: A CORUÑA
+  short_name: '31412'
+  coordinates:
+    latitude: 43.3496932
+    longitude: -8.4155629
+- id: '37200'
+  name: CIUDAD REAL
+  city: CIUDAD REAL
+  short_name: '37200'
+  coordinates:
+    latitude: 38.9853
+    longitude: -3.913633
+- id: '37300'
+  name: PUERTOLLANO
+  city: PUERTOLLANO
+  short_name: '37300'
+  coordinates:
+    latitude: 38.69128
+    longitude: -4.111655
+- id: '37704'
+  name: VILLANUEVA DE CÓRDOBA-LOS
+    PEDROCHES
+  city: VILLANUEVA DE CÓRDOBA
+  short_name: '37704'
+  coordinates:
+    latitude: 38.2554049
+    longitude: -4.570952
+- id: '43011'
+  name: LA PALMA DEL CONDADO
+  city: LA PALMA DEL CONDADO
+  short_name: '43011'
+  coordinates:
+    latitude: 37.390665
+    longitude: -6.554444
+- id: '43019'
+  name: HUELVA
+  city: HUELVA
+  short_name: '43019'
+  coordinates:
+    latitude: 37.2525922
+    longitude: -6.9448154
+- id: '50500'
+  name: CÓRDOBA
+  city: CÓRDOBA
+  short_name: '50500'
+  coordinates:
+    latitude: 37.888291
+    longitude: -4.789453
+- id: '51003'
+  name: SEVILLA-SANTA JUSTA
+  city: SEVILLA
+  short_name: '51003'
+  coordinates:
+    latitude: 37.3921277
+    longitude: -5.9752694
+- id: '51300'
+  name: JEREZ DE LA FRONTERA
+  city: JEREZ DE LA FRONTERA
+  short_name: '51300'
+  coordinates:
+    latitude: 36.680029
+    longitude: -6.1264716
+- id: '51400'
+  name: PUERTO DE SANTA MARÍA
+  city: PUERTO DE SANTA MARÍA
+  short_name: '51400'
+  coordinates:
+    latitude: 36.6037962
+    longitude: -6.2171641
+- id: '51405'
+  name: CÁDIZ
+  city: CÁDIZ
+  short_name: '51405'
+  coordinates:
+    latitude: 36.5290083
+    longitude: -6.2882055
+- id: '51406'
+  name: SAN FERNANDO-BAHÍA SUR
+  city: SAN FERNANDO
+  short_name: '51406'
+  coordinates:
+    latitude: 36.4680361
+    longitude: -6.2067638
+- id: '54413'
+  name: MÁLAGA MARÍA ZAMBRANO
+  city: MÁLAGA
+  short_name: '54413'
+  coordinates:
+    latitude: 36.7113388
+    longitude: -4.4313888
+- id: '55007'
+  name: RONDA
+  city: RONDA
+  short_name: '55007'
+  coordinates:
+    latitude: 36.748401
+    longitude: -5.16197
+- id: '55018'
+  name: SAN ROQUE-LA LÍNEA
+  city: SAN ROQUE
+  short_name: '55018'
+  coordinates:
+    latitude: 36.214482
+    longitude: -5.432399
+- id: '55020'
+  name: ALGECIRAS
+  city: ALGECIRAS
+  short_name: '55020'
+  coordinates:
+    latitude: 36.126831
+    longitude: -5.451108
+- id: '56200'
+  name: GUADIX
+  city: GUADIX
+  short_name: '56200'
+  coordinates:
+    latitude: 37.316873
+    longitude: -3.127209
+- id: '56312'
+  name: ALMERÍA
+  city: ALMERÍA
+  short_name: '56312'
+  coordinates:
+    latitude: 36.834951
+    longitude: -2.455519
+- id: '60000'
+  name: MADRID PTA. ATOCHA - ALMUDENA
+    GRANDES
+  city: MADRID
+  short_name: MADRI
+  coordinates:
+    latitude: 40.406442
+    longitude: -3.690886
+- id: '60600'
+  name: ALBACETE-LOS LLANOS
+  city: ALBACETE
+  short_name: '60600'
+  coordinates:
+    latitude: 38.999384
+    longitude: -1.84845
+- id: '60911'
+  name: ALICANTE/ALACANT
+  city: ALICANTE
+  short_name: '60911'
+  coordinates:
+    latitude: 38.34445
+    longitude: -0.4950527
+- id: '61200'
+  name: MURCIA
+  city: MURCIA
+  short_name: '61200'
+  coordinates:
+    latitude: 37.97465
+    longitude: -1.1299555
+- id: '62002'
+  name: ORIHUELA-MIGUEL HERNÁNDEZ
+  city: ORIHUELA
+  short_name: '62002'
+  coordinates:
+    latitude: 38.0779194
+    longitude: -0.94445
+- id: '65200'
+  name: SAGUNT/SAGUNTO
+  city: SAGUNT
+  short_name: '65200'
+  coordinates:
+    latitude: 39.6756611
+    longitude: -0.2715972
+- id: '65300'
+  name: CASTELLÓ
+  city: CASTELLÓ
+  short_name: '65300'
+  coordinates:
+    latitude: 39.9882552
+    longitude: -0.0524126
+- id: '70600'
+  name: CALATAYUD
+  city: CALATAYUD
+  short_name: '70600'
+  coordinates:
+    latitude: 41.346692
+    longitude: -1.63868
+- id: '71801'
+  name: BARCELONA-SANTS
+  city: BARCELONA
+  short_name: BARCE
+  coordinates:
+    latitude: 41.37922
+    longitude: 2.140624
+- id: '78400'
+  name: LLEIDA-PIRINEUS
+  city: LLEIDA
+  short_name: '78400'
+  coordinates:
+    latitude: 41.620696
+    longitude: 0.632669
+- id: '79206'
+  name: GIRONA
+  city: GIRONA
+  short_name: '79206'
+  coordinates:
+    latitude: 41.953481
+    longitude: 2.80536
+- id: '87088'
+  name: NARBONNE
+  city: NARBONNE
+  short_name: '87088'
+  coordinates:
+    latitude: 43.190253
+    longitude: 3.005716
+- id: '87089'
+  name: MARSEILLE ST CHARLES
+  city: MARSEILLE
+  short_name: '87089'
+  coordinates:
+    latitude: 43.30349
+    longitude: 5.382236
+- id: '87173'
+  name: MONTPELLIER SAINT-ROCH
+  city: MONTPELLIER
+  short_name: '87173'
+  coordinates:
+    latitude: 43.604852
+    longitude: 3.880491
+- id: '87302'
+  name: NIMES
+  city: NIMES
+  short_name: '87302'
+  coordinates:
+    latitude: 43.832291
+    longitude: 4.365845
+- id: '87374'
+  name: PERPIGNAN
+  city: PERPIGNAN
+  short_name: '87374'
+  coordinates:
+    latitude: 42.696421
+    longitude: 2.880381
+- id: '87814'
+  name: AVIGNON TGV
+  city: AVIGNON
+  short_name: '87814'
+  coordinates:
+    latitude: 43.921938
+    longitude: 4.785813
+- id: '87912'
+  name: AIX EN PROVENCE TGV
+  city: AIX EN PROVENCE
+  short_name: '87912'
+  coordinates:
+    latitude: 43.455268
+    longitude: 5.31723
+seat:
+- id: '1'
+  name: Básica
+  hard_type: 1
+  soft_type: 1
+- id: '2'
+  name: Básico
+  hard_type: 1
+  soft_type: 1
+- id: '3'
+  name: Elige
+  hard_type: 1
+  soft_type: 2
+- id: '4'
+  name: Elige Confort
+  hard_type: 1
+  soft_type: 3
+- id: '5'
+  name: Prémium
+  hard_type: 2
+  soft_type: 4
+corridor:
+- id: '1'
+  name: Spanish Corridor
+  stations:
+  - org: '60000'
+    des:
+    - org: '04007'
+      des:
+      - org: '70600'
+        des:
+        - org: '04040'
+          des:
+          - org: '78400'
+            des:
+            - org: '04104'
+              des:
+              - org: '71801'
+                des:
+                - org: '79206'
+                  des:
+                  - org: '04307'
+                    des:
+                    - org: '87374'
+                      des:
+                      - org: '87088'
+                        des:
+                        - org: '87173'
+                          des:
+                          - org: '87302'
+                            des:
+                            - org: '87814'
+                              des:
+                              - org: '87912'
+                                des:
+                                - org: '87089'
+                                  des: []
+    - org: '37200'
+      des:
+      - org: '37300'
+        des:
+        - org: '37704'
+          des:
+          - org: '50500'
+            des:
+            - org: '51003'
+              des:
+              - org: '43011'
+                des:
+                - org: '43019'
+                  des: []
+              - org: '51300'
+                des:
+                - org: '51400'
+                  des:
+                  - org: '51406'
+                    des:
+                    - org: '51405'
+                      des: []
+            - org: '02002'
+              des:
+              - org: '02003'
+                des:
+                - org: '02030'
+                  des:
+                  - org: '55007'
+                    des:
+                    - org: '55018'
+                      des:
+                      - org: '55020'
+                        des: []
+                  - org: '54413'
+                    des: []
+                  - org: '05012'
+                    des:
+                    - org: '05000'
+                      des:
+                      - org: '56200'
+                        des:
+                        - org: '56312'
+                          des: []
+    - org: 08004
+      des:
+      - org: 08240
+        des:
+        - org: '30200'
+          des:
+          - org: 08247
+            des:
+            - org: 08251
+              des:
+              - org: '22100'
+                des:
+                - org: '31400'
+                  des:
+                  - org: '31412'
+                    des:
+                    - org: '20400'
+                      des:
+                      - org: '21001'
+                        des:
+                        - org: '21004'
+                          des:
+                          - org: '21010'
+                            des: []
+                  - org: '23008'
+                    des:
+                    - org: '23004'
+                      des:
+                      - org: 08223
+                        des: []
+      - org: '10600'
+        des:
+        - org: '14100'
+          des:
+          - org: '15100'
+            des:
+            - org: '15211'
+              des:
+              - org: '15402'
+                des: []
+          - org: '11014'
+            des: []
+  - org: '17000'
+    des:
+    - org: 03208
+      des:
+      - org: '03213'
+        des:
+        - org: '03216'
+          des:
+          - org: '65200'
+            des:
+            - org: '65300'
+              des: []
+      - org: '60600'
+        des:
+        - org: 03309
+          des:
+          - org: '60911'
+            des:
+            - org: '03410'
+              des:
+              - org: '62002'
+                des:
+                - org: '61200'
+                  des: []
+line:
+- id: '05065'
+  name: Line 05065
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 25
+    departure_time: 27
+  - station: 03208
+    arrival_time: 61
+    departure_time: 63
+  - station: '17000'
+    arrival_time: 126
+    departure_time: 126
+- id: '05071'
+  name: Line 05071
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '17000'
+    arrival_time: 116
+    departure_time: 134
+  - station: '10600'
+    arrival_time: 191
+    departure_time: 194
+  - station: '14100'
+    arrival_time: 217
+    departure_time: 219
+  - station: '15100'
+    arrival_time: 259
+    departure_time: 259
+- id: '05075'
+  name: Line 05075
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 26
+    departure_time: 27
+  - station: 03208
+    arrival_time: 61
+    departure_time: 63
+  - station: '17000'
+    arrival_time: 126
+    departure_time: 126
+- id: 05081
+  name: Line 05081
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '17000'
+    arrival_time: 116
+    departure_time: 116
+- id: 05095
+  name: Line 05095
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 25
+    departure_time: 27
+  - station: 03208
+    arrival_time: 60
+    departure_time: 62
+  - station: '17000'
+    arrival_time: 126
+    departure_time: 126
+- id: '05101'
+  name: Line 05101
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 25
+    departure_time: 27
+  - station: 03208
+    arrival_time: 61
+    departure_time: 63
+  - station: '17000'
+    arrival_time: 126
+    departure_time: 151
+  - station: 08004
+    arrival_time: 179
+    departure_time: 181
+  - station: '10600'
+    arrival_time: 214
+    departure_time: 217
+  - station: '14100'
+    arrival_time: 241
+    departure_time: 243
+  - station: '15100'
+    arrival_time: 280
+    departure_time: 280
+- id: '05131'
+  name: Line 05131
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 25
+    departure_time: 27
+  - station: 03208
+    arrival_time: 61
+    departure_time: 63
+  - station: '17000'
+    arrival_time: 126
+    departure_time: 126
+- id: '05155'
+  name: Line 05155
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 25
+    departure_time: 27
+  - station: 03208
+    arrival_time: 60
+    departure_time: 62
+  - station: '17000'
+    arrival_time: 126
+    departure_time: 126
+- id: '05161'
+  name: Line 05161
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '17000'
+    arrival_time: 123
+    departure_time: 123
+- id: '05171'
+  name: Line 05171
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '17000'
+    arrival_time: 115
+    departure_time: 131
+  - station: '10600'
+    arrival_time: 185
+    departure_time: 188
+  - station: '11014'
+    arrival_time: 227
+    departure_time: 227
+- id: 05181
+  name: Line 05181
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 25
+    departure_time: 27
+  - station: 03208
+    arrival_time: 61
+    departure_time: 63
+  - station: '17000'
+    arrival_time: 127
+    departure_time: 127
+- id: 05191
+  name: Line 05191
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '17000'
+    arrival_time: 116
+    departure_time: 116
+- id: '05215'
+  name: Line 05215
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 25
+    departure_time: 27
+  - station: 03208
+    arrival_time: 60
+    departure_time: 62
+  - station: '17000'
+    arrival_time: 126
+    departure_time: 126
+- id: '05721'
+  name: Line 05721
+  corridor: '1'
+  stops:
+  - station: '65300'
+    arrival_time: 0
+    departure_time: 0
+  - station: '65200'
+    arrival_time: 23
+    departure_time: 26
+  - station: '03216'
+    arrival_time: 55
+    departure_time: 74
+  - station: 03208
+    arrival_time: 132
+    departure_time: 134
+  - station: '17000'
+    arrival_time: 200
+    departure_time: 222
+  - station: 08004
+    arrival_time: 247
+    departure_time: 249
+  - station: '10600'
+    arrival_time: 282
+    departure_time: 284
+  - station: '14100'
+    arrival_time: 306
+    departure_time: 308
+  - station: '15100'
+    arrival_time: 350
+    departure_time: 353
+  - station: '15211'
+    arrival_time: 415
+    departure_time: 418
+  - station: '15402'
+    arrival_time: 445
+    departure_time: 445
+- id: 05871
+  name: Line 05871
+  corridor: '1'
+  stops:
+  - station: '65300'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03216'
+    arrival_time: 47
+    departure_time: 55
+  - station: '03213'
+    arrival_time: 81
+    departure_time: 83
+  - station: 03208
+    arrival_time: 118
+    departure_time: 120
+  - station: '60000'
+    arrival_time: 186
+    departure_time: 186
+- id: 05951
+  name: Line 05951
+  corridor: '1'
+  stops:
+  - station: '65300'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03216'
+    arrival_time: 46
+    departure_time: 58
+  - station: '03213'
+    arrival_time: 83
+    departure_time: 85
+  - station: 03208
+    arrival_time: 120
+    departure_time: 122
+  - station: '60000'
+    arrival_time: 187
+    departure_time: 187
+rollingStock:
+- id: '1'
+  name: S-114
+  seats:
+  - hard_type: 1
+    quantity: 250
+  - hard_type: 2
+    quantity: 50
+trainServiceProvider:
+- id: '1'
+  name: Renfe
+  rolling_stock:
+  - '1'
+timeSlot:
+- id: '63210'
+  start: '10:32:00'
+  end: '10:42:00'
+- id: '75110'
+  start: '12:31:00'
+  end: '12:41:00'
+- id: '81110'
+  start: '13:31:00'
+  end: '13:41:00'
+- id: '90910'
+  start: '15:09:00'
+  end: '15:19:00'
+- id: '93210'
+  start: '15:32:00'
+  end: '15:42:00'
+- id: '99510'
+  start: '16:35:00'
+  end: '16:45:00'
+- id: '106210'
+  start: '17:42:00'
+  end: '17:52:00'
+- id: '111110'
+  start: '18:31:00'
+  end: '18:41:00'
+- id: '118210'
+  start: '19:42:00'
+  end: '19:52:00'
+- id: '127210'
+  start: '21:12:00'
+  end: '21:22:00'
+- id: '39210'
+  start: '6:32:00'
+  end: '6:42:00'
+- id: '41710'
+  start: '6:57:00'
+  end: '7:07:00'
+- id: '45210'
+  start: '7:32:00'
+  end: '7:42:00'
+- id: '46210'
+  start: '7:42:00'
+  end: '7:52:00'
+- id: '52210'
+  start: '8:42:00'
+  end: '8:52:00'
+- id: '57210'
+  start: '9:32:00'
+  end: '9:42:00'
+service:
+- id: 05065_02-06-2025-06.32
+  date: '2025-06-02'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 45.0
+  capacity_constraints: null
+- id: 05065_03-06-2025-06.32
+  date: '2025-06-03'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 29.0
+  capacity_constraints: null
+- id: 05065_04-06-2025-06.32
+  date: '2025-06-04'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 25.0
+  capacity_constraints: null
+- id: 05065_05-06-2025-06.32
+  date: '2025-06-05'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05065_06-06-2025-06.32
+  date: '2025-06-06'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 25.0
+  capacity_constraints: null
+- id: 05065_09-06-2025-06.32
+  date: '2025-06-09'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 35.0
+  capacity_constraints: null
+- id: 05065_10-06-2025-06.32
+  date: '2025-06-10'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 25.0
+  capacity_constraints: null
+- id: 05065_11-06-2025-06.32
+  date: '2025-06-11'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05065_12-06-2025-06.32
+  date: '2025-06-12'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05065_13-06-2025-06.32
+  date: '2025-06-13'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05071_02-06-2025-07.42
+  date: '2025-06-02'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 94.3
+    - seat: '5'
+      price: 113.3
+  capacity_constraints: null
+- id: 05071_03-06-2025-07.42
+  date: '2025-06-03'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 104.8
+    - seat: '5'
+      price: 123.8
+  capacity_constraints: null
+- id: 05071_04-06-2025-07.42
+  date: '2025-06-04'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 115.3
+    - seat: '5'
+      price: 134.3
+  capacity_constraints: null
+- id: 05071_05-06-2025-07.42
+  date: '2025-06-05'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 104.8
+    - seat: '5'
+      price: 123.8
+  capacity_constraints: null
+- id: 05071_06-06-2025-07.42
+  date: '2025-06-06'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05071_09-06-2025-07.42
+  date: '2025-06-09'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05071_10-06-2025-07.42
+  date: '2025-06-10'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05071_11-06-2025-07.42
+  date: '2025-06-11'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05071_12-06-2025-07.42
+  date: '2025-06-12'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05071_13-06-2025-07.42
+  date: '2025-06-13'
+  line: '05071'
+  train_service_provider: '1'
+  time_slot: '46210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05075_07-06-2025-07.32
+  date: '2025-06-07'
+  line: '05075'
+  train_service_provider: '1'
+  time_slot: '45210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 45.0
+  capacity_constraints: null
+- id: 05075_08-06-2025-07.32
+  date: '2025-06-08'
+  line: '05075'
+  train_service_provider: '1'
+  time_slot: '45210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05075_14-06-2025-07.32
+  date: '2025-06-14'
+  line: '05075'
+  train_service_provider: '1'
+  time_slot: '45210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 35.0
+  capacity_constraints: null
+- id: 05075_15-06-2025-07.32
+  date: '2025-06-15'
+  line: '05075'
+  train_service_provider: '1'
+  time_slot: '45210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05081_02-06-2025-08.42
+  date: '2025-06-02'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05081_03-06-2025-08.42
+  date: '2025-06-03'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 94.3
+    - seat: '5'
+      price: 113.3
+  capacity_constraints: null
+- id: 05081_04-06-2025-08.42
+  date: '2025-06-04'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05081_05-06-2025-08.42
+  date: '2025-06-05'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05081_06-06-2025-08.42
+  date: '2025-06-06'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05081_07-06-2025-08.42
+  date: '2025-06-07'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05081_09-06-2025-08.42
+  date: '2025-06-09'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05081_10-06-2025-08.42
+  date: '2025-06-10'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05081_11-06-2025-08.42
+  date: '2025-06-11'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05081_12-06-2025-08.42
+  date: '2025-06-12'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05081_13-06-2025-08.42
+  date: '2025-06-13'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05081_14-06-2025-08.42
+  date: '2025-06-14'
+  line: 05081
+  train_service_provider: '1'
+  time_slot: '52210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05095_02-06-2025-09.32
+  date: '2025-06-02'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 25.0
+  capacity_constraints: null
+- id: 05095_03-06-2025-09.32
+  date: '2025-06-03'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05095_04-06-2025-09.32
+  date: '2025-06-04'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05095_05-06-2025-09.32
+  date: '2025-06-05'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05095_06-06-2025-09.32
+  date: '2025-06-06'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 35.0
+  capacity_constraints: null
+- id: 05095_07-06-2025-09.32
+  date: '2025-06-07'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 45.0
+  capacity_constraints: null
+- id: 05095_08-06-2025-09.32
+  date: '2025-06-08'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 29.0
+  capacity_constraints: null
+- id: 05095_09-06-2025-09.32
+  date: '2025-06-09'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 29.0
+  capacity_constraints: null
+- id: 05095_10-06-2025-09.32
+  date: '2025-06-10'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05095_11-06-2025-09.32
+  date: '2025-06-11'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05095_12-06-2025-09.32
+  date: '2025-06-12'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05095_13-06-2025-09.32
+  date: '2025-06-13'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 29.0
+  capacity_constraints: null
+- id: 05095_14-06-2025-09.32
+  date: '2025-06-14'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 45.0
+  capacity_constraints: null
+- id: 05095_15-06-2025-09.32
+  date: '2025-06-15'
+  line: 05095
+  train_service_provider: '1'
+  time_slot: '57210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 25.0
+  capacity_constraints: null
+- id: 05101_02-06-2025-10.32
+  date: '2025-06-02'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 104.8
+    - seat: '5'
+      price: 123.8
+  capacity_constraints: null
+- id: 05101_03-06-2025-10.32
+  date: '2025-06-03'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 104.8
+    - seat: '5'
+      price: 123.8
+  capacity_constraints: null
+- id: 05101_04-06-2025-10.32
+  date: '2025-06-04'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05101_05-06-2025-10.32
+  date: '2025-06-05'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 104.8
+    - seat: '5'
+      price: 123.8
+  capacity_constraints: null
+- id: 05101_06-06-2025-10.32
+  date: '2025-06-06'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05101_07-06-2025-10.32
+  date: '2025-06-07'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05101_08-06-2025-10.32
+  date: '2025-06-08'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05101_09-06-2025-10.32
+  date: '2025-06-09'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05101_10-06-2025-10.32
+  date: '2025-06-10'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 15.75
+    - seat: '3'
+      price: 19.7
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05101_11-06-2025-10.32
+  date: '2025-06-11'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05101_12-06-2025-10.32
+  date: '2025-06-12'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05101_13-06-2025-10.32
+  date: '2025-06-13'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05101_14-06-2025-10.32
+  date: '2025-06-14'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05101_15-06-2025-10.32
+  date: '2025-06-15'
+  line: '05101'
+  train_service_provider: '1'
+  time_slot: '63210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05131_02-06-2025-13.31
+  date: '2025-06-02'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05131_03-06-2025-13.31
+  date: '2025-06-03'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05131_04-06-2025-13.31
+  date: '2025-06-04'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05131_05-06-2025-13.31
+  date: '2025-06-05'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05131_06-06-2025-13.31
+  date: '2025-06-06'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05131_07-06-2025-13.31
+  date: '2025-06-07'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05131_08-06-2025-13.31
+  date: '2025-06-08'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05131_09-06-2025-13.31
+  date: '2025-06-09'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05131_10-06-2025-13.31
+  date: '2025-06-10'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05131_11-06-2025-13.31
+  date: '2025-06-11'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05131_12-06-2025-13.31
+  date: '2025-06-12'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05131_13-06-2025-13.31
+  date: '2025-06-13'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05131_14-06-2025-13.31
+  date: '2025-06-14'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05131_15-06-2025-13.31
+  date: '2025-06-15'
+  line: '05131'
+  train_service_provider: '1'
+  time_slot: '81110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05155_02-06-2025-15.32
+  date: '2025-06-02'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05155_03-06-2025-15.32
+  date: '2025-06-03'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05155_04-06-2025-15.32
+  date: '2025-06-04'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05155_05-06-2025-15.32
+  date: '2025-06-05'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05155_06-06-2025-15.32
+  date: '2025-06-06'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 45.0
+  capacity_constraints: null
+- id: 05155_07-06-2025-15.32
+  date: '2025-06-07'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05155_08-06-2025-15.32
+  date: '2025-06-08'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 59.0
+  capacity_constraints: null
+- id: 05155_09-06-2025-15.32
+  date: '2025-06-09'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05155_10-06-2025-15.32
+  date: '2025-06-10'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05155_11-06-2025-15.32
+  date: '2025-06-11'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05155_12-06-2025-15.32
+  date: '2025-06-12'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 25.0
+  capacity_constraints: null
+- id: 05155_13-06-2025-15.32
+  date: '2025-06-13'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 45.0
+  capacity_constraints: null
+- id: 05155_14-06-2025-15.32
+  date: '2025-06-14'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 25.0
+  capacity_constraints: null
+- id: 05155_15-06-2025-15.32
+  date: '2025-06-15'
+  line: '05155'
+  train_service_provider: '1'
+  time_slot: '93210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 45.0
+  capacity_constraints: null
+- id: 05161_02-06-2025-16.35
+  date: '2025-06-02'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05161_03-06-2025-16.35
+  date: '2025-06-03'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 94.3
+    - seat: '5'
+      price: 113.3
+  capacity_constraints: null
+- id: 05161_04-06-2025-16.35
+  date: '2025-06-04'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+  capacity_constraints: null
+- id: 05161_05-06-2025-16.35
+  date: '2025-06-05'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05161_06-06-2025-16.35
+  date: '2025-06-06'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05161_07-06-2025-16.35
+  date: '2025-06-07'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05161_08-06-2025-16.35
+  date: '2025-06-08'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05161_09-06-2025-16.35
+  date: '2025-06-09'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05161_10-06-2025-16.35
+  date: '2025-06-10'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05161_11-06-2025-16.35
+  date: '2025-06-11'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05161_12-06-2025-16.35
+  date: '2025-06-12'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05161_13-06-2025-16.35
+  date: '2025-06-13'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05161_14-06-2025-16.35
+  date: '2025-06-14'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05161_15-06-2025-16.35
+  date: '2025-06-15'
+  line: '05161'
+  train_service_provider: '1'
+  time_slot: '99510'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05171_02-06-2025-17.42
+  date: '2025-06-02'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05171_03-06-2025-17.42
+  date: '2025-06-03'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 94.3
+    - seat: '5'
+      price: 113.3
+  capacity_constraints: null
+- id: 05171_04-06-2025-17.42
+  date: '2025-06-04'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 94.3
+    - seat: '5'
+      price: 113.3
+  capacity_constraints: null
+- id: 05171_05-06-2025-17.42
+  date: '2025-06-05'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 115.3
+    - seat: '5'
+      price: 134.3
+  capacity_constraints: null
+- id: 05171_06-06-2025-17.42
+  date: '2025-06-06'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05171_08-06-2025-17.42
+  date: '2025-06-08'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 78.8
+    - seat: '3'
+      price: 86.7
+    - seat: '4'
+      price: 104.8
+    - seat: '5'
+      price: 123.8
+  capacity_constraints: null
+- id: 05171_09-06-2025-17.42
+  date: '2025-06-09'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05171_10-06-2025-17.42
+  date: '2025-06-10'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05171_11-06-2025-17.42
+  date: '2025-06-11'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05171_12-06-2025-17.42
+  date: '2025-06-12'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05171_13-06-2025-17.42
+  date: '2025-06-13'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05171_15-06-2025-17.42
+  date: '2025-06-15'
+  line: '05171'
+  train_service_provider: '1'
+  time_slot: '106210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 70.9
+    - seat: '3'
+      price: 78.8
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05181_02-06-2025-18.31
+  date: '2025-06-02'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05181_03-06-2025-18.31
+  date: '2025-06-03'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05181_04-06-2025-18.31
+  date: '2025-06-04'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05181_05-06-2025-18.31
+  date: '2025-06-05'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05181_06-06-2025-18.31
+  date: '2025-06-06'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05181_07-06-2025-18.31
+  date: '2025-06-07'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05181_08-06-2025-18.31
+  date: '2025-06-08'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 70.9
+    - seat: '3'
+      price: 78.8
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05181_09-06-2025-18.31
+  date: '2025-06-09'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05181_10-06-2025-18.31
+  date: '2025-06-10'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05181_11-06-2025-18.31
+  date: '2025-06-11'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05181_12-06-2025-18.31
+  date: '2025-06-12'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05181_13-06-2025-18.31
+  date: '2025-06-13'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05181_14-06-2025-18.31
+  date: '2025-06-14'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05181_15-06-2025-18.31
+  date: '2025-06-15'
+  line: 05181
+  train_service_provider: '1'
+  time_slot: '111110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05191_02-06-2025-19.42
+  date: '2025-06-02'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05191_03-06-2025-19.42
+  date: '2025-06-03'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05191_04-06-2025-19.42
+  date: '2025-06-04'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05191_05-06-2025-19.42
+  date: '2025-06-05'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05191_06-06-2025-19.42
+  date: '2025-06-06'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05191_08-06-2025-19.42
+  date: '2025-06-08'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 70.9
+    - seat: '3'
+      price: 78.8
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05191_09-06-2025-19.42
+  date: '2025-06-09'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05191_10-06-2025-19.42
+  date: '2025-06-10'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05191_11-06-2025-19.42
+  date: '2025-06-11'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05191_12-06-2025-19.42
+  date: '2025-06-12'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 19.7
+    - seat: '3'
+      price: 23.65
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05191_13-06-2025-19.42
+  date: '2025-06-13'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05191_15-06-2025-19.42
+  date: '2025-06-15'
+  line: 05191
+  train_service_provider: '1'
+  time_slot: '118210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05215_02-06-2025-21.12
+  date: '2025-06-02'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05215_03-06-2025-21.12
+  date: '2025-06-03'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05215_04-06-2025-21.12
+  date: '2025-06-04'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05215_05-06-2025-21.12
+  date: '2025-06-05'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05215_06-06-2025-21.12
+  date: '2025-06-06'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 35.0
+  capacity_constraints: null
+- id: 05215_07-06-2025-21.12
+  date: '2025-06-07'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 19.0
+  capacity_constraints: null
+- id: 05215_08-06-2025-21.12
+  date: '2025-06-08'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 65.0
+  capacity_constraints: null
+- id: 05215_09-06-2025-21.12
+  date: '2025-06-09'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05215_10-06-2025-21.12
+  date: '2025-06-10'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05215_11-06-2025-21.12
+  date: '2025-06-11'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05215_12-06-2025-21.12
+  date: '2025-06-12'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 15.0
+  capacity_constraints: null
+- id: 05215_13-06-2025-21.12
+  date: '2025-06-13'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 35.0
+  capacity_constraints: null
+- id: 05215_14-06-2025-21.12
+  date: '2025-06-14'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 25.0
+  capacity_constraints: null
+- id: 05215_15-06-2025-21.12
+  date: '2025-06-15'
+  line: '05215'
+  train_service_provider: '1'
+  time_slot: '127210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 49.0
+  capacity_constraints: null
+- id: 05721_02-06-2025-12.31
+  date: '2025-06-02'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05721_03-06-2025-12.31
+  date: '2025-06-03'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05721_04-06-2025-12.31
+  date: '2025-06-04'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05721_05-06-2025-12.31
+  date: '2025-06-05'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05721_06-06-2025-12.31
+  date: '2025-06-06'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 104.8
+    - seat: '5'
+      price: 123.8
+  capacity_constraints: null
+- id: 05721_07-06-2025-12.31
+  date: '2025-06-07'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05721_08-06-2025-12.31
+  date: '2025-06-08'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05721_09-06-2025-12.31
+  date: '2025-06-09'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05721_10-06-2025-12.31
+  date: '2025-06-10'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05721_11-06-2025-12.31
+  date: '2025-06-11'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05721_12-06-2025-12.31
+  date: '2025-06-12'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05721_13-06-2025-12.31
+  date: '2025-06-13'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 94.3
+    - seat: '5'
+      price: 113.3
+  capacity_constraints: null
+- id: 05721_14-06-2025-12.31
+  date: '2025-06-14'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05721_15-06-2025-12.31
+  date: '2025-06-15'
+  line: '05721'
+  train_service_provider: '1'
+  time_slot: '75110'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05871_02-06-2025-06.57
+  date: '2025-06-02'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05871_03-06-2025-06.57
+  date: '2025-06-03'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 70.9
+    - seat: '3'
+      price: 78.8
+    - seat: '4'
+      price: 94.3
+    - seat: '5'
+      price: 113.3
+  capacity_constraints: null
+- id: 05871_04-06-2025-06.57
+  date: '2025-06-04'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05871_05-06-2025-06.57
+  date: '2025-06-05'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 94.3
+    - seat: '5'
+      price: 113.3
+  capacity_constraints: null
+- id: 05871_06-06-2025-06.57
+  date: '2025-06-06'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05871_07-06-2025-06.57
+  date: '2025-06-07'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05871_08-06-2025-06.57
+  date: '2025-06-08'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05871_09-06-2025-06.57
+  date: '2025-06-09'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05871_10-06-2025-06.57
+  date: '2025-06-10'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05871_11-06-2025-06.57
+  date: '2025-06-11'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05871_12-06-2025-06.57
+  date: '2025-06-12'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05871_13-06-2025-06.57
+  date: '2025-06-13'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05871_14-06-2025-06.57
+  date: '2025-06-14'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 39.4
+    - seat: '3'
+      price: 47.3
+    - seat: '4'
+      price: 52.4
+    - seat: '5'
+      price: 71.4
+  capacity_constraints: null
+- id: 05871_15-06-2025-06.57
+  date: '2025-06-15'
+  line: 05871
+  train_service_provider: '1'
+  time_slot: '41710'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05951_02-06-2025-15.09
+  date: '2025-06-02'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05951_03-06-2025-15.09
+  date: '2025-06-03'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05951_04-06-2025-15.09
+  date: '2025-06-04'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+  capacity_constraints: null
+- id: 05951_05-06-2025-15.09
+  date: '2025-06-05'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05951_06-06-2025-15.09
+  date: '2025-06-06'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 83.85
+    - seat: '5'
+      price: 102.85
+  capacity_constraints: null
+- id: 05951_07-06-2025-15.09
+  date: '2025-06-07'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05951_08-06-2025-15.09
+  date: '2025-06-08'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null
+- id: 05951_09-06-2025-15.09
+  date: '2025-06-09'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05951_10-06-2025-15.09
+  date: '2025-06-10'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 15.75
+    - seat: '3'
+      price: 19.7
+    - seat: '4'
+      price: 26.2
+    - seat: '5'
+      price: 45.2
+  capacity_constraints: null
+- id: 05951_11-06-2025-15.09
+  date: '2025-06-11'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 23.65
+    - seat: '3'
+      price: 31.5
+    - seat: '4'
+      price: 31.45
+    - seat: '5'
+      price: 50.45
+  capacity_constraints: null
+- id: 05951_12-06-2025-15.09
+  date: '2025-06-12'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 47.3
+    - seat: '3'
+      price: 55.15
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05951_13-06-2025-15.09
+  date: '2025-06-13'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 55.15
+    - seat: '3'
+      price: 63.05
+    - seat: '4'
+      price: 62.9
+    - seat: '5'
+      price: 81.9
+  capacity_constraints: null
+- id: 05951_14-06-2025-15.09
+  date: '2025-06-14'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 31.5
+    - seat: '3'
+      price: 39.4
+    - seat: '4'
+      price: 41.9
+    - seat: '5'
+      price: 60.9
+  capacity_constraints: null
+- id: 05951_15-06-2025-15.09
+  date: '2025-06-15'
+  line: 05951
+  train_service_provider: '1'
+  time_slot: '90910'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '2'
+      price: 63.05
+    - seat: '3'
+      price: 70.9
+    - seat: '4'
+      price: 73.35
+    - seat: '5'
+      price: 92.35
+  capacity_constraints: null

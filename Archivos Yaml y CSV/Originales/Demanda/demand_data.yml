@@ -1,0 +1,487 @@
+# Yaml datafile for demand data. Data of test case.
+
+# Market
+market:
+  - id: 1
+    departure_station: 'Madrid'
+    departure_station_coords: [40.416775, -3.703790]
+    arrival_station: 'Zaragoza'
+    arrival_station_coords: [41.648822, -0.889085]
+  - id: 2
+    departure_station: 'Zaragoza'
+    departure_station_coords: [41.648822, -0.889085]
+    arrival_station: 'Barcelona'
+    arrival_station_coords: [41.385064, 2.173404]
+  - id: 3
+    departure_station: 'Madrid'
+    departure_station_coords: [40.416775, -3.703790]
+    arrival_station: 'Barcelona'
+    arrival_station_coords: [41.385064, 2.173404]
+
+# User Pattern
+userPattern:
+  - id: 1
+    name: Business
+    rules:
+      R0: IF (seat is Premium) THEN 20.0
+      R1: IF (tsp is RU1) | (tsp is RU2) THEN 20.0
+      R2: IF (origin is very_near) & (destination is very_near) & (departure_time is in_time) & (arrival_time is in_time) THEN 60.0
+    variables:
+      - name: origin
+        type: fuzzy
+        support: [0, 100]
+        sets: [very_near, mid_range, far, far_away]
+        very_near: [0, 0, 10, 20]
+        mid_range: [10, 20, 50, 60]
+        far: [50, 60, 70, 80]
+        far_away:  [70, 80, 100, 100]
+      - name: destination
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: departure_time
+        type: fuzzy
+        support: [0, 100]
+        sets: [in_time, close, remote, very_remote]
+        in_time: [0, 0, 10, 30]
+        close: [10, 30, 40, 60]
+        remote: [40, 60, 70, 90]
+        very_remote: [70, 90, 100, 100]
+      - name: arrival_time
+        type: fuzzy
+        support: [0, 100]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: price
+        type: fuzzy
+        support: [0, 100]
+        sets: [very_cheap, cheap, medium, expensive]
+        very_cheap: [0, 0, 5, 15]
+        cheap: [5, 15, 25, 35]
+        medium: [25, 35, 55, 65]
+        expensive: [55, 65, 100, 100]
+      - name: seat
+        type: categorical
+        labels: [ Turista, TuristaPlus, Premium ]
+      - name: tsp
+        type: categorical
+        labels: [RU1, RU2, RU3, RU4]
+    arrival_time: norm
+    arrival_time_kwargs:
+      loc: 8
+      scale: 1
+    purchase_day: randint
+    purchase_day_kwargs:
+      low: 2
+      high: 7
+    forbidden_departure_hours:
+      start: 9
+      end: 24
+    seats:
+      - id: 1
+        utility: 10
+      - id: 2
+        utility: 15
+      - id: 3
+        utility: 20
+    train_service_providers:
+      - id: 1
+        utility: 2
+    early_stop: 0.3
+    utility_threshold: 50
+    error: norm
+    error_kwargs:
+      loc: 2
+      scale: 1
+  - id: 2
+    name: Estudiante
+    rules:
+      R0: IF (origin is very_near) & (destination is very_near) THEN 10.0
+      R1: IF (price is very_cheap) | (price is cheap) THEN 20.0
+      R2: IF (departure_time is in_time) & (arrival_time is in_time) THEN 10.0
+      R3: IF ((price is very_cheap) | (price is cheap)) & ((origin is very_near) & (destination is very_near)) THEN 60.0
+    variables:
+      - name: origin
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: destination
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: departure_time
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: arrival_time
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: price
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_cheap, cheap, medium, expensive ]
+        very_cheap: [ 0, 0, 5, 15 ]
+        cheap: [ 5, 15, 25, 35 ]
+        medium: [ 25, 35, 55, 65 ]
+        expensive: [ 55, 65, 100, 100 ]
+      - name: seat
+        type: categorical
+        labels: [ Turista, TuristaPlus, Premium ]
+      - name: tsp
+        type: categorical
+        labels: [RU1, RU2, RU3, RU4]
+    arrival_time: norm
+    arrival_time_kwargs:
+      loc: 18
+      scale: 3
+    purchase_day: randint
+    purchase_day_kwargs:
+      low: 0
+      high: 4
+    forbidden_departure_hours:
+      start: 6
+      end: 14
+    seats:
+      - id: 1
+        utility: 10
+      - id: 2
+        utility: 12
+      - id: 3
+        utility: 15
+    train_service_providers:
+      - id: 1
+        utility: 1
+    early_stop: 0.2
+    utility_threshold: 50
+    error: norm
+    error_kwargs:
+      loc: 1
+      scale: 0.5
+  - id: 3
+    name: Turista
+    rules:
+      R0: IF (price is very_cheap) | (price is cheap) THEN 20.0
+      R1: IF (seat is Turista) | (seat is TuristaPlus) THEN 10.0
+      R2: IF ((seat is Turista) | (seat is TuristaPlus)) & ((tsp is RU2) | (tsp is RU3) | (tsp is RU4)) THEN 20.0
+      R3: IF ((seat is Turista) | (seat is TuristaPlus)) & ((origin is very_near) | (origin is mid_range)) & (destination is very_near) THEN 50.0
+    variables:
+      - name: origin
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: destination
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: departure_time
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: arrival_time
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: price
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_cheap, cheap, medium, expensive ]
+        very_cheap: [ 0, 0, 5, 15 ]
+        cheap: [ 5, 15, 25, 35 ]
+        medium: [ 25, 35, 55, 65 ]
+        expensive: [ 55, 65, 100, 100 ]
+      - name: seat
+        type: categorical
+        labels: [ Turista, TuristaPlus, Premium ]
+      - name: tsp
+        type: categorical
+        labels: [RU1, RU2, RU3, RU4]
+    arrival_time: norm
+    arrival_time_kwargs:
+      loc: 14
+      scale: 6
+    purchase_day: randint
+    purchase_day_kwargs:
+      low: 1
+      high: 15
+    forbidden_departure_hours:
+      start: 0
+      end: 6
+    seats:
+      - id: 1
+        utility: 10
+      - id: 2
+        utility: 18
+      - id: 3
+        utility: 20
+    train_service_providers:
+      - id: 1
+        utility: 3
+    early_stop: 0.1
+    utility_threshold: 50
+    error: norm
+    error_kwargs:
+      loc: 2.5
+      scale: 3
+  - id: 4
+    name: Turista de Eventos
+    rules:
+      R0: IF (price is very_cheap) | (price is cheap) | (price is medium) THEN 25.0
+      R1: IF (departure_time is in_time) & (arrival_time is in_time) THEN 50.0
+      R2: IF (origin is very_near) & (destination is very_near) THEN 25.0
+    variables:
+      - name: origin
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: destination
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: departure_time
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: arrival_time
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: price
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_cheap, cheap, medium, expensive ]
+        very_cheap: [ 0, 0, 5, 15 ]
+        cheap: [ 5, 15, 25, 35 ]
+        medium: [ 25, 35, 55, 65 ]
+        expensive: [ 55, 65, 100, 100 ]
+      - name: seat
+        type: categorical
+        labels: [ Turista, TuristaPlus, Premium ]
+      - name: tsp
+        type: categorical
+        labels: [RU1, RU2, RU3, RU4]
+    arrival_time: norm
+    arrival_time_kwargs:
+      loc: 15
+      scale: 8
+    purchase_day: randint
+    purchase_day_kwargs:
+      low: 7
+      high: 15
+    forbidden_departure_hours:
+      start: 0
+      end: 6
+    seats:
+      - id: 1
+        utility: 10
+      - id: 2
+        utility: 18
+      - id: 3
+        utility: 20
+    train_service_providers:
+      - id: 1
+        utility: 3
+    early_stop: 0.1
+    utility_threshold: 50
+    error: norm
+    error_kwargs:
+      loc: 2.5
+      scale: 3
+  - id: 5
+    name: Aventurero
+    rules:
+      R0: IF (price is very_cheap) | (price is cheap) THEN 55.0
+      R1: IF (origin is very_near) | (origin is mid_range) THEN 35.0
+      R2: IF (seat is TuristaPlus) THEN 10.0
+    variables:
+      - name: origin
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: destination
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_near, mid_range, far, far_away ]
+        very_near: [ 0, 0, 10, 20 ]
+        mid_range: [ 10, 20, 50, 60 ]
+        far: [ 50, 60, 70, 80 ]
+        far_away: [ 70, 80, 100, 100 ]
+      - name: departure_time
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: arrival_time
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ in_time, close, remote, very_remote ]
+        in_time: [ 0, 0, 10, 30 ]
+        close: [ 10, 30, 40, 60 ]
+        remote: [ 40, 60, 70, 90 ]
+        very_remote: [ 70, 90, 100, 100 ]
+      - name: price
+        type: fuzzy
+        support: [ 0, 100 ]
+        sets: [ very_cheap, cheap, medium, expensive ]
+        very_cheap: [ 0, 0, 5, 15 ]
+        cheap: [ 5, 15, 25, 35 ]
+        medium: [ 25, 35, 55, 65 ]
+        expensive: [ 55, 65, 100, 100 ]
+      - name: seat
+        type: categorical
+        labels: [ Turista, TuristaPlus, Premium ]
+      - name: tsp
+        type: categorical
+        labels: [RU1, RU2, RU3, RU4]
+    arrival_time: norm
+    arrival_time_kwargs:
+      loc: 10
+      scale: 5
+    purchase_day: randint
+    purchase_day_kwargs:
+      low: 2
+      high: 7
+    forbidden_departure_hours:
+      start: 0
+      end: 6
+    seats:
+      - id: 1
+        utility: 10
+      - id: 2
+        utility: 18
+      - id: 3
+        utility: 20
+    train_service_providers:
+      - id: 1
+        utility: 3
+    early_stop: 0.1
+    utility_threshold: 50
+    error: norm
+    error_kwargs:
+      loc: 2.5
+      scale: 3
+
+# Demand Pattern
+demandPattern:
+  - id: 1
+    name: Monday-Thursday
+    markets:
+      # Madrid - Zaragoza
+      - market: 1
+        potential_demand: randint
+        potential_demand_kwargs:
+          low: 1000
+          high: 1800
+        user_pattern_distribution:
+          - id: 1 # Business
+            percentage: 0.2
+          - id: 2 # Student
+            percentage: 0.25
+          - id: 3 # Tourist
+            percentage: 0.35
+          - id: 4 # EventTourist
+            percentage: 0.1
+          - id: 5 # Adventurer
+            percentage: 0.1
+      # Zaragoza - Barcelona
+      - market: 2
+        potential_demand: randint
+        potential_demand_kwargs:
+          low: 1000
+          high: 1200
+        user_pattern_distribution:
+          - id: 1 # Business
+            percentage: 0.1
+          - id: 2 # Student
+            percentage: 0.3
+          - id: 3 # Tourist
+            percentage: 0.4
+          - id: 4 # EventTourist
+            percentage: 0.1
+          - id: 5 # Adventurer
+            percentage: 0.1
+      # Madrid - Barcelona
+      - market: 3
+        potential_demand: randint
+        potential_demand_kwargs:
+          low: 5000
+          high: 7000
+        user_pattern_distribution:
+          - id: 1 # Business
+            percentage: 0.15
+          - id: 2 # Student
+            percentage: 0.1
+          - id: 3 # Tourist
+            percentage: 0.5
+          - id: 4 # EventTourist
+            percentage: 0.15
+          - id: 5 # Adventurer
+            percentage: 0.1
+
+# Day
+day:
+  - id: 1
+    date: 2024-06-25
+    demandPattern: 1
