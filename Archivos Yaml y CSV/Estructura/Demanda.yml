@@ -1,0 +1,90 @@
+#Lista de mercados para la simulación
+market:
+  - id: <Identificador del mercado>
+    departure_station: <Nombre de la estación de salida>
+    departure_station_coords: <Coordenadas de la estación de salida>
+    arrival_station: <Nombre de la estación de llegada>
+    arrival_station_coords: <Coordenadas de la estación de llegada>
+
+#Lista con los patrones de usuario    
+userPattern:
+  - id: <Identificador del patrón de usuario>
+    name: <Nombre del patron de usuario>
+    
+    #Lista de reglas difusas
+    rules:
+      R0: <Regla difusa número 0>
+      Rn: <Regla difusa número n>
+      
+    #Lista de variables lingüísticas  
+    variables:
+        #Variable tipo "fuzzy"
+      - name: <Nombre de la variable>
+        type: fuzzy
+        support: <Dominio de la variable lingüística>
+        sets: [Conjunto_1, Conjunto_2, Conjunto_n]
+        Conjunto_1: <Valores que definen el Conjunto_1>
+        Conjunto_n: <Valores que definen el Conjunto_n>
+
+      - name: <Nombre de la variable>
+        type: categorical
+        labels: [Etiqueta_1,Etiqueta_2,Etiqueta_n]
+    arrival_time: <Función para generar la distribución del timepo de llegada>
+    arrival_time_kwargs: # Lista con los argumentos de la función de arrival_time
+      arg_1: <Valor del argumento 1> 
+      arg_n: <Valor del argumento n>
+    purchase_day: <Función que genera los días de antelación de la compra del billete>
+    purchase_day_kwargs: # Argumentos para la función purchase_day
+      arg_1: <Valor del argumento 1> 
+      arg_n: <Valor del argumento n>
+    forbidden_departure_hours: # Franja horaria en la que el usuario prefiere no empezar el viaje
+      start: <Hora de inicio de la franja>
+      end: <Hora de finalización de la franja>
+    
+    #Lista de diccionarios para representar la utilidad de cada asiento
+    #para el patrón de usuario
+    seats:
+      - id: 1
+        utility: <Valor de utilidad para el asiento con id = 1>
+      - id: n
+        utility: <Valor de utilidad para el asiento con id = n>
+    
+    #Lista de diccionarios para representar la utilidad de cada proveedor
+    #de servicios ferroviarios para el patrón de usuario
+    train_service_providers:
+      - id: 1
+        utility: <Valor de utilidad para el proveedor con id = 1>
+      - id: 2
+        utility: <Valor de utilidad para el proveedor con id = 2>
+      - id: n
+        utility: <Valor de utilidad para el proveedor con id = n>
+       
+    early_stop: <Probabilidad de que el usuario cancele el billete>
+    utility_threshold: <Umbral de utilidad para el patron de usuario>
+    error: <Función para generar la distribución del error>
+    error_kwargs:
+      arg_1: <Valor del argumento 1> 
+      arg_n: <Valor del argumento n>
+
+#Lista de patrones de demanda    
+demandPattern:
+  - id: <Identificador del patrón de demanda>
+    name: <Nombre del patrón de demanda>
+    markets: # Lista de mercados a los que afecta el patrón de demanda
+
+      - market: <Identificador del mercado>
+        potential_demand: <Función para calcular la posible demanda>
+        potential_demand_kwargs: # Argumentos para la función de potential_demand
+            arg_1: <Valor del argumento 1> 
+            arg_n: <Valor del argumento n>
+            
+        #Lista con la distribución de los patrones de usuario para el
+        #patrón de demanda actual        
+        user_pattern_distribution:
+          - id: <Identificador del patrón de usuario 1>
+            percentage: <Porcentaje del tipo de usuario esperado>
+
+day:
+  - id: <Identificador del día>
+    date: <Fecha de la simulación>
+    demandPattern: <Patrón de demanda empleado para el día simulado>
