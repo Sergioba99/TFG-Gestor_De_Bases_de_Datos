@@ -593,18 +593,17 @@ class Parser:
     # Funciones auxiliares de corridor
     def extractStationsFromCorridor(self, stationsData: list, stations=None):
         """
-        Extrae las estaciones por las que va a pasar el corredor a partir de
-        los datos obtenidos directamente del
-        archivo Yaml. Esta funcion devuelve una lista ordenada con todas las
-        estaciones siendo el primer elemento el
-        punto de partida del corredor y el ultimo elemento el final del
-        corredor.
-        :param stationsData: lista en las que estan contenidos los IDs de
+        Extrae los ramales del corredor. Esta función devuelve una lista
+        ordenada con todos los ramales. Cada ramal será una lista ordenada
+        siendo el primer elemento la estación de inicio del ramal y el último
+        elemento será la última estación del ramal.
+        :param stationsData: Lista en las que están contenidos los IDs de
         todas las estaciones por las que va a pasar el
         corredor
-        :param stations: ruta actual acumulada (se utiliza internamente al
+        :param stations: Ruta actual acumulada (se utiliza internamente al
         llamar recursivamente).
-        :return: Devuelve una lista ordenada con las paradas del corredor.
+        :return: Devuelve una lista de listas con todos los ramales del
+        corredor.
         """
         if stations is None:
             stations = []
