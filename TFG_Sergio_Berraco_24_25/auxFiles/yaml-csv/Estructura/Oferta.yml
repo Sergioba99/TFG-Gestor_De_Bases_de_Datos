@@ -1,0 +1,83 @@
+#Lista con los datos de las estaciones
+stations:
+- id: <Identificador de la estación>
+  name: <Nombre de la estación>
+  city: <Ciudad en la que se encuentra la estación>
+  short_name: <Nombre corto de la estación>
+  coordinates:
+    latitude: <Latitud a la que se encuentra la estación>
+    longitude: <Longitud a la que se encuentra la estación>
+
+#Lista con los asientos ofertados
+seat:
+- id: <Identificador del asiento>
+  name: <Nombre del identificador>
+  hard_type: <Tipo de asiento físico>
+  soft_type: <Tipo de asiento según los servicios incluidos>
+
+#Lista con la información de los corredores ferroviarios
+corridor:
+- id: <Identificador del corredor>
+  name: <Nombre del corredor>
+  
+  #Lista de diccionarios que define el corredor
+  stations:
+  - org: <Estación de origen>
+    des: # Si hay más estaciones, esto es un diccionario
+    - org: <Estación de origen>
+      des: [] # Para indicar el final del corredor 
+              # se usa una lista vacia
+
+#Lista con los datos de las líneas
+line:
+- id: <Identificador de la línea>
+  name: <Nombre de la línea>
+  corridor: <Corredor al que pertenece la línea>
+  stops: # Lista con las paradas de la línea
+    - station: <Identificador de la estación de llegada>
+      arrival_time: <Tiempo relativo de llegada a la estación>
+      departure_time: <Tiempo relativo de salida de la estación>
+
+#Lista con los trenes en servicio
+rollingStock:
+- id: <Identificador del tren>
+  name: <Nombre del tren>
+  seats: # Lista con los tipos de asientos físicos que tiene el tren
+  - hard_type: <Tipo de asiento físico>
+    quantity: <Cantidad del tipo de asiento>
+
+#Lista con los proveedores de servicios ferroviarios
+trainServiceProvider:
+- id: <Identificador del proveedor>
+  name: <Nombre del proveedor>
+  
+  #Lista de los trenes que posee el proveedor de servicios ferroviarios
+  rolling_stock:
+  - <Identificador del tren 1>
+  - <Identificador del tren n>
+  
+#Lista con todas las franjas horarias
+timeSlot:
+- id: <Identificador de la franja horaria>
+  start: <Hora de inicio de la franja>
+  end: <Hora de finalización de la franja>
+
+#Lista con la información de los servicios
+service:
+- id: <Identificador del servicio>
+  date: <Fecha en la que se da el servicio>
+  line: <Linea a la que pertenece el servicio>
+  train_service_provider: <Proveedor encargado del servicio>
+  time_slot: <Franja horaria de inicio del servicio>
+  rolling_stock: <Tren que va a cumplir el servicio>
+  
+  #Lista con la información de los trayectos entre estaciones del servicio
+  origin_destination_tuples:
+  - origin: <Estación de origen>
+    destination: <Estación de destino>
+    
+    #Lista con el precio de cada asiento
+    seats:
+    - seat: <Identificador del asiento>
+      price: <Precio del asiento para el trayecto>
+  capacity_constraints: <Restricción de capacidad, null en caso de no existir>

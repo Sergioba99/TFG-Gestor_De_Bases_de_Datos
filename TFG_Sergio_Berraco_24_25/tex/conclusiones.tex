@@ -1,0 +1,58 @@
+\chapter{Conclusiones}
+\label{ch:conclusiones}
+
+A continuación, se analizará el cumplimiento de los objetivos durante el desarrollo del \acrshort{TFG}.
+
+Se ha investigado el funcionamiento de las bases de datos relacionales así como herramientas como SQLiteStudio. Esto ha permitido entender cómo funciona una base de datos relacional y plantear posibles diseños para las diferentes bases de datos necesarias en la consecución del trabajo. También se han estudiado los diferentes comandos \acrshort{SQL}, que permiten la interacción con las bases de datos. Esto ha permitido realizar una serie de pruebas para familiarizarse con la creación e interacción con las bases de datos, empleando para ello la herramienta SQLiteStudio, la cual emplea como motor de base de datos SQLite3. De esta manera, se ha podido comprender cómo emplear el lenguaje \acrshort{SQL} para realizar todas las tareas necesarias referentes a las bases de datos.
+
+Se ha realizado el diseño de las tres bases de datos necesarias para albergar los datos que se importan desde los diferentes archivos: una para los archivos que emplea el simulador para la entrada de datos de la oferta, otra para los archivos de entrada de datos de la demanda del simulador y, por último, otra que almacena los diferentes archivos de resultados que arroje el simulador. Para el diseño se ha empleado la herramienta SQLiteStudio para generar las tres bases de datos con sus correspondientes tablas.
+
+Se ha diseñado y desarrollado una herramiento en lenguaje Python que permite importar la información de los diferentes archivos del simulador a su base de datos correspondiente, así como regenerar estos archivos empleando la información contenida en dichas bases de datos. Este programa se ha dividido en diferentes módulos que realizan diferentes tareas. Para la lectura, escritura y procesado de datos de los archivos, se han realizado una serie de módulos que permiten leer y procesar la información contenida en archivos \acrshort{Yaml} y \acrshort{CSV} para su posterior inserción en las bases de datos y, además, estos módulos también permiten la creación de los archivos empleando la información obtenida de las bases de datos. También existe un módulo que es el encargado de crear estas bases de datos y manejar todo el flujo de información, permitiendo insertar, consultar y eliminar los datos almacenados mediante sentencias \acrshort{SQL}.
+
+Se ha estudiado el diseño y desarrollo de interfaces gráficas utilizando la librería nativa de Python Tkinter. Esta librería permite crear diferentes elementos, como marcos, botones, etiquetas, etc, que al unirse, componen una interfaz gráfica. Esto ha permitido la creación de una interfaz sencilla para que los usuarios puedan importar y exportar archivos, borrar los archivos de las bases de datos y ejecutar sentencias \acrshort{SQL} dentro de la propia interfaz. Esto último permite al usuario de la aplicación consultar información almacenada en las bases de datos empleando sentencias \acrshort{SQL}, teniendo además la posibilidad de exportar la vista generada a un archivo \acrshort{CSV}.
+
+Los objetivos conseguidos de los marcados inicialmente son los siguientes:
+\begin{itemize}
+
+\item Diseño e implementación de tres bases de datos funcionales para almacenar los datos de los diferentes archivos de configuración de la oferta y la demanda, así como los de resultados.
+
+\item Diseño y desarrollo de los módulos necesarios para leer y procesar los datos provenientes de los archivos para introducirlos posteriormente en la base de datos y, además, generar estos archivos usando la información proveniente de las bases de datos.
+
+\item Diseño e implementación del módulo encargado de la gestión de las bases de datos y de los datos almacenados en estas.
+
+\item Creación y desarrollo de una interfaz sencilla que permita interactuar con los diferentes módulos permitiendo así, importar, exportar y borrar archivos de las bases de datos y, también, realizar consultas a las bases de datos mediante sentencias \acrshort{SQL}.
+
+\end{itemize}
+
+A lo largo de la realización de este \acrshort{TFG}, se han abordado y cumplido también una serie de objetivos de carácter académico y técnico que han aportado un conjunto de competencias nuevas no estudiadas en la carrera. Estas son las siguientes:
+\begin{itemize}
+    \item Diseñar y gestionar bases de datos relacionales mediante el uso de sentencias \acrshort{SQL}.
+
+    \item Procesar archivos \acrshort{Yaml} utilizando PyYaml en Python.
+
+    \item Procesar archivos \acrshort{CSV} utilizando la librería csv de Python.
+    
+    \item Diseñar y crear interfaces gráficas utilizando la librería de Tkinter.
+    
+    \item Integrar bases de datos relacionales a programas desarrollados en Python utilizando la librería de sqlite3.
+
+    \item Separar los programas, desarrollados en Python, en diferentes módulos que se comuniquen entre sí.
+
+    \item Utilizar repositorios de código como GitHub para el control de versiones de un programa.
+\end{itemize}
+
+Los conocimientos adquiridos durante la realización del \acrshort{TFG} no solo han contribuido al desarrollo de este proyecto, sino que también resultarán de gran utilidad en futuros proyectos profesionales y académicos.
+
+Todo el trabajo desarrollado en este \acrshort{TFG} ha permitido comprobar la utilidad del uso de bases de datos dentro del simulador \acrshort{ROBIN}.
+
+Finalmente, se plantean las siguientes líneas posibles de trabajos futuros:
+
+\begin{itemize}
+    \item Optimizar el código de la aplicación para que su ejecución sea lo más rápida posible.
+    
+    \item Migrar las bases de datos a un servidor y modificar el código para que se empleen esas bases de datos.
+
+    \item Mejorar el aspecto de la interfaz y añadir mejoras y funciones a esta.
+
+    \item Implementar las bases de datos directamente al simulador para que al ejecutar una prueba, este almacene los archivos empleados en las simulaciones directamente a las bases de datos.
+\end{itemize}

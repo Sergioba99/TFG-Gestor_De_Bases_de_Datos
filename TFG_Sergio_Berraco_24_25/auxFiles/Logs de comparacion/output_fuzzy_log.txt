@@ -1,0 +1,7 @@
+Selecciona el primer archivo CSV (referencia)
+CSV1: D:/Sergio/universidad/24-25/TFG Base de datos/TFG/Material TFG/Aplicacion compilada/inputData/Resultados/output_fuzzy.csv
+Selecciona el segundo archivo CSV (a comparar)
+CSV2: D:/Sergio/universidad/24-25/TFG Base de datos/TFG/Material TFG/Aplicacion compilada/outputData/Resultados/output_fuzzy.csv
+
+=== RESULTADO DE LA COMPARACIÓN ===
+¡No se encontraron diferencias entre los archivos CSV!

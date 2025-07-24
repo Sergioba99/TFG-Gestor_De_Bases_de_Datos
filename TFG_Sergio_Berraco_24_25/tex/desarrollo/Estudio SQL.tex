@@ -1,0 +1,121 @@
+\section{Estudio del funcionamiento de bases de datos relacionales}
+\label{sec:estudioBasesDeDatos}
+
+Para el almacenamiento de los datos, tanto de la configuración como de los resultados del simulador, se ha optado por emplear bases de datos relacionales, debido a que es una solución eficiente para el almacenamiento masivo de datos que están relacionados entre sí, como es el caso de \acrshort{ROBIN}. 
+
+Una base de datos relacional está diseñada como un sistema estructurado donde se almacenan, organizan y gestionan datos en tablas interrelacionadas entre sí, de ahí que a este tipo de bases de datos se les denomine bases de datos relacionales. Estas bases de datos tienen una serie de características que facilitan el almacenamiento, tratamiento y consulta de la información, como por ejemplo, la organización de los datos en tablas, el empleo de comandos SQL para su manipulación y el uso de relaciones lógicas entre tablas, entre otras.
+
+%Dichas bases de datos comparten ciertos aspectos entre sí, como la organización de los datos, el empleo de comandos SQL para interactuar con los datos almacenados y el empleo de relaciones lógicas entre tablas dentro de la base de datos, entre otras. 
+
+
+Los datos se organizan en tablas, que se componen de filas y columnas, comúnmente denominadas registros y campos, respectivamente. Cada columna dentro de la tabla tiene asignado un tipo de datos específico, como números, texto, fechas, etc. A su vez, una de estas columnas debe ser una clave primaria que identifica inequívocamente al registro y que se puede emplear en la creación de relaciones con otras tablas de la base de datos. Además, algunas columnas pueden pertenecer a claves primarias de otras tablas, lo que se denomina como una clave externa. Estas claves externas sirven para definir las relaciones entre las tablas. Dichas relaciones vinculan las tablas dentro de la base de datos para que operen de forma conjunta.  
+
+\begin{table}[H]
+\centering
+\begin{tabular}{r|c|c|c|}
+\cline{2-4}
+ & \cellcolor[HTML]{C0C0C0}ID\_CLIENTE (\textbf{Clave Primaria}) & \cellcolor[HTML]{C0C0C0}NOMBRE & \cellcolor[HTML]{C0C0C0}EMAIL \\ \hline
+\multicolumn{1}{|r|}{1} & 1 & Juan Pérez    & juan.perez@email.com    \\ \hline
+\multicolumn{1}{|r|}{2} & 2 & María López   & maria.lopez@email.com   \\ \hline
+\multicolumn{1}{|r|}{3} & 3 & Carlos García & carlos.garcia@email.com \\ \hline
+\end{tabular}
+\caption{Tabla de ejemplo: CLIENTES}
+\label{tab:ejemploTablaClientes}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c|c|}
+\cline{2-4}
+ & \cellcolor[HTML]{C0C0C0}ID\_PEDIDO (\textbf{Clave Primaria}) & \cellcolor[HTML]{C0C0C0}FECHA & \cellcolor[HTML]{C0C0C0}ID\_CLIENTE (\textbf{Clave externa}) \\ \hline
+\multicolumn{1}{|l|}{1} & 101 & 18/03/2025 & 1 \\ \hline
+\multicolumn{1}{|l|}{2} & 102 & 19/03/2025 & 2 \\ \hline
+\multicolumn{1}{|l|}{3} & 103 & 20/03/2025 & 1 \\ \hline
+\multicolumn{1}{|l|}{4} & 104 & 21/03/2025 & 3 \\ \hline
+\end{tabular}
+\caption{Tabla de ejemplo: PEDIDOS}
+\label{tab:ejemploTablaPedidos}
+\end{table}
+
+A modo de ejemplo, se mostrará una base de datos donde se tienen almacenados los datos de los clientes que posee una empresa (Tabla \ref{tab:ejemploTablaClientes}) y los pedidos realizados a dicha empresa (Tabla \ref{tab:ejemploTablaPedidos}). Los clientes y pedidos tienen la clave primaria ID\_CLIENTE e ID\_PEDIDO respectivamente. La tabla PEDIDOS utiliza como clave externa la clave primaria de CLIENTES para relacionar los pedidos con el cliente que los realizó. Por ejemplo, si se observa el pedido 101, se puede comprobar que lo hizo el cliente 1; es decir, Juan Pérez con email juan.perez@email.com, junto con el resto de sus datos. Con estas relaciones se evita la replicación de información en diferentes lugares. 
+
+\begin{lstlisting}[language=SQL,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Seleccion de pedidos del cliente 1},
+                   label=src:ejemploPedidosClienteId1,
+                   inputencoding=utf8]                   
+-- Pedidos del cliente con id 1
+SELECT *
+FROM PEDIDOS
+WHERE PEDIDOS.ID_CLIENTE = 1
+\end{lstlisting}
+
+Además, se dispone del lenguaje de consultas SQL que permite realizar consultas de alto nivel. En el ejemplo, si se desea comprobar qué pedidos ha realizado el cliente 1 se puede utilizar el comando del Listado~\ref{src:ejemploPedidosClienteId1} que selecciona los pedidos del cliente 1 dentro de la tabla PEDIDOS.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l|c|c|c|}
+\cline{2-4}
+& \cellcolor[HTML]{C0C0C0}ID\_PEDIDO (\textbf{Clave Primaria}) & \cellcolor[HTML]{C0C0C0}FECHA & \cellcolor[HTML]{C0C0C0}ID\_CLIENTE (\textbf{Clave externa}) \\ \hline
+\multicolumn{1}{|l|}{1} & 101                                                 & 18/03/2025                    & 1                                                   \\ \hline
+\multicolumn{1}{|l|}{2} & 103                                                 & 20/03/2025                    & 1                                                   \\ \hline
+\end{tabular}
+\caption{Resultado de la sentencia del Listado~\ref{src:ejemploPedidosClienteId1}}
+\label{tab:ejemploTablaSelectId1}
+\end{table}
+
+Utilizando la relación entre las tablas de clientes y de pedidos, se pueden cruzar los datos de ambas para, por ejemplo, mostrar en una misma respuesta los datos referentes al cliente junto con los datos del pedido. Esto se realiza utilizando la sentencia SQL mostrada en el Listado~\ref{src:ejemploPedidosClienteId1ConRef}. Esta sentencia devuelve la información relacionada con los pedidos realizados por el cliente 1 añadiendo el nombre y el email, información que se encuentra en la tabla \texttt{CLIENTES}. Para lograr esto, se emplea el comando \texttt{INNER JOIN} que relaciona \texttt{CLIENTES} con \texttt{PEDIDOS} mediante la condición \texttt{PEDIDOS.ID\_CLIENTE = CLIENTES.ID\_CLIENTE}, combinando los valores de ambas tablas para el cliente que posea el identificador 1 (\texttt{CLIENTES.ID\_CLIENTE = 1}). La salida de esta sentencia se encuentra en la Tabla \ref{tab:ejemploSelectTablaId1ConRef}.
+
+%\newpage
+\begin{lstlisting}[language=SQL,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Seleccion de pedidos del cliente 1 con datos cruzados},
+                   label=src:ejemploPedidosClienteId1ConRef,
+                   inputencoding=utf8]                   
+-- Pedidos del cliente con id 1 con datos del cliente
+SELECT
+    PEDIDOS.ID_PEDIDO,
+    PEDIDOS.FECHA,        
+    CLIENTES.NOMBRE,
+    CLIENTES.EMAIL
+FROM 
+    CLIENTES
+
+INNER JOIN
+    PEDIDOS
+ON 
+    PEDIDOS.ID_CLIENTE = CLIENTES.ID_CLIENTE
+    
+WHERE 
+    CLIENTES.ID_CLIENTE = 1
+\end{lstlisting}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{r|c|c|c|c|}
+\cline{2-5}
+\multicolumn{1}{l|}{} &
+  \cellcolor[HTML]{C0C0C0}\textbf{ID\_PEDIDO} &
+  \cellcolor[HTML]{C0C0C0}\textbf{FECHA} &
+  \cellcolor[HTML]{C0C0C0}\textbf{NOMBRE} &
+  \cellcolor[HTML]{C0C0C0}\textbf{EMAIL} \\ \hline
+\multicolumn{1}{|r|}{1} &
+  101 &
+  18/03/2025 &
+  Juan Pérez &
+  juan.perez@email.com \\ \hline
+\multicolumn{1}{|r|}{2} &
+  103 &
+  20/03/2025 &
+  Juan Pérez &
+  juan.perez@email.com \\ \hline
+\end{tabular}
+\caption{Resultados de la sentencia del Listado~\ref{src:ejemploPedidosClienteId1ConRef}}
+\label{tab:ejemploSelectTablaId1ConRef}
+\end{table}
+
+Como motor de base de datos se ha elegido SQLite3~\cite{SQLite3}, ya que es lo suficientemente potente para llevar a cabo este \acrshort{TFG}. SQLite3 es una biblioteca multiplataforma escrita en lenguaje C, que implementa un motor de base de datos \acrshort{SQL} pequeño, rápido, autónomo, altamente confiable y con todas las funciones de una base de datos \acrshort{SQL}. SQLite3 puede operar sin la necesidad de emplear un servidor que aloje la base de datos, dado que los datos se almacenan en archivos dentro del dispositivo que emplee los programas que utilicen SQLite3. Esto, además, brinda la posibilidad de mover estos archivos entre diferentes sistemas sin que suponga un problema, pudiéndose usar así, en cualquier dispositivo con soporte para SQLite3. Dichas algunas de las ventajas, ahora se expondrán algunos de los inconvenientes del empleo de SQLite3. SQLite3 no es ideal para aplicaciones con alta concurrencia; es decir, que múltiples usuarios estén accediendo o modificando la base de datos al mismo tiempo. Esto se debe al modelo de bloqueo que implementa. También presenta una limitación en el tamaño máximo del archivo que puede manejar: unos 140 \acrfull{TB}. A diferencia de otros sistemas de bases de datos SQL como MySQL o PostgreSQL, no posee funcionalidades avanzadas como roles definidos, usuarios, replicación o clustering. Estas desventajas no suponen un gran impedimento para el desarrollo de este \acrshort{TFG}, ya que no se espera que haya más de un usuario accediendo a la base de datos, ni que la base de datos supere este límite de almacenamiento, ni tampoco sea necesario el uso de funciones avanzadas para la consecución de este TFG.

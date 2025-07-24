@@ -1,0 +1,29 @@
+\section{Bibliografía, citas y referencias} 
+\label{sec:bibliografia-citas}
+
+Otro de los aspectos especialmente cuidados de \LaTeX{} es el manejo de bibliografía y citas.  En esta plantilla utilizamos el paquete \emph{biblatex}.  Es un paquete muy flexible que permite adaptarse a casi cualquier estilo de citas existente.  En los documentos de ingeniería no hay consenso en el estilo a utilizar.  Nosotros hemos configurado en la plantilla el estilo del IEEE, pero dependiendo del área específica de trabajo puede ser necesario cambiarlo. Consulta con tu tutor.
+
+La bibliografía en \LaTeX{} se hace con ayuda de unos archivos auxiliares escritos en formato BibTeX.  Es otro formato textual, con una serie de campos que hay que rellenar.  Para la composición de entradas BibTeX lo más sencillo es utilizar un editor online, como la página \url{http://truben.no/latex/bibtex/}.  En principio todas las entradas de bibliografía que utilices en tu TFG deben ponerse en \texttt{bib/main.bib}.
+
+En \LaTeX{} la forma más básica de cita consiste en emplear la orden \texttt{cite} con el campo clave que contiene todo registro de BibTeX.  Por ejemplo, según el trabajo~\cite{armas2011estimation} \ldots mientras que según~\cite{castillo2010design} el control es una cosa muy buena.  Pero hay muchas otras opciones de cita.  Consulta la \href{http://tug.ctan.org/info/biblatex-cheatsheet/biblatex-cheatsheet.pdf}{chuleta de Bib\LaTeX} para ver todas las posibilidades.  Entre las alternativas más frecuentes está la orden \texttt{parencite} con el campo clave que contiene el registro BibTeX y entre corchetes la página concreta.  Por ejemplo, según~\parencite[3]{armas2011estimation} bla bla.  Como ves, el aspecto visual es similar, pero añade la página a la que hacemos referencia.  Otra posibilidad es usar la orden \texttt{textcite} que añade los autores.  Por ejemplo, según~\textcite{armas2011estimation} bla bla.
+
+Se puede personalizar el aspecto de las citas cambiando los parámetros \texttt{style} y \texttt{citestyle} del paquete \texttt{biblatex} en \texttt{sty/eiitfg.cls}.  En ingeniería el estilo más utilizado, con mucha diferencia, es el de IEEE, del que existen dos variantes, \texttt{ieee} y \texttt{ieee-alphabetic}.  La única diferencia entre ambos es que en el primero se usan números para identificar las referencias y en el segundo se utilizan iniciales de los apellidos de los autores.
+
+Otros valores muy utilizados son \texttt{alphabetic}, \texttt{authoryear}, \texttt{apa}, \texttt{chem-acs}, \texttt{mla}, \texttt{phys}, \texttt{nature}, \texttt{science}.  Sin embargo te recomendamos que utilices una de las dos variantes del estilo IEEE porque incluye soporte de entradas BibTeX para patentes.
+
+También se puede acceder a campos concretos del registro BibTeX, tales como el autor, el año o el título.  Por ejemplo, \citeauthor{armas2011estimation} escribió en \citeyear{armas2011estimation} el artículo \citetitle{armas2011estimation}.
+
+Otro estilo más antiguo es el estilo de Vancouver, en el que se usan notas al pie.  En \LaTeX{} puede hacerse con la orden \texttt{footcite}.  Por ejemplo, según el profesor Armas~\footcite[3]{armas2011estimation} bla bla.  Todavía se ve este estilo en libros de historia, pero tiende al desuso porque rompe la linealidad del texto. En general, lo más importante es ser consistente, usa un estilo y solo un estilo en todo el documento.
+
+\subsection{Lo que toda referencia debe tener}
+
+Una referencia bibliográfica se utiliza como argumento de autoridad, para dar peso a tu propia argumentación.  Por tanto, hay tres elementos clave que siempre deben estar: 
+\begin{itemize}
+    \item El autor, puesto que palabras anónimas no dan peso a nada.  Recuerda que el autor es lo que da peso a tu argumento.  No cites artículos divulgativos, ni autores sin un mínimo prestigio en el campo de lo que afirman.
+    \item El título, puesto que el lector debe poder buscar por sí mismo el documento original.
+    \item La fecha, puesto que un mismo autor puede cambiar de opinión a lo largo de su vida.  Por ejemplo,  John Maynard Keynes es Premio Nobel, pero tiene numerosos escritos contradictorios.  Su opinión era bastante cambiante con el tiempo.
+\end{itemize}
+
+Si falta alguno de estos elementos no es una referencia y no se cita.  Se puede poner como una nota a pie de página (\texttt{footnote}) o como una URL en el cuerpo del texto, pero no como una referencia.
+
+Por cierto, es conveniente citar las fuentes.  Es decir, debes tomarte la molestia de buscar quién dijo o inventó lo que citas y dónde lo publicó por primera vez.  Es la mínima cortesía que se debe tener con los colegas de profesión.  Supongo que tú también querrás crédito por tu trabajo en tu futuro profesional.

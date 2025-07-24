@@ -1,0 +1,133 @@
+\documentclass{sty/eiiatfg}
+\usepackage[normalem]{ulem}
+\usepackage[nomain,acronym]{glossaries}
+\usepackage{adjustbox}
+\usepackage{enumitem}
+\usepackage[htt]{hyphenat}
+\usepackage{pgfplotstable}
+\usepackage{booktabs}
+\usepackage{comment}
+
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+\setlist[itemize]{noitemsep, topsep=0pt, itemsep=4pt, parsep=0pt}
+\definecolor{violet}{HTML}{8A2BE2}
+
+\lstset{
+  inputencoding=utf8,
+  literate={
+    {á}{{\'a}}1 {é}{{\'e}}1 {í}{{\'i}}1 {ó}{{\'o}}1 {ú}{{\'u}}1
+    {Á}{{\'A}}1 {É}{{\'E}}1 {Í}{{\'I}}1 {Ó}{{\'O}}1 {Ú}{{\'U}}1
+    {ñ}{{\~n}}1 {Ñ}{{\~N}}1 
+    {¡}{{\textexclamdown}}1 {¿}{{\textquestiondown}}1
+  }
+}
+
+\lstdefinelanguage{YAML}{
+  keywords={true,false,null},
+  keywordstyle=\color{blue!70!black}\bfseries,
+  comment=[l]{\#},
+  commentstyle=\color{gray!60}\itshape,
+  morestring=[b]", morestring=[b]',
+  stringstyle=\color{blue!50!black},
+  sensitive=true,
+  alsoletter={-_:},
+  moredelim=[l][\color{blue!50!black}]{:},
+  keywordstyle=[2]\color{purple!70!black},
+}
+
+\lstdefinestyle{python}{
+    language=Python,
+    basicstyle=\ttfamily\normalsize,
+    keywordstyle=\color{blue},      % Color para palabras clave
+    commentstyle=\color{gray},      % Color para comentarios
+    stringstyle=\color{red},        % Color para cadenas de texto
+    frame=single,
+    breaklines=true,
+    breakindent=0pt,
+    morekeywords={as, indent},
+    morekeywords=[2]{self},
+    morekeywords=[3]{__init__},
+    keywordstyle=[2]\color{violet},
+    keywordstyle=[3]\color{magenta},
+    keywordstyle=[4]\color{red}
+}
+
+
+
+\makeglossaries
+
+% Hay muchos paquetes para LaTeX que facilitan centenares de trabajos
+% engorrosos. Busca en Internet si no sabes hacer algo con LaTeX. El
+% repositorio oficial está en https://ctan.org/
+
+% Algunos paquetes especialmente útiles ya están incluídos en el estilo
+% del TFG (consulta sty/eiiatfg.cls para más detalles).
+
+\input{datos-tfg.tex}
+\input{acronimos.tex}
+
+% La bibliografía la puedes descomponer en varios archivos .bib
+% Los archivos .bib se pueden escribir a mano con ayuda de un editor online
+% (e.g. http://truben.no/latex/bibtex) o generar con Mendeley u otro
+% gestor de bibliografía. Solo se incluyen las referencias que son citadas
+% en el texto.
+\addbibresource{bib/main.bib}
+%\addbibresource{bib/how.bib}
+%\addbibresource{bib/ejemplos.bib}
+
+\begin{document}
+
+% Puedes cambiar la licencia de este documento con la orden license.  Por defecto se asume Creative Commons Attribution 4.0 (ver https://creativecommons.org/licenses/by/4.0/).  
+% Por ejemplo, para restringir su uso, copia y distribución:
+%\license{Todos los derechos reservados.}
+
+% Si usas muchos símbolos conviene que describas lo que significan en un archivo
+% aparte (en este caso simbolos.tex).  Si no es el caso puedes comentar esta línea
+%\listofsymbols{simbolos.tex}
+
+
+\portada
+
+% Edita los
+\input{agradecimientos.tex}	   
+%\input{dedicatoria.tex}
+\input{resumen.tex}
+
+\indices
+
+% El cuerpo del documento está en la carpeta tex
+% Aquí simplemente se incluyen los archivos correspondientes a cada capítulo.
+
+% No los llames capitulo1, capitulo2, etc. Los números los pondrá LaTeX según
+% el orden en que los pongas.  Eso facilitará después su posible reordenación
+% o división.
+
+% Esta estructura corresponde a un documento científico-técnico.
+% Si ves que tu proyecto concuerda con un trabajo profesional organiza el 
+% documento según UNE 157001
+
+\input{introduccion.tex}
+\input{objetivos.tex}
+\input{antecedentes.tex}
+\input{desarrollo.tex}
+\input{resultados.tex}
+\input{conclusiones.tex}
+
+% Los anexos pueden ir en la misma carpeta que el cuerpo del documento 
+% porque eso facilita la migración de partes de un capítulo a un anexo.
+\appendix\cleardoublepage
+\hypertarget{ch:anexos}{%
+    \input{tex/anexos/EDRs.tex}
+    \input{tex/anexos/archivosYaml}
+    \input{tex/anexos/Fuzzy}}
+% La bibliografía no suele ir numerada porque se pone después de los anexos.
+% No se debe poner antes de los anexos porque si se cita una referencia en
+% un anexo sería una backward reference, que deben evitarse a toda costa
+\cleardoublepage
+\hypertarget{ch:bibliografia}{%
+    \printbibliography[heading=bibintoc]}
+\cleardoublepage
+
+\end{document}

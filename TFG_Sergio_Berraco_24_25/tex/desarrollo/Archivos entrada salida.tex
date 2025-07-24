@@ -1,0 +1,941 @@
+\section{Archivos de entrada y salida del simulador ROBIN}
+\label{sec:archivosEntradaSalida}
+
+Actualmente, el simulador \acrshort{ROBIN} emplea dos archivos \acrshort{Yaml} para la entrada de datos y genera un archivo \acrshort{CSV} donde se reflejan los resultados de la simulación. \acrshort{Yaml} es un formato de serialización de datos diseñado para ser legible por humanos. A diferencia de otros lenguajes como \acrfull{HTML} o \acrfull{XML}, \acrshort{Yaml} se enfoca en la representación de datos de forma estructurada mediante indentación y asociaciones clave-valor (diccionarios). Esta simplicidad hace que \acrshort{Yaml} sea especialmente adecuado para definir estructuras de datos jerárquicas de forma clara y concisa.
+
+%\acrfull{Yaml} es un formato de serialización de datos diseñado para ser legible, simple y fácilmente editable tanto por humanos como por máquinas. \acrshort{Yaml} se centra en la descripción de datos de forma estructurada y no en marcar contenido como otros lenguajes de marcado, como podrían ser \acrfull{HTML} o \acrfull{XML}.
+
+Dentro de un archivo \acrshort{Yaml}, la clave raíz (o clave de primer nivel) es el elemento que aparece en el primer nivel de la jerarquía estructurada del documento. Cada clave raíz actúa como un contenedor principal de un bloque de información, del cual dependen las claves secundarias, listas o asociaciones anidadas que componen la estructura de datos. Un mismo archivo puede contener múltiples claves raíz. En el Listado~\ref{src:ejemploMultiplesClavesRaiz}, se muestra un ejemplo de un archivo \acrshort{Yaml} que emplea las claves raíz \texttt{oferta} y \texttt{demanda}, conteniendo también claves secundarias como \texttt{estaciones} y \texttt{operadores}.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo de archivo Yaml con múltiples claves raíz},
+                   label=src:ejemploMultiplesClavesRaiz,
+                   inputencoding=utf8]                   
+oferta:
+  estaciones: [ES1, ES2, ES3]
+  operadores:
+    - nombre: Renfe
+      trenes: [S-114]
+
+demanda:
+  mercados:
+    - id: 1
+      nombre: ES1-ES3
+      origen: ES1
+      destino: ES3
+  frecuencia:
+    mercado: 1
+    frecuencia: frecuente
+    
+\end{lstlisting}
+
+%Los archivos \acrshort{Yaml} contienen texto plano donde la información contenida en estos se organiza de forma jerárquica utilizando la indentación para definir niveles de anidación, a diferencia de, por ejemplo, \acrshort{XML} que emplea etiquetas para la organización de los datos contenidos en los ficheros que lo emplean. También existe la posibilidad de añadir listas y asociaciones clave-valor (diccionarios). Al primer nivel jerárquico dentro del archivo \acrshort{Yaml} se le denomina clave raíz.
+
+El primero de los archivos de entrada a \acrshort{ROBIN} almacena todos los datos relacionados con la oferta de servicios ferroviarios como, por ejemplo, el corredor que va a emplearse para realizar las simulaciones, las estaciones que aparecen en este corredor, los proveedores de servicios ferroviarios que ofrecen servicios en ese corredor, etc. La estructura de este archivo de configuración de la oferta se detalla en la Sección \ref{sec:EstructuraArchivoOferta}.
+
+El segundo archivo de entrada a \acrshort{ROBIN} contiene los datos relacionados con la demanda de servicios como, por ejemplo, los patrones que modelizan el comportamiento de los usuarios de los servicios ferroviarios, los mercados empleados en la simulación, la demanda que se espera que tengan los mercados, etc. La estructura de este archivo de configuración de la demanda se detalla en la Sección \ref{sec:EstructuraArchivoDemanda}. 
+
+Por otro lado, el archivo de resultados generado por el simulador \acrshort{ROBIN} contiene los resultados de la simulación, donde cada fila representa un viaje individual con todos los datos asociados a este. La estructura de este archivo de configuración de la demanda se detalla en la Sección \ref{sec:EstructuraArchivoResultados}.
+
+%La estructura completa empleada en los archivos de configuración de la oferta puede consultarse en el Anexo~\ref{apx:estructuraYamlOferta}. \textbf{TEMA: TRAETE EL AÑEXO AQUÍ, NO ES MUY GRANDE Y ACLARA EN ESTE PUNTO. ADEMÁS, EXPLICA UN POCO SU ESTRUCTURA, CLAVES Y BLOQUES}
+
+%La plantilla estructural en la que se basan los archivos de configuración de la demanda puede consultarse en el Anexo~\ref{apx:estructuraYamlDemanda}. \textbf{TEMA: LO MISMO, TRAETE EL AÑEXO AQUÍ Y EXPLICA UN POCO SU ESTRUCTURA, CLAVES Y BLOQUES}
+
+%A continuación se explicará en detalle la estructura de cada uno de los ficheros empleados por \acrshort{ROBIN}.
+
+Las tres siguientes subsecciones detallan la estructura de los dos archivos \acrshort{Yaml} de entrada y del \acrshort{CSV} de salida. Finalmente, comentar que la estructura de los archivos \acrshort{Yaml} se encuentra en el Anexo \ref{ch:yamlApendix}, en el que se pueden ver tanto la estructura de los archivos de configuración de la oferta como la de los archivos de configuración de la demanda. 
+
+
+%\subsection{Plantilla estructural de los archivos de configuración de la oferta}\label{sec:PlantillaEstructuralOferta}
+
+\subsection{Estructura de los archivos de configuración de la oferta}\label{sec:EstructuraArchivoOferta}
+
+Los archivos de oferta tienen como propósito almacenar los datos referentes a la oferta ferroviaria. Para representar la oferta ferroviaria se consideran los siguientes elementos:
+\begin{itemize}
+    \item Estaciones: Las estaciones son los puntos de la red ferroviaria en las que los trenes paran para embarcar o desembarcar pasajeros y mercancías. Estas forman parte de un corredor ferroviario y pueden ser el inicio o el final de una o varias lineas de tren o una parada intermedia dentro de una línea.
+    \item Asientos: Los asientos, en este caso, hacen referencia al tipo de billete que se encuentra disponible para su compra por usuarios de servicios ferroviarios. Estos pueden emplear asientos físicos con diferentes características, como el tamaño, si cuentan con respaldo reclinable, conexión para la carga de terminales moviles, etc. Además, estos billetes también tienen diferentes tipos de servicios asociados a ellos dependiendo del tipo de billete que se compre, como por ejemplo, reembolso parcial o total del billete en caso de incidencias con el servicio o la posibilidad de usar áreas de descanso reservadas a los poseedores de un cierto tipo de billete.
+    \item Corredor ferroviario: El corredor es un conjunto de vías que conectan dos o más estaciones. Define la infraestructura técnica de la red (ancho de la vía, electrificación) y suele agrupar varias líneas de tren que circulan por el trazado del corredor. Puede haber múltiples líneas en un corredor.
+    \item Líneas de tren: Las líneas de tren hacen referencia a las rutas comerciales que cubren el trayecto entre un origen y un destino pasando por una secuencia de estaciones en las que puede haber una parada programada. Estas suelen llevar un identificador asociado a ellas, horarios fijos, e incluso algunas pueden llegar a tener variaciones estacionales o de servicio.
+    \item Material rodante: Agrupa los diferentes trenes y material rodante en general en función de la cantidad y tipos de asientos de los que disponga cada uno de los trenes.
+    \item Proveedores de servicios ferroviarios: Un proveedor de servicios ferroviarios es una empresa que opera en las líneas y gestiona los trenes que tiene a su disposición. Se encargan de la venta de billetes, de la puesta en marcha de los trenes y su mantenimiento, etc. Pueden ser empresas dedicadas al transporte de viajeros, mercancías o ambas. Además, pueden ser empresas públicas o privadas.
+    \item Franjas de tiempo de los servicios: Las franjas de tiempo de los servicios son periodos horarios en los que se encuentra el tren estacionado en las vías junto al andén.
+    \item Servicios ferroviarios: Los servicios ferroviarios se corresponden con cada uno de los viajes programados de un tren sobre una linea concreta, con una hora de salida desde la estación de origen, un destino, paradas intermedias y diferentes condiciones de viaje ligadas al tipo de billete que se haya adquirido.
+\end{itemize}
+
+A continuación, se presentarán los siguientes ejemplos:
+    \begin{itemize}
+        \item Estaciones: Un ejemplo para una estación podría ser la estación Madrid Puerta de Atocha - Almudena Grandes ubicada en la ciudad de Madrid o la estación Joaquín Sorolla ubicada en la ciudad de Valencia.
+        \item Asientos: Como ejemplo para un tipo de billete podrían ser los que emplea Renfe en la fecha actual de realización de este \acrshort{TFG}, los cuales pueden ser: Básico, Elige, Elige confort y Prémium. Cada uno de estos tiene diferentes tipos de asientos físicos: los billetes Básico y Elige tienen un asiento estándar, mientras que Elige confort y Prémium tienen un asiento confort, el cual es más amplio y cuenta con reposa brazos individuales para cada asiento. Además, cada uno de los billetes cuenta con una serie de servicios asociados, como la posibilidad de obtener un cambio de billete gratuito, en el caso del billete Elige, o la posibilidad de realizar cambios de billete y titular gratuitos de manera ilimitada para el caso de los billetes Prémium.
+        \item Corredor ferroviario: En el caso del corredor ferroviario, un ejemplo podría ser el Corredor Noreste, el cual recorre la Península Ibérica desde Madrid hasta la frontera con Francia. 
+        \item Líneas de tren: Una línea que podría servir como ejemplo es la línea AVE Madrid-Barcelona. Se trata de una línea de alta velocidad que se abarca las estaciones comprendidas entre las ciudades de Madrid y Barcelona.
+        \item Proveedores de servicios ferroviarios: Ejemplos de empresas proveedoras de servicios ferroviarios publicas serían Renfe Viajeros, destinada al transporte de pasajeros, o Renfe Mercancías, destinada al transporte de mercancías y ejemplos de empresas privadas podrían ser Ouigo o Iryo, en el transporte de pasajeros o CEFSA (Compañía Europea Ferroviaria) para el transporte de mercancías.
+        \item Material rodante: Un ejemplo de un modelo de tren podría ser el modelo S-114 de Renfe. El S-114 es un tren de alta velocidad, diseñado para trayectos de media distancia, el cual consta de 237 plazas.
+        \item Franjas de tiempo de los servicios: Un ejemplo para franja de tiempo seria la que siguiera un tren cuyo servicio empieza a las 6:32 de la mañana y sale de la estación a las 6:42 de la mañana. Dicho esto, la franja horaria que tendría sería 6:32-6:42.
+        \item Servicios ferroviarios: Un ejemplo de servicio ferroviario sería el AVE 03206, que realiza un trayecto directo con origen en estación de Madrid Puerta de Atocha, y como destino tiene la de Barcelona Sants, en un día determinado, con las capacidades y precios que el operador haya establecido.
+    \end{itemize}
+
+
+En base a esto, los archivos de oferta se componen de 8 claves raíz para recoger esta información. Estas claves raíz son: \texttt{stations}, \texttt{seat}, \texttt{corridor}, \texttt{line}, \texttt{rollingStock}, \texttt{trainServiceProvider}, \texttt{timeSlots} y \texttt{service} (Listado \ref{apx:estructuraYamlOferta}). Cada una define un bloque concreto de los datos de configuración vinculados a la oferta ferroviaria.
+
+En las siguientes secciones se detalla la estructura de cada uno de estos 8 bloques identificados por su clave raíz.
+
+\subsubsection{Estaciones}
+
+La clave raíz \texttt{stations} alberga la información de todas las estaciones que forman parte del corredor ferroviario empleado en la simulación. Cada estación se representa como un elemento dentro de la lista asociada a esta clave raíz, incluyendo los datos necesarios para su identificación y localización. 
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{stations}},
+                   label=src:estructuraStations,
+                   inputencoding=utf8]
+# Lista con los datos de las estaciones:
+stations:
+  - id: <Identificador de la estación>
+    name: <Nombre de la estación>
+    city: <Ciudad en la que se encuentra la estación>
+    short_name: <Nombre corto de la estación>
+    coordinates:
+      latitude: <Latitud a la que se encuentra la estación>
+      longitude: <Longitud a la que se encuentra la estación>   
+\end{lstlisting}
+
+En el Listado~\ref{src:estructuraStations}, se muestra la estructura de la clave raíz \texttt{stations}. Esta contiene una lista con los datos de las diferentes estaciones, donde cada elemento de esta lista es un diccionario al que se accede con las siguientes claves: \texttt{id}, \texttt{name}, \texttt{city}, \texttt{short\_name} y \texttt{coordinates}. La estructura clave-valor de cada elemento de la lista asociada a \texttt{stations} es la siguiente:
+
+\begin{itemize}
+    \item \texttt{id}: Esta clave accede al identificador único para una estación en concreto. Por ejemplo, para el caso de la estación de Atocha sería el número "60000".
+    \item \texttt{name}: Utilizada para acceder al nombre de la estación. Por ejemplo, para el caso de Atocha, el nombre sería "MADRID PTA. ATOCHA - ALMUDENA GRANDES".
+    \item \texttt{city}: Permite el acceso a la ciudad en la que se encuentra la estación. 
+    \item \texttt{short\_name}: Cada estación cuenta con un nombre corto al que se accede con esta clave. Por ejemplo, a Atocha, se le asigna el nombre corto de "MADRI".
+    \item \texttt{coordinates}: Las coordenadas de la estación se localizan mediante esta clave. Las coordenadas están almacenadas en un diccionario con las claves \texttt{latitude} y \texttt{longitude}, que reciben los valores de latitud y longitud respectivamente.
+\end{itemize}
+
+El Listado~\ref{src:ejemploEstructuraStations} muestra un caso de uso de un ejemplo real de la estructura con datos presentados anteriormente y que define las estaciones de Atocha y de Joaquín Sorolla.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{stations}},
+                   label=src:ejemploEstructuraStations,
+                   inputencoding=utf8]
+stations:
+  - id: '60000'
+    name: MADRID PTA. ATOCHA - ALMUDENA GRANDES
+    city: MADRID
+    short_name: MADRI
+    coordinates:
+      latitude: 40.406442
+      longitude: -3.690886
+  - id: '03216'
+    name: VALENCIA JOAQUÍN SOROLLA
+    city: VALENCIA
+    short_name: VALEN
+    coordinates:
+      latitude: 39.459051
+      longitude: -0.382923
+\end{lstlisting}
+
+\subsubsection{Asientos}
+
+La clave raíz \texttt{seat} contiene la información de los diferentes tipos de asientos ofertados por los proveedores de servicios ferroviarios. Cada tipo de asiento se representa mediante un elemento de la lista asociada a \texttt{seat}, donde se encuentra la información necesaria para definir cada tipo de asiento. 
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{seat}},
+                   label=src:estructuraSeat,
+                   inputencoding=utf8]
+#Lista con los asientos ofertados
+seat:
+- id: <Identificador del asiento>
+  name: <Nombre del identificador>
+  hard_type: <Tipo de asiento físico>
+  soft_type: <Tipo de asiento según los servicios incluidos> 
+\end{lstlisting}
+
+En el Listado~\ref{src:estructuraSeat} se encuentra la plantilla que sigue \texttt{seat}. La estructura clave-valor de cada elemento dentro de la lista dependiente de \texttt{seat} es la siguiente:
+
+\begin{itemize}
+    \item \texttt{id}: Esta clave accede al identificador único que recibe cada tipo de asiento.
+    \item \texttt{name}: En esta clave se guarda el nombre del tipo de asiento. Los nombres de los tipos de asiento actualmente son: Básica, Básico, Elige, Elige Confort y Prémium.
+    \item \texttt{hard\_type}: Esta clave contiene el tipo físico del asiento. Los tipos de asiento físico disponibles son: 1 (asiento básico) y 2 (asiento más grande y con reposa brazos individual).
+    \item \texttt{soft\_type}: En esta clave se almacena el tipo de asiento según los servicios asociados a este. Los tipos de servicios son actualmente: 1, 2, 3 y 4.
+\end{itemize}
+
+En el Listado~\ref{src:ejemploEstructuraSeat} se muestra un ejemplo de cómo se definiría un tipo de asiento. En este ejemplo se define un asiento básico que recibe el identificador "1", y con los tipos físico y de servicios definidos como "1". 
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{seat}},
+                   label=src:ejemploEstructuraSeat,
+                   inputencoding=utf8]
+seat:
+  - id: '1'
+    name: Básica
+    hard_type: 1
+    soft_type: 1
+  - id: '5'
+    name: Prémium
+    hard_type: 2
+    soft_type: 4
+\end{lstlisting}
+
+\subsubsection{Corredores}
+
+La clave raíz \texttt{corridor} contiene los datos de los corredores ferroviarios que se van a emplear en la simulación. Cada corredor se define mediante un identificador, un nombre y una estructura de datos que define los diferentes ramales del corredor.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{corridor}},
+                   label=src:estructuraCorridor,
+                   inputencoding=utf8]
+#Lista con la información de los corredores ferroviarios
+corridor:
+- id: <Identificador del corredor>
+  name: <Nombre del corredor>
+  
+  #Lista de diccionarios que define el corredor
+  stations:
+  - org: <Estación de origen>
+    des: # Si hay más estaciones, esto es un diccionario
+    - org: <Estación de origen>
+      des: [] # Para indicar el final del corredor 
+              # se usa una lista vacia
+\end{lstlisting}
+
+El Listado~\ref{src:estructuraCorridor} contiene la plantilla estructural que sigue \texttt{corridor} para construir un corredor. La estructura clave-valor de cada corredor dentro de \texttt{corridor} es:
+
+\begin{itemize}
+    \item \texttt{id}: Esta clave almacena el identificador único que recibe el corredor ferroviario.
+    \item \texttt{name}: Esta clave contiene el nombre que recibe el corredor ferroviario.
+    \item \texttt{stations}: En esta clave se definen los diferentes ramales que posee el corredor mediante el uso de diccionarios. Estos diccionarios se agrupan formando cadenas de tramos entre estaciones donde cada tramo se representa mediante un diccionario con 2 campos, uno para la estación de origen denominado \texttt{org}, que alberga el identificador de la estación de origen, y otro para la estación de destino denominado \texttt{des}, en el que se almacena una lista que contiene los tramos posteriores. Para indicar la finalización de un ramal, la lista almacenada en \texttt{des} estará vacía. Empleando esta estructura recursiva se puede modelar el orden secuencial de las estaciones que componen el corredor. Además, esta estructura permite representar bifurcaciones en los ramales si en la lista dentro de \texttt{des} se incluyeran múltiples tramos definidos por diccionarios diferentes. 
+\end{itemize}
+
+En el Listado~\ref{src:ejemploEstructuraCorridor} se muestra un ejemplo de cómo se definiría un corredor. En este ejemplo, el corredor definido no está completo, debido al tamaño que requeriría el mostrar el corredor español completo, por lo que se ha optado por mostrar únicamente el ramal que parte desde la estación de Madrid-Chamartín-Clara Campoamor (con el identificador 17000), en Madrid y va hasta las estaciones de Castelló (con el identificador 65300), en Castellón de la Plana y de Murcia (con el identificador 61200), en Murcia. La bifurcación se produce en la estación de Cuenca Fernando Zóbel (con identificador 03208), situada en Cuenca y de ahí se bifurca. Una de las estaciones de la bifurcación es la de Requena Utiel (con identificador 03213), situada en Requena y cuyo ramal termina en la estación de Castelló. La otra estación de la bifurcación es la de Albacete-Los Llanos (con identificador 60600), situada en Albacete y su ramal termina en la estación de Murcia.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{corridor}},
+                   label=src:ejemploEstructuraCorridor,
+                   inputencoding=utf8]
+corridor:
+- id: '1'
+  name: Spanish Corridor
+  stations:
+  - org: '17000'
+    des:
+    - org: 03208
+      des:
+      - org: '03213'
+        des:
+        - org: '03216'
+          des:
+          - org: '65200'
+            des:
+            - org: '65300'
+              des: []
+      - org: '60600'
+        des:
+        - org: 03309
+          des:
+          - org: '60911'
+            des:
+            - org: '03410'
+              des:
+              - org: '62002'
+                des:
+                - org: '61200'
+                  des: []
+\end{lstlisting}
+
+\subsubsection{Línea}
+
+La clave raíz \texttt{line} alberga las diferentes líneas de tren empleadas en la simulación. Cada línea viene definida por un identificador único, el nombre que recibe, el identificador del corredor por el que discurre y la lista de paradas que se realizan durante el trayecto.
+
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{line}},
+                   label=src:estructuraLine,
+                   inputencoding=utf8]
+#Lista con los datos de las líneas
+line:
+- id: <Identificador de la línea>
+  name: <Nombre de la línea>
+  corridor: <Corredor al que pertenece la línea>
+  stops: # Lista con las paradas de la línea
+    - station: <Identificador de la estación de llegada>
+      arrival_time: <Tiempo relativo de llegada a la estación>
+      departure_time: <Tiempo relativo de salida de la estación>
+\end{lstlisting}
+
+En el Listado~\ref{src:estructuraLine} se muestra la plantilla estructural que sigue \texttt{line} en el archivo \acrshort{Yaml} para definir cada línea. La estructura clave-valor de cada elemento dentro de la lista dependiente de \texttt{line} está compuesta por las siguientes claves:
+
+\begin{itemize}
+    \item \texttt{id}: Almacena el identificador único que recibe cada línea.
+    \item \texttt{name}: Contiene el nombre de la línea.
+    \item \texttt{corridor}: En esta clave se guarda el corredor sobre el que discurre la línea.
+    \item \texttt{stops}: Contiene una lista de diccionarios, en los que cada diccionario almacena una parada en la línea. La estructura de los diccionarios es la siguiente:
+    \begin{itemize}
+        \item \texttt{station}: Contiene el valor del identificador de la estación en la que se efectúa la parada.
+        \item \texttt{arrival\_time}: Almacena el tiempo relativo de la llegada a la estación. Este tiempo se expresa en minutos y cuenta desde la salida de la primera estación. 
+        \item \texttt{departure\_time}: Guarda el tiempo relativo de la salida de la estación. Este tiempo, al igual que en el caso de \texttt{arrival\_time}, se expresa en minutos y cuenta a partir del instante de salida desde la primera estación. 
+    \end{itemize}
+\end{itemize}
+
+En el Listado~\ref{src:ejemploEstructuraLine} se muestra un ejemplo de cómo se definiría una línea empleando la estructura de la plantilla para \texttt{line}. En esta línea aparece el trayecto entre la estación de Valencia Joaquín Sorolla (con identificador 03216), ubicada en Valencia, y la estación Madrid-Chamartín-Clara Campoamor (con el identificador 17000), en Madrid, con una duración de 126 minutos, o lo que es lo mismo, 2 horas y 6 minutos.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{line}},
+                   label=src:ejemploEstructuraLine,
+                   inputencoding=utf8]
+line:
+- id: '05065'
+  name: Line 05065
+  corridor: '1'
+  stops:
+  - station: '03216'
+    arrival_time: 0
+    departure_time: 0
+  - station: '03213'
+    arrival_time: 25
+    departure_time: 27
+  - station: 03208
+    arrival_time: 61
+    departure_time: 63
+  - station: '17000'
+    arrival_time: 126
+    departure_time: 126
+\end{lstlisting}
+
+\subsubsection{Material rodante -  \texttt{rollingStock}}
+
+La clave raíz \texttt{rollingStock} almacena los diferentes trenes disponibles. Cada tren se define con un identificador, el nombre que tiene el modelo de tren y una lista con diccionarios que definen la cantidad de asientos por tipo físico que tiene el tren.
+
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{rollingStock}},
+                   label=src:estructuraRollingStock,
+                   inputencoding=utf8]
+#Lista con los trenes en servicio
+rollingStock:
+- id: <Identificador del tren>
+  name: <Nombre del tren>
+  seats: # Lista con los tipos de asientos físicos que tiene el tren
+  - hard_type: <Tipo de asiento físico>
+    quantity: <Cantidad del tipo de asiento>
+\end{lstlisting}
+
+En el Listado~\ref{src:estructuraRollingStock} se encuentra la plantilla estructural que sigue \texttt{rollingStock} para definir cada tren o instancia de material rodante en general. La estructura clave-valor de cada elemento dentro de la lista asociada a \texttt{rollingStock} es:
+
+\begin{itemize}
+    \item \texttt{id}: Esta clave almacena el identificador único que recibe cada tren.
+    \item \texttt{name}: En esta clave se guarda el nombre del modelo de tren.
+    \item \texttt{seats}: Esta clave contiene una lista de diccionarios, donde cada uno de los diccionarios se compone de las siguientes claves:
+        \begin{itemize}
+            \item \texttt{hard\_type}: Identificador del tipo de asiento físico.
+            \item \texttt{quantity}: Cantidad que posee el tren del tipo de asiento físico definido en \texttt{hard\_type}.   
+        \end{itemize}    
+\end{itemize}
+
+El Listado~\ref{src:ejemploEstructuraRollingStock} muestra un ejemplo de cómo se definiría un modelo de tren. En este ejemplo se ha creado una entrada para el modelo de nombre "S-114", cuyo identificador es el "1" y que posee 250 asientos del tipo físico 1 y 50 asientos del tipo físico 2.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{rollingStock}},
+                   label=src:ejemploEstructuraRollingStock,
+                   inputencoding=utf8]
+rollingStock:
+- id: '1'
+  name: S-114
+  seats:
+  - hard_type: 1
+    quantity: 250
+  - hard_type: 2
+    quantity: 50
+\end{lstlisting}
+
+\subsubsection{Proveedores de Servicio}
+
+La clave raíz \texttt{trainServiceProvider} almacena los datos de los diferentes proveedores de servicios ferroviarios. Cada proveedor de servicios ferroviarios se define mediante un identificador único, el nombre del proveedor y una lista con el material rodante que posee.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{trainServiceProvider}},
+                   label=src:estructuraTSP,
+                   inputencoding=utf8]
+#Lista con los proveedores de servicios ferroviarios
+trainServiceProvider:
+- id: <Identificador del proveedor>
+  name: <Nombre del proveedor>
+  
+  #Lista de los trenes que posee el proveedor de servicios ferroviarios
+  rolling_stock:
+  - <Identificador del tren 1>
+  - <Identificador del tren n>
+\end{lstlisting}
+
+En el Listado~\ref{src:estructuraTSP} se encuentra la estructura que sigue \texttt{trainServiceProvider}. La estructura clave-valor de cada elemento dentro de \texttt{trainServiceProvider} es:
+
+\begin{itemize}
+    \item \texttt{id}: Identificador único que recibe el proveedor de servicios ferroviarios.
+    \item \texttt{name}: Nombre del proveedor de servicios ferroviarios.
+    \item \texttt{rolling\_stock}: Lista con el material rodante del que posee el proveedor.
+\end{itemize}
+
+El Listado~\ref{src:ejemploEstructuraTSP} muestra un ejemplo de cómo se definiría un proveedor de servicios ferroviarios basándose en la plantilla estructural del Listado~\ref{src:estructuraTSP}. En el ejemplo se define el proveedor con un identificador de valor "1", cuyo nombre es "Renfe" y posee un tren con identificador "1", que corresponde al modelo S-114.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{trainServiceProvider}},
+                   label=src:ejemploEstructuraTSP,
+                   inputencoding=utf8]
+trainServiceProvider:
+- id: '1'
+  name: Renfe
+  rolling_stock:
+  - '1'
+\end{lstlisting}
+
+\subsubsection{Franjas horarias -  \texttt{timeSlot}}
+
+La clave raíz \texttt{timeSlot} contiene una lista de franjas horarias, que se emplearán posteriormente en la definición de los servicios ofertados. Cada franja de tiempo se construye con un identificador único para cada franja, una hora de inicio y una de finalización. 
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{timeSlot}},
+                   label=src:estructuraTimeSlot,
+                   inputencoding=utf8]
+#Lista con todas las franjas horarias
+timeSlot:
+- id: <Identificador de la franja horaria>
+  start: <Hora de inicio de la franja>
+  end: <Hora de finalización de la franja>
+\end{lstlisting}
+
+A continuación, en el Listado~\ref{src:estructuraTimeSlot} se encuentra la plantilla estructural que sigue \texttt{timeSlot}. La estructura clave-valor de cada franja de tiempo dentro de la lista asociada a \texttt{timeSlot} es:
+
+\begin{itemize}
+    \item \texttt{id}: Identificador único de cada franja de tiempo.
+    \item \texttt{start}: Hora de comienzo de la franja de tiempo.
+    \item \texttt{end}: Hora de finalización de la franja de tiempo.
+\end{itemize}
+
+En el Listado~\ref{src:ejemploEstructuraTimeSlot} se observa un ejemplo de cómo se definiría una franja de tiempo. En este ejemplo, el identificador tomaría el valor "39210", iniciando la franja a las "6:32:00" y finalizando a las "6:42:00".
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{timeSlot}},
+                   label=src:ejemploEstructuraTimeSlot,
+                   inputencoding=utf8]
+timeSlot:
+- id: '39210'
+  start: '6:32:00'
+  end: '6:42:00'
+\end{lstlisting}
+
+\subsubsection{Servicio}
+
+La clave raíz \texttt{service} contiene los datos de los diferentes servicios ofertados por los proveedores de servicios ferroviarios. Cada una de las entradas corresponde a un servicio, el cual se define mediante un identificador único, la fecha en la que se produce el servicio, la línea a la que pertenece, el proveedor que se encarga del servicio, el material rodante empleado, los diferentes trayectos efectuados en el servicio con los precios de los diferentes tipos de asientos y las restricciones que presente el servicio, siendo la restricción de capacidad la única existente actualmente.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{service}},
+                   label=src:estructuraService,
+                   inputencoding=utf8]
+#Lista con la información de los servicios
+service:
+- id: <Identificador del servicio>
+  date: <Fecha en la que se da el servicio>
+  line: <Linea a la que pertenece el servicio>
+  train_service_provider: <Proveedor encargado del servicio>
+  time_slot: <Franja horaria de inicio del servicio>
+  rolling_stock: <Tren que va a cumplir el servicio>
+  
+  #Lista con la información de los trayectos entre estaciones del servicio
+  origin_destination_tuples:
+  - origin: <Estación de origen>
+    destination: <Estación de destino>
+    
+    #Lista con el precio de cada asiento
+    seats:
+    - seat: <Identificador del asiento>
+      price: <Precio del asiento para el trayecto>
+  capacity_constraints: <Restricción de capacidad, null en caso de no existir>
+\end{lstlisting}
+
+El Listado~\ref{src:estructuraService} muestra la plantilla estructural que sigue \texttt{service} para cada uno de los servicios. La estructura clave-valor de cada elemento dentro de la lista dependiente de \texttt{service} es:
+
+\begin{itemize}
+    \item \texttt{id}: Identificador único del servicio ofertado.
+    \item \texttt{date}: Fecha en la que se va a dar el servicio.
+    \item \texttt{line}: Línea a la que pertenece el servicio.
+    \item \texttt{train\_service\_provider}: Proveedor de servicios ferroviarios que ofrece el servicio.
+    \item \texttt{time\_slot}: Franja de tiempo en la que comienza el servicio.
+    \item \texttt{rolling\_stock}: Tren empleado para el servicio.
+    \item \texttt{origin\_destination\_tuples}: Lista que contiene la información de los trayectos que se realizan en el servicio. Cada elemento de la lista es un diccionario que tiene las siguientes claves:
+        \begin{itemize}
+            \item \texttt{origin}: Estación de origen del trayecto.
+            \item \texttt{destination}: Estación de destino del trayecto.
+            \item \texttt{seats}: Lista con los datos del precio de los asientos por tipo. Cada diccionario se define con las claves \texttt{seat}, en la que aparece el identificador del tipo de asiento, y \texttt{price}, que almacena el precio, en euros, para el tipo de asiento definido en la clave \texttt{seat} del mismo diccionario.
+        \end{itemize}
+    \item \texttt{capacity\_constraints}: Restricción de capacidad para ese servicio; es decir, cuántos asientos han de quedar restringidos (no disponibles para la venta) para evitar que se llene el tren en la primera estación.
+\end{itemize}
+
+En el Listado~\ref{src:ejemploEstructuraService} se muestra un ejemplo de cómo se definiría un servicio. En el ejemplo aparece el servicio con el identificador "05065\_02-06-2025-06.32", que se efectuará el día 2 de junio del 2025. Este servicio pertenece a la línea "05065", lo ofrece el proveedor con el identificador "1" y el tren que se va a emplear es el modelo con el identificador "1". Cuenta con un único trayecto entre las estaciones "03216" (Valencia Joaquín Sorolla) y "17000" (Madrid-Chamartín-Clara Campoamor) y, para este trayecto, cuenta con un único tipo de asiento, el que posee el identificador "1" y un precio de 45 euros.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{service}},
+                   label=src:ejemploEstructuraService,
+                   inputencoding=utf8]
+service:
+- id: 05065_02-06-2025-06.32
+  date: '2025-06-02'
+  line: '05065'
+  train_service_provider: '1'
+  time_slot: '39210'
+  rolling_stock: '1'
+  origin_destination_tuples:
+  - origin: '03216'
+    destination: '17000'
+    seats:
+    - seat: '1'
+      price: 45.0
+  capacity_constraints: null
+\end{lstlisting}
+
+%\subsection{Plantilla estructural de los archivos de configuración de la demanda}\label{sec:PlantillaEstructuralDemanda}
+
+
+\subsection{Estructura de los archivos de configuración de la demanda}\label{sec:EstructuraArchivoDemanda}
+
+Los archivos de demanda recopilan la información referente a la modelización de la demanda de servicios ferroviarios. Esta información viene dada por:
+\begin{itemize}
+    \item Mercado: Definen los flujos de pasajeros en los diferentes trayectos que se van a analizar.
+    \item Modelo de patrón de usuario: Define el comportamiento de los diferentes usuarios de los servicios ferroviarios. Cada uno de los patrones contiene una serie de características que modelan las decisiones que tomarán los usuarios, como qué tipo de billete comprarán, con cuanta antelación lo harán o la posibilidad de que el viaje se cancele, entre otros. \acrshort{ROBIN} utiliza modelos difusos para conseguir este modelado de comportamiento.
+    \item Modelos de patrón de demanda: Definen el volumen de pasajeros que cada uno de los mercados tendrá en función de una serie de parámetros. Estos parámetros pueden ser la demanda potencial o la distribución de los diferentes tipos de usuarios modelados.
+    \item Día de la simulación: Corresponde con el día que se pretende simular. Éste debe coincidir con la fecha de los servicios ofertados para que los pasajeros puedan disponer de una oferta acorde a sus necesidades de día de viaje.
+\end{itemize}
+
+A continuación se detallan ejemplos de cada uno de los conceptos anteriores:
+    \begin{itemize}
+        \item Mercado: el mercado Madrid - Zaragoza, en el que se definirían los diferentes trayectos posibles entre estas dos ciudades.
+        \item Modelo de patrón de usuario: Un hombre de negocios, que podría preferir que las estaciones de origen y destino se encuentren lo más cerca posible de su destino, que el tren sea puntual y que las horas de salida no estén comprendidas entre las 9 de la mañana y las 12 de la noche. También preferirá que su billete sea el billete más prémium disponible. 
+        \item Modelos de patrón de demanda: Para el mercado Madrid - Zaragoza se define la distribución de los diferentes modelos de patrón de usuario para ese mercado y la demanda potencial esperada.
+        \item Día de la simulación: El día 2 de julio del 2025 en el que sale el servicio AVE 03206 de la estación Madrid Puerta de Atocha - Almudena Grandes, por lo que el día de la simulación corresponde con la fecha de salida de la estación. 
+    \end{itemize}
+
+
+En base a lo anterior, los archivos de demanda se componen de 4 claves raíz: \texttt{market}, \texttt{userPattern}, \texttt{demandPattern} y \texttt{day}. Cada una representa un bloque de datos para la configuración de los patrones de demanda y los patrones de usuario empleados en las simulaciones.
+
+En los siguientes apartados se detalla la estructura de cada uno de los bloques definidos por las claves raíz mencionadas en el párrafo anterior.
+
+\subsubsection{Mercado}
+
+En la clave raíz \texttt{market} se encuentran los datos sobre los diferentes mercados que se emplearán posteriormente para definir los patrones de demanda que se han de seguir a la hora de realizar la simulación. Los diferentes mercados se representan mediante un identificador único, el nombre de la estación de salida, las coordenadas de la estación de salida, el nombre de la estación de llegada y sus coordenadas.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{market}},
+                   label=src:estructuraMarket,
+                   inputencoding=utf8]
+#Lista de mercados para la simulación
+market:
+  - id: <Identificador del mercado>
+    departure_station: <Nombre de la estación de salida>
+    departure_station_coords: <Coordenadas de la estación de salida>
+    arrival_station: <Nombre de la estación de llegada>
+    arrival_station_coords: <Coordenadas de la estación de llegada>
+\end{lstlisting}
+
+A continuación, en el Listado~\ref{src:estructuraMarket} se muestra la plantilla estructural que sigue \texttt{market}. La estructura clave-valor de cada elemento dentro de la lista dependiente de \texttt{market} es:
+
+\begin{itemize}
+    \item \texttt{id}: Identificador único que posee el mercado.
+    \item \texttt{departure\_station}: Nombre de la estación de salida.
+    \item \texttt{departure\_stations\_coords}: Coordenadas de la estación de salida.
+    \item \texttt{arrival\_station}: Nombre de la estación de llegada.
+    \item \texttt{arrival\_station\_coords}: Coordenadas de la estación de llegada.
+\end{itemize}
+
+El Listado~\ref{src:ejemploEstructuraMarket} muestra un ejemplo de cómo se definiría un mercado. En este ejemplo se define un mercado que recibe el identificador "1", con origen en Madrid y destino a Zaragoza.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{market}},
+                   label=src:ejemploEstructuraMarket,
+                   inputencoding=utf8]
+market:
+  - id: 1
+    departure_station: 'Madrid'
+    departure_station_coords: [40.416775, -3.703790]
+    arrival_station: 'Zaragoza'
+    arrival_station_coords: [41.648822, -0.889085]
+\end{lstlisting}
+
+\subsubsection{Patrón de usuario}
+
+La clave raíz \texttt{userPattern} alberga los diferentes patrones de usuarios que se emplearán en \acrshort{ROBIN} para realizar las simulaciones. Cada patrón de usuario está definido por un identificador, el nombre para el patrón de usuario, una lista de reglas difusas utilizadas para definir la lógica difusa que se empleará en la simulación, una lista de variables, las cuales pueden ser categóricas o difusas, una serie de funciones que modelan parámetros para el patrón, la franja horaria en la que el usuario no va a empezar el trayecto, la utilidad de cada tipo de asiento para ese usuario, los proveedores de servicios ferroviarios que prefiere, la probabilidad de que el usuario cancele el billete y, por último, un umbral de utilidad para ese patrón de usuario.
+
+A modo de curiosidad, simplemente indicar que la lógica difusa es un sistema que permite manejar información imprecisa o ambigua. A diferencia de la lógica clásica, donde las afirmaciones únicamente pueden ser verdaderas o falsas, la lógica difusa asigna un grado de pertenencia que varía entre 0 y 1 a cada afirmación. Esto permite modelar conceptos que en la vida real no tienen límites nítidos como, por ejemplo, cómodo, barato o rápido. Gracias a ello, resulta especialmente útil para representar decisiones humanas en entornos complejos. Dentro de \acrshort{ROBIN} se utiliza para modelar los perfiles de pasajero. Esta componente va más allá de los objetivos de este \acrshort{TFG}, solamente indicar que en las bases de datos diseñadas se han modelado los conceptos relacionados con la lógica difusa que aparecen en los archivos \acrshort{Yaml}. Para el interés del lector se ha realizado un breve resumen de los conceptos utilizados en este \acrshort{TFG} (Anexo~\ref{ch:fuzzyApendix}). 
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{userPattern}},
+                   label=src:estructuraUserPattern,
+                   inputencoding=utf8]
+#Lista con los patrones de usuario    
+userPattern:
+  - id: <Identificador del patrón de usuario>
+    name: <Nombre del patron de usuario>
+    
+    #Lista de reglas difusas
+    rules:
+      R0: <Regla difusa número 0>
+      Rn: <Regla difusa número n>
+      
+    #Lista de variables lingüísticas  
+    variables:
+        #Variable tipo "fuzzy"
+      - name: <Nombre de la variable>
+        type: fuzzy
+        support: <Dominio de la variable lingüística>
+        sets: [Conjunto_1, Conjunto_2, Conjunto_n]
+        Conjunto_1: <Valores que definen el Conjunto_1>
+        Conjunto_n: <Valores que definen el Conjunto_n>
+
+      - name: <Nombre de la variable>
+        type: categorical
+        labels: [Etiqueta_1,Etiqueta_2,Etiqueta_n]
+    arrival_time: <Función para generar la distribución del tiempo de llegada>
+    arrival_time_kwargs: # Lista con los argumentos de la función de arrival_time
+      arg_1: <Valor del argumento 1> 
+      arg_n: <Valor del argumento n>
+    purchase_day: <Función que genera los días de antelación de la compra del billete>
+    purchase_day_kwargs: # Argumentos para la función purchase_day
+      arg_1: <Valor del argumento 1> 
+      arg_n: <Valor del argumento n>
+    forbidden_departure_hours: # Franja horaria en la que el usuario prefiere no empezar el viaje
+      start: <Hora de inicio de la franja>
+      end: <Hora de finalización de la franja>
+    
+    #Lista de diccionarios para representar la utilidad de cada asiento
+    #para el patrón de usuario
+    seats:
+      - id: 1
+        utility: <Valor de utilidad para el asiento con id = 1>
+      - id: n
+        utility: <Valor de utilidad para el asiento con id = n>
+    
+    #Lista de diccionarios para representar la utilidad de cada proveedor
+    #de servicios ferroviarios para el patrón de usuario
+    train_service_providers:
+      - id: 1
+        utility: <Valor de utilidad para el proveedor con id = 1>
+      - id: 2
+        utility: <Valor de utilidad para el proveedor con id = 2>
+      - id: n
+        utility: <Valor de utilidad para el proveedor con id = n>
+       
+    early_stop: <Probabilidad de que el usuario compre un billete útil sin realizar una búsqueda exhaustiva>
+    utility_threshold: <Umbral de utilidad para el patron de usuario>
+    error: <Función para generar la distribución del error>
+    error_kwargs:
+      arg_1: <Valor del argumento 1> 
+      arg_n: <Valor del argumento n>
+
+\end{lstlisting}
+
+En el Listado~\ref{src:estructuraUserPattern} se encuentra la estructura que sigue \texttt{userPattern} para definir cada patrón de usuario. La estructura clave-valor de cada elemento dentro de la lista asociada a \texttt{userPattern} es:
+
+\begin{itemize}
+    \item \texttt{id}: Identificador que recibe el patrón de usuario.
+    \item \texttt{name}: Nombre que se le da al patrón de usuario.
+    \item \texttt{rules}: Conjunto de reglas difusas que se emplearán en las simulaciones. Están definidas mediante una clave que comienza con una letra "R" seguida del número de la regla.
+    \item \texttt{variables}: Conjunto de variables que se utilizan en la simulación. Pueden ser variables difusas o variables categóricas. Las variables difusas se definen con la siguiente estructura:
+    \begin{itemize}
+        \item \texttt{name}: Nombre que posee la variable difusa.
+        \item \texttt{type}: Tipo de la variable, en este caso al ser una variable difusa, el tipo será "fuzzy".
+        \item \texttt{support}: Dominio en el que se mueven los conjuntos que definen la variable difusa.
+        \item \texttt{sets}: Lista con los nombres de los conjuntos que definen la variable difusa. Cada uno de ellos se especifica debajo de la clave \texttt{sets}, empleando como clave el nombre del conjunto y como valor una lista de 4 elementos con los que se define la pertenencia. Empleando esta estructura, se pueden generar conjuntos triangulares (cuando coinciden los puntos centrales) y trapezoidales.
+    \end{itemize}
+    En caso de que la variable sea del tipo categórico, tendría esta otra estructura:
+    \begin{itemize}
+        \item \texttt{name}: Nombre que tiene la variable.
+        \item \texttt{type}: Tipo de la variable, en este caso, "categorical".
+        \item \texttt{labels}: Lista con las etiquetas que definen la variable.
+    \end{itemize}
+    \item \texttt{arrival\_time}: Función que se utiliza para generar la distribución del tiempo de llegada.
+    \item \texttt{arrival\_time\_kwargs}: Argumentos que emplea la función definida en \texttt{arrival\_time}.
+    \item \texttt{purchase\_day}: Función encargada de generar con cuántos días de antelación comprará el usuario el billete.
+    \item \texttt{purchase\_day\_kwargs}: Argumentos utilizados por la función definida en \texttt{purchase\_day}.
+    \item \texttt{forbidden\_departure\_hours}: Franja horaria en la que el usuario prefiere no iniciar el viaje. Se emplean las claves \texttt{start} y \texttt{end} para definir la hora de inicio y finalización de la franja horaria, respectivamente.
+    \item \texttt{seats}: Lista de diccionarios donde se define la utilidad que tiene cada tipo de asiento para el usuario. Cada diccionario se crea con las claves \texttt{id} y \texttt{utility}, para indicar el identificador del tipo de asiento y la utilidad para el usuario que tiene.
+    \item \texttt{train\_service\_providers}: Lista de diccionarios que establece la utilidad de cada proveedor de servicios ferroviarios para el usuario. Cada diccionario presente en la lista se define mediante las claves \texttt{id} y \texttt{utility} e indican el identificador del proveedor y la utilidad que tiene este para el usuario, respectivamente.
+    \item \texttt{early\_stop}: Probabilidad de que el usuario adquiera un billete que le resulta útil sin realizar una búsqueda exhaustiva; es decir, sin buscar el mejor billete posible.
+    \item \texttt{utility\_threshold}: Umbral de utilidad que tiene el patrón de usuario.
+    \item \texttt{error}: Función que se usa para calcular la distribución del error.
+    \item \texttt{error\_kwargs}: Argumentos que aplica la función de la clave \texttt{error} para funcionar.
+\end{itemize}
+
+El Listado~\ref{src:ejemploEstructuraUserPattern} recoge un ejemplo en el que se ha definido un patrón de usuario basándose en la estructura presentada en el Listado~\ref{src:estructuraUserPattern}. Se puede observar que las reglas poseen más variables de las que se encuentran definidas. Estas variables se han removido debido al tamaño que ocupan. Las variables que faltan son: \texttt{destination}, \texttt{departure\_time},\texttt{arrival\_time}, \texttt{price} y \texttt{seat}. Este ejemplo se ha extraído del archivo "demand\_data.yml" el cual se encuentra en el repositorio de GitHub. Se puede acceder a este archivo mediante el siguiente \href{https://github.com/Sergioba99/TFG-Gestor_De_Bases_de_Datos/blob/master/Archivos%20Yaml%20y%20CSV/Originales/Demanda/demand_data.yml}{enlace}\footnote{\textbf{Enlace a "demand\_data.yml":} \url{https://github.com/Sergioba99/TFG-Gestor\_De\_Bases\_de\_Datos/blob/master/Archivos\%20Yaml\%20y\%20CSV/Originales/Demanda/demand\_data.yml}}.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{userPattern}},
+                   label=src:ejemploEstructuraUserPattern,
+                   inputencoding=utf8]
+userPattern:
+  - id: 1
+    name: Business
+    rules:
+      R0: IF (seat is Premium) THEN 20.0
+      R1: IF (tsp is RU1) | (tsp is RU2) THEN 20.0
+      R2: IF (origin is very_near) & (destination is very_near) & (departure_time is in_time) & (arrival_time is in_time) THEN 60.0
+    variables:
+      - name: origin
+        type: fuzzy
+        support: [0, 100]
+        sets: [very_near, mid_range, far, far_away]
+        very_near: [0, 0, 10, 20]
+        mid_range: [10, 20, 50, 60]
+        far: [50, 60, 70, 80]
+        far_away:  [70, 80, 100, 100]
+
+      - name: tsp
+        type: categorical
+        labels: [RU1, RU2, RU3, RU4]
+    arrival_time: norm
+    arrival_time_kwargs:
+      loc: 8
+      scale: 1
+    purchase_day: randint
+    purchase_day_kwargs:
+      low: 2
+      high: 7
+    forbidden_departure_hours:
+      start: 9
+      end: 24
+    seats:
+      - id: 1
+        utility: 10
+      - id: 2
+        utility: 15
+      - id: 3
+        utility: 20
+    train_service_providers:
+      - id: 1
+        utility: 2
+    early_stop: 0.3
+    utility_threshold: 50
+    error: norm
+    error_kwargs:
+      loc: 2
+      scale: 1
+\end{lstlisting}
+
+\subsubsection{Patrón de demanda}
+
+La clave raíz \texttt{demandPattern} almacena los diferentes patrones de demanda que se emplearán en las simulaciones. Cada uno contiene: un identificador, un nombre y la lista de mercados a los que afecta el patrón de demanda con su demanda potencial y la distribución de usuarios esperada.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{demandPattern}},
+                   label=src:estructuraDemandPattern,
+                   inputencoding=utf8]
+#Lista de patrones de demanda    
+demandPattern:
+  - id: <Identificador del patrón de demanda>
+    name: <Nombre del patrón de demanda>
+    markets: # Lista de mercados a los que afecta el patrón de demanda
+
+      - market: <Identificador del mercado>
+        potential_demand: <Función para calcular la posible demanda>
+        potential_demand_kwargs: # Argumentos para la función de potential_demand
+            arg_1: <Valor del argumento 1> 
+            arg_n: <Valor del argumento n>
+            
+        #Lista con la distribución de los patrones de usuario para el
+        #patrón de demanda actual        
+        user_pattern_distribution:
+          - id: <Identificador del patrón de usuario 1>
+            percentage: <Porcentaje del tipo de usuario esperado>
+\end{lstlisting}
+
+El Listado~\ref{src:estructuraDemandPattern} presenta la plantilla estructural en la que está basada \texttt{demandPattern}. La estructura clave-valor de cada elemento dentro de la lista dependiente de \texttt{demandPattern} es:
+
+\begin{itemize}
+    \item \texttt{id}: Identificador único del patrón de demanda.
+    \item \texttt{name}: Nombre que se le da al patrón de demanda.
+    \item \texttt{markets}: Lista de diccionarios donde se refleja la demanda potencial y la posible distribución de los patrones de usuario. Los diccionarios de esta lista tienen la siguiente estructura:
+    \begin{itemize}
+        \item \texttt{market}: Identificador del mercado del que se van a definir la demanda potencial y la distribución de los patrones de usuario.
+        \item \texttt{potential\_demand}: Función empleada para calcular la demanda potencial del mercado.
+        \item \texttt{potential\_demand\_kwargs}: Argumentos empleados en la función definida en la clave \texttt{potential\_demand}.
+        \item \texttt{user\_pattern\_distribution}: Lista de diccionarios donde se refleja la distribución de los patrones de usuario en el mercado. Cada diccionario contiene la clave. \texttt{id}, y la clave \texttt{percentage}, que indica el porcentaje de usuarios de ese tipo esperado para el mercado.
+    \end{itemize}
+\end{itemize}
+
+En el Listado~\ref{src:ejemploEstructuraDemandPattern} se muestra un ejemplo de cómo se define un patrón de demanda. En este ejemplo, se modela el patrón de demanda con un identificador de valor "1", con el nombre de "Monday-Thursday" y afecta al mercado con el identificador "1".
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{demandPattern}},
+                   label=src:ejemploEstructuraDemandPattern,
+                   inputencoding=utf8]
+# Demand Pattern
+demandPattern:
+  - id: 1
+    name: Monday-Thursday
+    markets:
+      # Madrid - Zaragoza
+      - market: 1
+        potential_demand: randint
+        potential_demand_kwargs:
+          low: 1000
+          high: 1800
+        user_pattern_distribution:
+          - id: 1 # Business
+            percentage: 0.2
+          - id: 2 # Student
+            percentage: 0.25
+          - id: 3 # Tourist
+            percentage: 0.35
+          - id: 4 # EventTourist
+            percentage: 0.1
+          - id: 5 # Adventurer
+            percentage: 0.1
+\end{lstlisting}
+
+\subsubsection{Día}
+
+La clave raíz \texttt{day} alberga los datos correspondientes al día simulado. Este se define mediante un identificador, la fecha y el patrón de demanda empleado en la simulación.
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Estructura de la clave raíz \texttt{day}},
+                   label=src:estructuraDay,
+                   inputencoding=utf8]
+day:
+  - id: <Identificador del día>
+    date: <Fecha de la simulación>
+    demandPattern: <Patrón de demanda empleado para el día simulado>
+\end{lstlisting}
+
+En el Listado~\ref{src:estructuraDay} se presenta la estructura seguida para la creación de \texttt{day}. La estructura clave-valor de \texttt{day} es:
+
+\begin{itemize}
+    \item \texttt{id}: Identificador del día.
+    \item \texttt{date}: Fecha del día simulado.
+    \item \texttt{demandPattern}: Patrón de demanda asociado al día simulado.
+\end{itemize}
+
+El Listado~\ref{src:ejemploEstructuraSeat} muestra un ejemplo de cómo se definiría un día dentro del archivo de configuración de la demanda. Este día tomaría el valor "1" como identificador, la fecha sería el 25 de junio del año 2024 y su patrón de demanda sería el que tiene asignado el identificador con valor "1".
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Ejemplo con datos reales de la estructura de \texttt{day}},
+                   label=src:ejemploEstructuraDay,
+                   inputencoding=utf8]
+day:
+  - id: 1
+    date: 2024-06-25
+    demandPattern: 1 
+\end{lstlisting}
+
+\subsection{Estructura de los archivos de resultados}\label{sec:EstructuraArchivoResultados}
+
+Los archivos donde se almacenan los resultados de la simulación son archivos \acrshort{CSV}. Los resultados de la simulación para cada pasajero se almacenan en una fila del archivo \acrshort{CSV} que incluye las siguientes columnas:
+
+\begin{itemize}
+    \item id: Identificador único que se le da a cada pasajero.
+    \item user\_pattern: Patrón de usuario para el que se ha obtenido el resultado de la fila.
+    \item departure\_station: Estación donde se inicia del viaje.
+    \item arrival\_station: Estación donde finaliza el trayecto.
+    \item arrival\_day: Día de llegada a la estación de destino.
+    \item arrival\_time: Hora de llegada al destino.
+    \item purchase\_day: Día en el que se compró el billete.
+    \item service: Identificador del servicio adquirido por el pasajero.
+    \item service\_departure\_time: Hora de salida prevista para el servicio. 
+    \item service\_arrival\_time: Hora de llegada prevista para el servicio.
+    \item seat: Asiento elegido por el usuario.
+    \item price: Precio al que se ha comprado el billete.
+    \item utility: Utilidad, en porcentaje, del billete que adquiere el pasajero.
+    \item best\_service: Servicio que mejor se adapta a las exigencias del pasajero, y que podría ser diferente al que finalmente adquiere (debido, por ejemplo, a que éste ya estuviera agotado).
+    \item best\_seat: Asiento que mejor se adapta a los requerimientos del pasajero.
+    \item best\_utility: utilidad del mejor billete para el pasajero simulado.
+\end{itemize}
+
+La Tabla \ref{tab:ejemploTablaResultados} muestra un ejemplo de los valores de una fila del archivo de resultados.
+% Please add the following required packages to your document preamble:
+% \usepackage[table,xcdraw]{xcolor}
+% Beamer presentation requires \usepackage{colortbl} instead of \usepackage[table,xcdraw]{xcolor}
+\begin{table}[]
+\centering
+\begin{tabular}{|
+>{\columncolor[HTML]{EFEFEF}}l |l|
+>{\columncolor[HTML]{EFEFEF}}l |l|}
+\hline
+id                       & 42         & user\_pattern          & Tourist                 \\ \hline
+departure\_station       & 60000      & arrival\_station       & 04040                   \\ \hline
+arrival\_day             & 2023-09-06 & arrival\_time          & 9.7311                  \\ \hline
+purchase\_day            & 14         & service                & 03203\_06-09-2023-20.40 \\ \hline
+service\_departure\_time & 20.6666    & service\_arrival\_time & 23.9166                 \\ \hline
+seat                     & Básico     & price                  & 36.8                    \\ \hline
+utility                  & 51.1333    & best\_service          & 03203\_06-09-2023-20.40 \\ \hline
+best\_seat               & Básico     & best\_utility          & 51.1.333                \\ \hline
+\end{tabular}
+\caption{Tabla con datos reales de un archivo de resultados}
+\label{tab:ejemploTablaResultados}
+\end{table}

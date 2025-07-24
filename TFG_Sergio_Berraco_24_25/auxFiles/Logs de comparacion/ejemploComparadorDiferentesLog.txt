@@ -1,0 +1,9 @@
+Selecciona el primer archivo YAML (referencia)
+YAML1: D:/Sergio/universidad/24-25/TFG Base de datos/TFG/Material TFG/Yaml prueba comparador/Letras a números 2.yml
+Selecciona el segundo archivo YAML (a comparar)
+YAML2: D:/Sergio/universidad/24-25/TFG Base de datos/TFG/Material TFG/Yaml prueba comparador/Letras a números.yml
+
+=== RESULTADO DE LA COMPARACIÓN ===
+Se encontraron las siguientes diferencias:
+- letras_a_numeros: YAML1 -> '-a:1 b:2 c:5 d:4', YAML2 -> '-a:1 b:2 c:3 d:4'
+- otra_clave: Clave faltante en YAML2

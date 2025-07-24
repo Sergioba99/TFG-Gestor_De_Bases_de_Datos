@@ -1,0 +1,8 @@
+letras_a_numeros:
+    -a:1
+     b:2
+     c:5
+     d:4
+     
+otra_clave:
+    - null

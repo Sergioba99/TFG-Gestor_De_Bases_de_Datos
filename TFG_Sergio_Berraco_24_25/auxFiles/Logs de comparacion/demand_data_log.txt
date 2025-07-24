@@ -1,0 +1,7 @@
+Selecciona el primer archivo YAML (referencia)
+YAML1: D:/Sergio/universidad/24-25/TFG Base de datos/TFG/Material TFG/Aplicacion compilada/inputData/Demanda/demand_data.yml
+Selecciona el segundo archivo YAML (a comparar)
+YAML2: D:/Sergio/universidad/24-25/TFG Base de datos/TFG/Material TFG/Aplicacion compilada/outputData/Demanda/demand_data.yml
+
+=== RESULTADO DE LA COMPARACIÓN ===
+¡No se encontraron diferencias entre los archivos YAML!

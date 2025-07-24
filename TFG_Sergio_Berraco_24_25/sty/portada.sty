@@ -1,0 +1,72 @@
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}p{#1}}
+
+\newcommand{\portada}{%
+    \pagenumbering{roman}
+    \newgeometry{%
+        left=20mm,right=15mm,
+        top=15mm, bottom=15mm}
+    \begin{titlepage}
+        \sffamily
+        \noindent\includegraphics[height=2.3cm,valign=B]{sty/LOGOMARCA_UCLM_2021}%
+        \hfill\includegraphics[height=2.2cm,valign=B]{sty/logo\@grado.png} \\
+        \begin{minipage}[b]{1.5cm}
+            \colorbox{lightgray}{\rotatebox[origin=l]{90}{%
+                \rule{0cm}{1.6cm}\rule{3.5cm}{0cm}
+                \raisebox{.45cm}{\Huge{\textsf{\textcolor{white}{%
+                    Escuela de Ingeniería Industrial y Aeroespacial}}
+                \rule{.5cm}{0cm}}}}}
+        \end{minipage}\hfill
+        \begin{minipage}[b]{14cm}
+            \hfill\parbox{4.5cm}{%
+            \resizebox{4.5cm}{.35cm}{\Large TRABAJO FIN DE GRADO}\\[1.1ex]
+            \resizebox{4.5cm}{!}{N\textordmasculine~\expandafter\@gobbletwo\number\numexpr\the\year\relax-\tfgcode{\@grado}-\@expediente}}\\[6cm]
+            \setlength{\unitlength}{1cm}
+            \begin{picture}(13,0)
+                \put(0,0){\parbox{14cm}{%
+                    \raggedleft\LARGE\textbf{\@title}\\
+                    \rule{0cm}{1cm}\\
+                    \@author
+                }}
+            \end{picture} \\[13cm]
+            \DTMsavenow{thisone}
+            \mbox{}\hfill\scalebox{.8}[1.0]{\Large\MakeUppercase{%
+                \DTMspanishmonthname{\DTMfetchmonth{thisone}} de \the\year}}\\
+        \end{minipage}
+        \thispagestyle{empty}
+    \end{titlepage}
+    \clearpage\restoregeometry
+    \thispagestyle{empty}
+    \copyrightpage
+    \cleardoublepage
+}
+
+\newcommand{\multi@tutor}{}
+\newcommand{\copyrightpage}{%
+    \IfSubStringInString{\\}{\@advisor}{\renewcommand{\multi@tutor}{es}}{}
+    \null \vfill
+    \noindent
+    \begin{tabbing}
+        \hspace*{1.7cm} \= \\
+        \emph{Título:}  \> \parbox[t]{.7\textwidth}{\@title} \\
+        \emph{Autor:}   \> \@author \\
+        \emph{Grado:}   \> \gname{\@grado} \\
+        \emph{Tutor\multi@tutor{}:}   \> \parbox[t]{.7\textwidth}{\@advisor\\} \\
+        \ifdefempty{\@email}   {}{\emph{E-mail:}   \> \@email \\}
+        \ifdefempty{\@phone}   {}{\emph{Teléfono:} \> \@phone \\}
+        \ifdefempty{\@homepage}{}{\emph{Sitio web:} \> \url{\@homepage} \\}
+        \ifdefempty{\@address} {}{\emph{Dirección:} \> \parbox[t]{.7\textwidth}{%
+            \@address \\ 
+            \ifdefempty{\@zipcode} {}{\@zipcode~}\@city\ -- \@country  
+        } \\}
+    \end{tabbing}
+    \vspace{-.7cm}
+  \begin{singlespace}
+    \noindent
+    \copyright\ \number\the\year\ \ \@author \par
+    \smallskip \noindent
+    \begin{minipage}{0.8\textwidth} \raggedright \footnotesize
+      \@license
+    \end{minipage}
+  \end{singlespace}
+  \cleardoublepage
+}

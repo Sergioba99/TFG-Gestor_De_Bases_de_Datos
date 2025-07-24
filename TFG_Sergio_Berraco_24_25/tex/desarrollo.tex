@@ -1,0 +1,14 @@
+\chapter{Desarrollo del TFG}
+\label{ch:desarrollo}
+
+%El simulador \acrshort{ROBIN} utiliza actualmente archivos Yaml. Concretamente, emplea dos archivos con este formato para la {\color{blue}entrada de datos} : uno para los datos de la oferta de los diferentes proveedores de servicios ferroviarios, y otro para los patrones de demanda esperados por los distintos tipos de usuarios. Dichos archivos se emplean en la configuración del simulador y, tras un análisis por parte de este, genera un archivo de datos en formato CSV que almacena los resultados de la simulación.
+
+En este \acrshort{TFG} se pretende desarrollar un software modular que sirva para manejar los datos de los diferentes archivos que componen la configuración y los resultados del simulador \acrshort{ROBIN} mediante un conjunto de bases de datos. Este software maneja los datos de una forma más eficiente que la actual, mediante la utilización de bases de datos relacionales. Esto es debido a que no es necesario almacenar todo el contenido de los archivos de entrada de datos y resultados de forma independiente. El uso de estas bases de datos aprovecha la existencia de relaciones entre la información de los archivos, evitando la duplicidad de información gracias a la utilización de tablas relacionadas entre sí, y permitiendo acceder a toda la información del simulador.
+
+Este capítulo está estructurado de la siguiente forma. Inicialmente se presenta un estudio de las Bases de Datos relacionales para que el lector pueda entender el funcionamiento de las mismas (Sección \ref{sec:estudioBasesDeDatos}). A continuación, se detalla cómo está estructurada la información en los archivos Yaml de \acrshort{ROBIN} (Sección \ref{sec:archivosEntradaSalida}). Una vez explicados estos archivos, en la Sección \ref{sec:diseñoImplementacionBasesDeDatos}, se expondrá el diseño e implementación de las Bases de Datos que contendrán la información de los archivos Yaml. Finalmente, se presentará el diseño y desarrollo del software elaborado en este \acrshort{TFG} (Sección \ref{sec:desarrolloSoftware}), junto con la interfaz gráfica diseñada.
+
+\input{tex/desarrollo/Estudio SQL}
+\input{tex/desarrollo/Archivos entrada salida}
+\input{tex/desarrollo/Diseño DB}
+\input{tex/desarrollo/Desarrollo del software}
+

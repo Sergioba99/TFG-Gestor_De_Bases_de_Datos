@@ -1,0 +1,126 @@
+\section{Prueba de las bases de datos}
+\label{sec:compareFilesResults}
+
+En esta sección, se pretende comprobar el correcto funcionamiento de las bases de datos, es decir, que las bases de datos almacenen la información extraída de los archivos de forma correcta. Para ello, se han importado varios archivos con la aplicación, para después exportarlos y comprobar que los archivos exportados desde la aplicación contienen la misma información que los archivos importados. De esta forma, se van a comparar los archivos originales con los archivos exportados desde las bases de datos empleando la aplicación para la gestión de las bases de datos objeto de este \acrshort{TFG} para, de este modo, verificar el correcto funcionamiento de las bases de datos.
+
+Para esta tarea se han empleado dos pequeños \textit{scripts} en Python: uno que compara dos archivos \acrshort{Yaml} y otro que compara archivos \acrshort{CSV}. Esto se debe a que realizar dichas comparaciones de manera manual resultaría no solo muy tedioso, sino además propenso a errores, dada la gran cantidad de elementos que habría que revisar para confirmar que ambos archivos contienen los mismos datos.
+
+El \textit{script} que se encarga de comparar los archivos \acrshort{Yaml} revisa que en ambos archivos se encuentren las mismas claves, tanto las claves raíz como lo que depende de éstas, y que los datos en cada una de las claves sean iguales, tanto en valor como en tipo de dato. En cuanto al script que se encarga de los archivos \acrshort{CSV}, este compara cada fila teniendo en cuenta el identificador de cada una ellas y revisa que los datos de las filas que contienen el mismo identificador sean iguales. Ambos \textit{scripts} muestran la información en la consola y, además, copian esta salida a un archivo de texto para poder revisar los posibles fallos aunque se haya cerrado la consola que contenía los mensajes indicando las diferencias entre los dos archivos comparados.
+
+Para verificar el funcionamiento de los scripts, se ha realizado una prueba empleando 2 archivos \acrshort{Yaml} (Listados \ref{src:letrasANumeros1} y \ref{src:letrasANumeros2}).
+
+\lstinputlisting[language=YAML,frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Archivo \acrshort{Yaml} de prueba "Letras a números.yml"}, 
+                 label=src:letrasANumeros1, inputencoding=utf8]{auxFiles/Yaml prueba comparador/Letras a números.yml}
+
+\lstinputlisting[language=YAML,frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Archivo \acrshort{Yaml} de prueba "Letras a números 2.yml"}, 
+                 label=src:letrasANumeros2, inputencoding=utf8]{auxFiles/Yaml prueba comparador/Letras a números 2.yml}
+
+Primero se compara el archivo del Listado~\ref{src:letrasANumeros1} consigo mismo para verificar que, al introducir dos archivos idénticos, el script no detecta ningún fallo. Al comparar el archivo "Letras a números.yml" consigo mismo, se constata que el \textit{script} verifica que ambos archivos de entrada son iguales, lo que es lógico dado que se trata del mismo archivo empleado como entrada dos veces. Esto se evidencia en la salida de la consola, que se muestra en el Listado~\ref{log:letrasANumeros1y1}.
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de consola al comparar "Letras a números.yml" consigo mismo.}, 
+                 label=log:letrasANumeros1y1, inputencoding=utf8]{auxFiles/Logs de comparacion/ejemploComparadorIgualesLog.txt}
+
+Posteriormente, se ha comparado el archivo del Listado~\ref{src:letrasANumeros1} con el archivo del Listado~\ref{src:letrasANumeros2}. En este caso, el script detecta que hay una diferencia e imprime en la consola que ha encontrado una diferencia entre los archivos y muestra las diferencias entre estos. La diferencia entre estos dos archivos es que en el diccionario, el valor de "c" en el primer archivo es de 3, mientras que en el segundo archivo es de 5 y, además, existe otra clave en el segundo archivo llamada "otra\_clave" que contiene una lista con un único elemento de valor "null". La salida de la consola se encuentra en el Listado~\ref{log:letrasANumeros1y2}
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de consola al comparar "Letras a números.yml" con "Letras a números 2.yml"}, 
+                 label=log:letrasANumeros1y2, inputencoding=utf8]{auxFiles/Logs de comparacion/ejemploComparadorDiferentesLog.txt}
+
+Todos los archivos empleados en las pruebas de la aplicación se encuentran subidos en el siguiente \href{https://github.com/Sergioba99/TFG-Gestor_De_Bases_de_Datos/tree/master/Archivos%20Yaml%20y%20CSV}{repositorio de GitHub}\footnote{Archivos Yaml y CSV: \url{https://github.com/Sergioba99/TFG-Gestor\_De\_Bases\_de\_Datos/tree/master/Archivos\%20Yaml\%20y\%20CSV}}. 
+
+Primero se van a comparar los archivos \acrshort{Yaml} de configuración de la oferta. Los archivos originales que se han introducido, con ayuda de la aplicación, a la base de datos para los archivos de entrada de datos de la oferta, se encuentran en el siguiente \href{https://github.com/Sergioba99/TFG-Gestor_De_Bases_de_Datos/tree/master/Archivos%20Yaml%20y%20CSV/Originales/Oferta}{enlace}\footnote{Archivos originales de entrada de datos de la oferta: \url{https://github.com/Sergioba99/TFG-Gestor\_De\_Bases\_de\_Datos/tree/master/Archivos\%20Yaml\%20y\%20CSV/Originales/Oferta}}. Los archivos exportados de la base de datos se encuentran en el siguiente \href{https://github.com/Sergioba99/TFG-Gestor_De_Bases_de_Datos/tree/master/Archivos%20Yaml%20y%20CSV/Exportados/Oferta}{enlace}\footnote{Archivos exportados de entrada de datos de la oferta: \url{https://github.com/Sergioba99/TFG-Gestor\_De\_Bases\_de\_Datos/tree/master/Archivos\%20Yaml\%20y\%20CSV/Exportados/Oferta}}. 
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de la consola para los archivos supply\_03216\_60000\_2025-06-02\_2025-06-16}, 
+                 label=log:supply_03216_60000_2025-06-02_2025-06-16, inputencoding=utf8]{auxFiles/Logs de comparacion/supply_03216_60000_2025-06-02_2025-06-16_log.txt}
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de la consola para los archivos supply\_54413\_60000\_2025-06-02\_2025-06-16}, 
+                 label=log:supply_54413_60000_2025-06-02_2025-06-16, inputencoding=utf8]{auxFiles/Logs de comparacion/supply_54413_60000_2025-06-02_2025-06-16_log.txt}
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de la consola para los archivos supply\_60000\_03216\_2025-06-02\_2025-06-16}, 
+                 label=log:supply_60000_03216_2025-06-02_2025-06-16, inputencoding=utf8]{auxFiles/Logs de comparacion/supply_60000_03216_2025-06-02_2025-06-16_log.txt}
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de la consola para los archivos supply\_60000\_54413\_2025-06-02\_2025-06-16}, 
+                 label=log:supply_60000_54413_2025-06-02_2025-06-16, inputencoding=utf8]{auxFiles/Logs de comparacion/supply_60000_54413_2025-06-02_2025-06-16_log.txt}
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de la consola para los archivos supply\_60000\_71801\_2025-06-02\_2025-06-16}, 
+                 label=log:supply_60000_71801_2025-06-02_2025-06-16, inputencoding=utf8]{auxFiles/Logs de comparacion/supply_60000_71801_2025-06-02_2025-06-16_log.txt}
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de la consola para los archivos supply\_71801\_60000\_2025-06-02\_2025-06-16}, 
+                 label=log:supply_71801_60000_2025-06-02_2025-06-16, inputencoding=utf8]{auxFiles/Logs de comparacion/supply_71801_60000_2025-06-02_2025-06-16_log.txt}
+
+
+Al examinar las salidas de la consola correspondientes a las distintas comparaciones (Listados \ref{log:supply_03216_60000_2025-06-02_2025-06-16}, \ref{log:supply_54413_60000_2025-06-02_2025-06-16}, \ref{log:supply_60000_03216_2025-06-02_2025-06-16}, \ref{log:supply_60000_54413_2025-06-02_2025-06-16}, \ref{log:supply_60000_71801_2025-06-02_2025-06-16} y \ref{log:supply_71801_60000_2025-06-02_2025-06-16}), se comprueba que los datos de los archivos originales, importados y luego exportados mediante el programa se mantienen idénticos. En otras palabras, todos los archivos exportados conservan exactamente la misma información que los que se importaron a la base de datos, lo que demuestra que la base de datos no corrompe ni modifica los datos.
+
+En el caso del archivo de demanda, el archivo original se encuentra en el siguiente \href{https://github.com/Sergioba99/TFG-Gestor_De_Bases_de_Datos/tree/master/Archivos%20Yaml%20y%20CSV/Originales/Demanda}{enlace}\footnote{Archivo original de entrada de datos de la demanda: \url{https://github.com/Sergioba99/TFG-Gestor\_De\_Bases\_de\_Datos/tree/master/Archivos\%20Yaml\%20y\%20CSV/Originales/Demanda}}. El archivo exportado de la base de datos se encuentra en el siguiente \href{https://github.com/Sergioba99/TFG-Gestor_De_Bases_de_Datos/tree/master/Archivos%20Yaml%20y%20CSV/Exportados/Demanda}{enlace}\footnote{Archivo exportado de entrada de datos de la demanda: \url{https://github.com/Sergioba99/TFG-Gestor\_De\_Bases\_de\_Datos/tree/master/Archivos\%20Yaml\%20y\%20CSV/Exportados/Demanda}}. 
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de la consola para los archivos demand\_data}, 
+                 label=log:demand_data, inputencoding=utf8]{auxFiles/Logs de comparacion/demand_data_log.txt}
+
+
+Como se puede observar en la salida de la consola (Listado~\ref{log:demand_data}) a la hora de comparar el archivo "demand\_data" original con el que ha sido exportado de la base de datos por la aplicación se puede comprobar que ambos archivos contienen los mismos datos, pero hay una pequeña diferencia en cuanto a formato entre ambos archivos, aunque esto no afecta a la hora de leer y de procesar el archivo. La diferencia de formato en cuestión se debe a que el archivo original almacena las listas como si fueran listas de Python; es decir, en la misma línea. Sin embargo, el archivo exportado convierte las listas al formato que emplea \acrshort{Yaml}. Como ya se ha dicho, esto no afecta a la hora de procesar los datos de los archivos, pero sí a la hora de modificarlos y de visualizarlos por una persona, debido a que la estructura que emplea \acrshort{Yaml} es, probablemente, menos visual que emplear listas como las de Python. A continuación se muestra un fragmento de ambos archivos que ilustra lo descrito anteriormente:
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Fragmento del archivo demand\_data original},
+                   label=src:originDemand_dataOriginal,
+                   inputencoding=utf8]                   
+userPattern:
+   -variables:
+      - name: origin
+        type: fuzzy
+        support: [0, 100]
+        sets: [very_near, mid_range, far, far_away]
+        very_near: [0, 0, 10, 20]
+        mid_range: [10, 20, 50, 60]
+        far: [50, 60, 70, 80]
+        far_away:  [70, 80, 100, 100]
+\end{lstlisting}
+
+\begin{lstlisting}[language=YAML,
+                   frame=none,
+                   numbers=none,
+                   basicstyle=\ttfamily\normalsize,
+                   caption={Fragmento del archivo demand\_data exportado por la aplicación},
+                   label=src:originDemand_dataExported,
+                   inputencoding=utf8]                   
+userPattern:
+   -variables:
+      - name: origin
+        type: fuzzy
+        support:
+        - 0
+        - 100
+        sets:
+        - very_near
+        - mid_range
+        - far
+        - far_away
+        very_near:
+        - 0
+        - 0
+        - 10
+        - 20
+        mid_range:
+        - 10
+        - 20
+        - 50
+        - 60
+        far:
+        - 50
+        - 60
+        - 70
+        - 80
+        far_away:
+        - 70
+        - 80
+        - 100
+        - 100
+\end{lstlisting}
+
+Por último, se van a comparar los archivos \acrshort{CSV} de los resultados. El archivo original se encuentra en el siguiente \href{https://github.com/Sergioba99/TFG-Gestor_De_Bases_de_Datos/tree/master/Archivos%20Yaml%20y%20CSV/Originales/Resultados}{enlace}\footnote{Archivo original de resultados: \url{https://github.com/Sergioba99/TFG-Gestor\_De\_Bases\_de\_Datos/tree/master/Archivos\%20Yaml\%20y\%20CSV/Originales/Resultados}}. El archivo exportado de la base de datos se encuentra en el siguiente \href{https://github.com/Sergioba99/TFG-Gestor_De_Bases_de_Datos/tree/master/Archivos%20Yaml%20y%20CSV/Exportados/Resultados}{enlace}\footnote{Archivo exportado de resultados: \url{https://github.com/Sergioba99/TFG-Gestor\_De\_Bases\_de\_Datos/tree/master/Archivos\%20Yaml\%20y\%20CSV/Exportados/Resultados}}.
+
+\lstinputlisting[frame=none, numbers=none, basicstyle=\ttfamily\normalsize, caption={Salida de la consola para los archivos output\_fuzzy}, 
+                 label=log:output_fuzzy, inputencoding=utf8]{auxFiles/Logs de comparacion/output_fuzzy_log.txt}
+
+En la salida de la consola del Listado~\ref{log:output_fuzzy}, se puede comprobar que los dos archivos \acrshort{CSV} comparados presentan los mismos datos. En este caso se trata del archivo de resultados importado a la base de datos con el archivo exportado de la base de datos empleando la aplicación. Al igual que sucedía con los datos solicitados a la base de datos mediante la sentencia que devolvía las estaciones presentes en el ramal con el identificador de valor 10 (Listado~\ref{src:queryStationsOnPathId10}), los datos de ambos \acrshort{CSV} no tienen el mismo orden, debido a que al solicitar los datos para regenerar el archivo \acrshort{CSV} los datos se ordenan de manera ascendente por el valor del identificador.

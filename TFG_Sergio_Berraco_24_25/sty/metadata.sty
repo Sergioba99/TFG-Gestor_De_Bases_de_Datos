@@ -1,0 +1,48 @@
+\newcommand{\@advisor}{}
+\newcommand{\@expediente}{}
+\newcommand{\@gitrepo}{}
+\newcommand{\@address}{}
+\newcommand{\@zipcode}{}
+\newcommand{\@city}{Toledo}
+\newcommand{\@country}{Spain}
+\newcommand{\@phone}{}
+\newcommand{\@email}{}
+\newcommand{\@homepage}{}
+\newcommand{\@grado}{}
+\newcommand{\@gradofull}{}
+
+\newcommand{\tutor}[1]{\renewcommand{\@advisor}{#1}}
+\newcommand{\advisor}[1]{\renewcommand{\@advisor}{#1}}
+\newcommand{\tutores}[1]{\renewcommand{\@advisor}{#1}}
+\newcommand{\expediente}[1]{\renewcommand{\@expediente}{#1}}
+\newcommand{\gitrepo}[1]{\renewcommand{\@gitrepo}{#1}}
+\newcommand{\address}[1]{\renewcommand{\@address}{#1}}
+\newcommand{\direccion}[1]{\renewcommand{\@address}{#1}}
+\newcommand{\zipcode}[1]{\renewcommand{\@zipcode}{#1}}
+\newcommand{\cpostal}[1]{\renewcommand{\@zipcode}{#1}}
+\newcommand{\city}[1]{\renewcommand{\@city}{#1}}
+\newcommand{\poblacion}[1]{\renewcommand{\@city}{#1}}
+\newcommand{\country}[1]{\renewcommand{\@country}{#1}}
+\newcommand{\pais}[1]{\renewcommand{\@country}{#1}}
+\newcommand{\phone}[1]{\renewcommand{\@phone}{#1}}
+\newcommand{\telefono}[1]{\renewcommand{\@phone}{#1}}
+\newcommand{\email}[1]{\renewcommand{\@email}{#1}}
+\newcommand{\homepage}[1]{\renewcommand{\@homepage}{#1}}
+\newcommand{\grado}[1]{
+    \renewcommand{\@grado}{#1}
+}
+\newcommand{\thegitrepo}{\url{\@gitrepo}}
+
+\usepackage{ifthen}
+\newcommand{\tfgcode}[1]{%
+    \ifthenelse{\equal{#1}{IE}}{A}{}%
+    \ifthenelse{\equal{#1}{IEIA}}{B}{}%
+    \ifthenelse{\equal{#1}{IA}}{D}{}%
+}
+
+\newcommand{\gname}[1]{%
+    Grado en Ingeniería
+    \ifthenelse{\equal{#1}{IE}}{Eléctrica}{}%
+    \ifthenelse{\equal{#1}{IEIA}}{Electrónica Industrial y Automática}{}%
+    \ifthenelse{\equal{#1}{IA}}{Aeroespacial}{}%
+}
